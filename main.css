@@ -1,0 +1,299 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-size: 14px;
+  box-sizing: border-box;
+  /* font-family: "Open Sans", sans-serif; */
+}
+/* nav */
+#logo > * {
+  height: 50px;
+}
+#btn-log-in-nav {
+  color: black;
+  background: whitesmoke;
+  margin-right: 21px;
+}
+.nav-wrapper {
+  width: 100%;
+  /* position: fixed; */
+  z-index: 1000;
+  border-bottom: 1px solid lightgrey;
+}
+
+.nav-container {
+  background-color: #fff;
+  height: 70px;
+}
+.nav-holder > * {
+  margin-top: 11px;
+}
+.nav-holder {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 169px;
+}
+.nav-drop-down {
+  margin-left: 29px;
+}
+.dropdown > button {
+  background: lightgray;
+  color: black;
+  font-weight: 500;
+  border: none;
+  margin-left: 40px;
+}
+.dropdown > button:hover {
+  background: white;
+  color: black;
+}
+.dropdown {
+  margin-top: 5px;
+}
+
+#nav-search {
+  min-width: 70px;
+  text-align: center;
+  color: #9b9b9b;
+  line-height: 37px;
+}
+/* .nav-holder > * { */
+/* margin-right: 15px; */
+/* padding: 5px; */
+/* border-radius: 15px; */
+/* } */
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+}
+#search-btn {
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  margin-top: 10px;
+}
+
+.nav-right .nav-btn > button {
+  width: 95px;
+  height: 38px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #ffffff;
+  background: #d41872;
+  border-radius: 11px;
+  border: none;
+}
+.nav-left {
+  display: flex;
+  justify-content: flex-start;
+  padding: 5px;
+}
+.search {
+  width: 400px;
+  display: flex;
+  background-color: #f4f4f4;
+  padding-left: 7px;
+  margin-left: 90px;
+  border-radius: 5px;
+  max-height: 40px;
+}
+.search > input {
+  width: 300%;
+  height: 38px;
+  background-color: #f4f4f4;
+  border: none;
+  /* border-radius: 10px; */
+  outline: none;
+}
+/* suggest bar */
+.sg-bar-list {
+  display: flex;
+  /* justify-content: space-around; */
+  /* text-align: center; */
+  margin-left: 360px;
+}
+.sg-bar-list > * {
+  padding: 0px 22px;
+  line-height: 44px;
+}
+.suggest-bar-content {
+  margin: 0px 169px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.suggest-bar {
+  height: 50px;
+  background-color: lightgray;
+  border-bottom: 1px solid gray;
+  /* width: 11px; */
+}
+.item > * {
+  font-size: 16px;
+}
+/* banner */
+.banner-container {
+  display: flex;
+}
+.right-banner {
+  padding-top: 40px;
+  margin: 0px 360px 0px 0px;
+  padding-left: 20px;
+  width: 100%;
+}
+/* register */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: 100px left;
+  background: url("./image/foodiesfeed.com_messy-pizza-on-a-black-table.jpg")
+    center no-repeat;
+  background-size: cover;
+}
+.register-form {
+  height: 429px;
+  border-radius: 7px;
+
+  min-width: 500px;
+  background: white;
+  padding: 0px 50px;
+}
+.form-header {
+  padding: 20px 0px;
+}
+.form-header > h3 {
+  text-align: center;
+  font-size: 32px;
+  font-family: Poppins-Bold;
+  font-weight: 600;
+  color: #333;
+}
+.form-content > * {
+  margin-bottom: 10px;
+}
+
+.name-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.name-wrapper > * {
+  width: calc(50% - 5px);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+}
+/* log in */
+.log-in-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("./image/burger-and-vegetables-placed-on-brown-wood-surface-1565982.jpg")
+    center no-repeat;
+  background-size: cover;
+}
+
+.log-in-form {
+  height: 299px;
+  min-width: 500px;
+  background: whitesmoke;
+  padding: 0px 50px;
+  border-radius: 10px;
+}
+/* .log-in-form-div {
+  padding: 299px;
+} */
+
+.message-error {
+  color: #ff0000;
+}
+.message-success {
+  color: green;
+}
+
+.input-wrapper > input {
+  width: 100%;
+  height: 38px;
+  padding: 10px;
+  border: 1px solid #eae9ea;
+  border-radius: 5px;
+}
+
+.form-footer > button {
+  width: 120px;
+  height: 38px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #ffffff;
+  background: #d41872;
+  border-radius: 11px;
+}
+button:hover {
+  cursor: pointer;
+}
+button:disabled {
+  background: #f2f2f2;
+}
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+li {
+  list-style-type: none;
+}
+#search-btn-cover:hover {
+  cursor: pointer;
+}
+
+/* img */
+.slide-img {
+  width: 618px;
+  height: 411px;
+  padding-top: 40px;
+
+  /* display: flex; */
+  /* justify-content: flex-end; */
+  margin: 0px 0px 0px 350px;
+}
+.carousel-inner {
+  border-radius: 7px;
+}
+.carousel-item {
+  height: 360px;
+}
+/* home */
+.home-container {
+  background-color: #e6e6e6;
+}
+i:hover {
+  cursor: pointer;
+}
+/* food suggestion */
+
+.food-suggestion {
+  width: 100%;
+  height: 120px;
+}
+.top {
+  background: url(./image/art.jpg) top no-repeat;
+  border-radius: 7px 7px 0px 0px;
+}
+.mid {
+  background: url(./image/chicken.jpg);
+}
+.bot {
+  background: url(./image/spicy.jpg);
+  border-radius: 0px 0px 7px 7px;
+}
