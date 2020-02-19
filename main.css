@@ -112,7 +112,7 @@
   display: flex;
   /* justify-content: space-around; */
   /* text-align: center; */
-  margin-left: 360px;
+  margin-left: 0px;
 }
 .sg-bar-list > * {
   padding: 0px 22px;
@@ -139,9 +139,9 @@
 }
 .right-banner {
   padding-top: 40px;
-  margin: 0px 360px 0px 0px;
+  margin: 0px 130px 0px 0px;
   padding-left: 20px;
-  width: 100%;
+  width: 80%;
 }
 /* register */
 .register-container {
@@ -266,7 +266,7 @@ li {
 
   /* display: flex; */
   /* justify-content: flex-end; */
-  margin: 0px 0px 0px 350px;
+  margin: 0px 0px 0px 220px;
 }
 .carousel-inner {
   border-radius: 7px;
@@ -286,7 +286,7 @@ i:hover {
 /* food suggestion */
 
 .food-suggestion {
-  width: 85%;
+  width: 80%;
   height: 120px;
 }
 .top {
@@ -336,4 +336,10 @@ i:hover {
 .support {
   padding-left: 20px;
   line-height: 3;
+}
+.mail > * {
+  width: 182.9px;
+}
+.phone > * {
+  width: 90px;
 }
