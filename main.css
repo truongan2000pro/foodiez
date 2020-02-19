@@ -23,6 +23,8 @@
 }
 
 .nav-container {
+  width: 100%;
+
   background-color: #fff;
   height: 70px;
 }
@@ -30,9 +32,11 @@
   margin-top: 11px;
 }
 .nav-holder {
+  width: 1200px;
+
   display: flex;
   justify-content: space-between;
-  margin: 0px 200px;
+  margin: auto;
 }
 .nav-drop-down {
   margin-left: 29px;
@@ -139,9 +143,9 @@
 }
 .right-banner {
   padding-top: 40px;
-  margin: 0px 130px 0px 0px;
-  padding-left: 20px;
-  width: 80%;
+  margin-left: 20px;
+  margin-right: auto;
+  width: 500px;
 }
 /* register */
 .register-container {
@@ -259,6 +263,11 @@ li {
 }
 
 /* img */
+.left-banner {
+  width: 618px;
+
+  margin-left: auto;
+}
 .slide-img {
   width: 618px;
   height: 411px;
@@ -266,7 +275,6 @@ li {
 
   /* display: flex; */
   /* justify-content: flex-end; */
-  margin: 0px 0px 0px 220px;
 }
 .carousel-inner {
   border-radius: 7px;
@@ -286,7 +294,7 @@ i:hover {
 /* food suggestion */
 
 .food-suggestion {
-  width: 80%;
+  /* width: 700px; */
   height: 120px;
 }
 .top {
