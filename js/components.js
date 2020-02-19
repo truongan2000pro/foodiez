@@ -103,6 +103,8 @@ components.nav = `
                   </div>
                 </div>
               </div>
+              <div class="phone support"> <i class="fas fa-phone-alt" aria-hidden="true"> 0584681228</i> </div>
+              <div class="mail support"><i class="fas fa-envelope" aria-hidden="true"> kingdragon7a8@gmail.com</i> </div>
               <div class="search">
                 <span id="nav-search">Tìm Kiếm</span>
                 <input type="text" name="" id="search-input" placeholder="" />
@@ -187,9 +189,20 @@ components.home = ` <section class="home-container">
 
 </div>
 <div class="right-banner">
-  <div class="top food-suggestion">abc</div>
-  <div class="mid food-suggestion">ád</div>
-  <div class="bot food-suggestion">zxc</div>
+<div class="top food-suggestion">
+<p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+
+<a class="post" href="">Chia Sẻ Ngay</a>
+</div>
+<div class="mid food-suggestion">
+<p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+
+<a class="post" href="">Chia Sẻ Ngay</a>
+</div>
+<div class="bot food-suggestion"><p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+
+<a class="post" href="">Chia Sẻ Ngay</a>
+</div>
 </div>
 </div>
 </section>`;

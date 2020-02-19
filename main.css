@@ -16,7 +16,8 @@
 }
 .nav-wrapper {
   width: 100%;
-  /* position: fixed; */
+  overflow: hidden;
+  position: fixed;
   z-index: 1000;
   border-bottom: 1px solid lightgrey;
 }
@@ -31,7 +32,7 @@
 .nav-holder {
   display: flex;
   justify-content: space-between;
-  margin: 0px 169px;
+  margin: 0px 200px;
 }
 .nav-drop-down {
   margin-left: 29px;
@@ -94,7 +95,7 @@
   display: flex;
   background-color: #f4f4f4;
   padding-left: 7px;
-  margin-left: 90px;
+  margin-left: 60px;
   border-radius: 5px;
   max-height: 40px;
 }
@@ -118,7 +119,7 @@
   line-height: 44px;
 }
 .suggest-bar-content {
-  margin: 0px 169px;
+  margin: 0px 200px;
   font-weight: 400;
   line-height: 1.3;
 }
@@ -275,7 +276,9 @@ li {
 }
 /* home */
 .home-container {
+  padding-top: 69px;
   background-color: #e6e6e6;
+  height: 100vh;
 }
 i:hover {
   cursor: pointer;
@@ -283,17 +286,54 @@ i:hover {
 /* food suggestion */
 
 .food-suggestion {
-  width: 100%;
+  width: 85%;
   height: 120px;
 }
 .top {
-  background: url(./image/art.jpg) top no-repeat;
+  background: url(./image/pen1.jpg);
+  background-color: red;
+  background-size: 100% 100%;
   border-radius: 7px 7px 0px 0px;
+  /* display: flex; */
 }
 .mid {
-  background: url(./image/chicken.jpg);
+  background: url(./image/pen1.jpg);
+  background-size: 100% 100%;
 }
 .bot {
-  background: url(./image/spicy.jpg);
+  background: url(./image/pen1.jpg);
+  background-size: 100% 100%;
   border-radius: 0px 0px 7px 7px;
+}
+
+.text {
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 20px;
+}
+.post {
+  /* text-shadow: white 0px 0px 10px; */
+
+  margin-left: 175px;
+  color: white;
+  font-weight: bold;
+  overflow: hidden;
+  display: inline-block;
+  width: 130px;
+  height: 40px;
+  line-height: 36px;
+  text-align: center;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  /* position: absolute; */
+  left: 50%;
+  top: 72%;
+  text-decoration: none;
+}
+/* support */
+.support {
+  padding-left: 20px;
+  line-height: 3;
 }
