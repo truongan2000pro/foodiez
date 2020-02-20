@@ -138,6 +138,12 @@ view.showComponents = async function(screenName) {
       navRegisterBtn.onclick = function registerLinkHandler() {
         view.showComponents("register");
       };
+      break;
+    }
+    case "extras": {
+      let app = document.getElementById("app");
+      app.innerHTML = components.nav + components.extras;
+      break;
     }
   }
 };

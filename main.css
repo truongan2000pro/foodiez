@@ -408,3 +408,36 @@ i:hover {
   width: 185px;
   height: 185px;
 }
+/* dẹo */
+.turn-off-rbg {
+  background: #ebebeb;
+}
+.extras-wrapper {
+  padding-top: 100px;
+  margin: auto;
+  width: 1200px;
+}
+.image-details {
+  display: flex;
+}
+.img {
+  max-width: 100%;
+  width: 185px;
+  height: 185px;
+  border-radius: 10px;
+}
+.ten-quan {
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 555;
+  font-size: 150%;
+}
+.link-dia-chi {
+  color: #ff0000;
+}
+.anh {
+  max-width: 100%;
+  width: 185px;
+  height: 185px;
+  padding-left: 200px;
+}

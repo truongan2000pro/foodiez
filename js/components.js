@@ -253,7 +253,9 @@ components.home = ` <section class="home-container">
       </div>
 
 </section>`;
-components.extras=`<div class="content-wrapper">
+components.extras = `    <section class="extras-wrapper" >
+
+<div class="content-wrapper">
 <table class="table table-light">
   <tbody class="">
     <tr class="turn-off-rbg">
@@ -320,4 +322,6 @@ components.extras=`<div class="content-wrapper">
     </tr>
   </tbody>
 </table>
-</div>`
+</div>
+</section>
+`;
