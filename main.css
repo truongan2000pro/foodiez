@@ -361,24 +361,23 @@ i:hover {
   width: 90px;
 }
 
-
 /* Hoang */
 /* list-food  */
-.article{
-  width: 1200px;
+.article {
+  width: 1110px;
   margin: auto;
   margin-top: 20px;
 }
 
-.title-list-food{
+.title-list-food {
   margin-bottom: 10px;
 }
 
-.list-food-wrapper{
+.list-food-wrapper {
   display: flex;
   margin: 0px 0px -14px;
 }
-.food-wrapper{
+.food-wrapper {
   width: 205px;
   margin-bottom: 10px;
 }
@@ -389,7 +388,7 @@ i:hover {
   border-radius: 0px 0px 6px 6px;
 }
 
-.food-contents>*{
+.food-contents > * {
   padding: 1px 7px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -404,7 +403,8 @@ i:hover {
   margin: 0px;
 }
 
-.img-food>* {
+.img-food > * {
+  border-radius: 6px 6px 0px 0px;
   width: 185px;
   height: 185px;
 }
