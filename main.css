@@ -296,7 +296,7 @@ li {
 /* home */
 .home-container {
   padding-top: 69px;
-  background-color: #ebebeb;
+  background-color: #f1f1f1;
 }
 i:hover {
   cursor: pointer;
@@ -363,6 +363,9 @@ i:hover {
 
 /* Hoang */
 /* list-food  */
+.address {
+  color: #9b9b9b;
+}
 .article {
   width: 1110px;
   margin: auto;
@@ -398,7 +401,9 @@ i:hover {
 .view-all {
   text-align: right;
 }
-
+.view-all > * {
+  font-weight: 700;
+}
 .img-food {
   margin: 0px;
 }
@@ -410,9 +415,12 @@ i:hover {
 }
 /* dẹo */
 .turn-off-rbg {
-  background: #ebebeb;
+  border-bottom: solid 1.6px lightgrey;
 }
-.extras-wrapper {
+.content-container {
+  background: #f1f1f1;
+}
+.content-wrapper {
   padding-top: 100px;
   margin: auto;
   width: 1200px;

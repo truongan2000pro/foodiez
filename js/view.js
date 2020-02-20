@@ -120,6 +120,8 @@ view.showComponents = async function(screenName) {
 
       let logo = document.getElementById("logo");
 
+      let viewExtras = document.getElementById("view-extras");
+
       logo.onclick = function logoClickHandler() {
         view.showComponents("home");
       };
@@ -138,11 +140,38 @@ view.showComponents = async function(screenName) {
       navRegisterBtn.onclick = function registerLinkHandler() {
         view.showComponents("register");
       };
+      viewExtras.onclick = function viewAllClickHandler() {
+        view.showComponents("extras");
+      };
       break;
     }
     case "extras": {
       let app = document.getElementById("app");
       app.innerHTML = components.nav + components.extras;
+      let searchBtn = document.getElementById("search-btn-cover");
+
+      let searchInput = document.getElementById("search-input");
+
+      let logo = document.getElementById("logo");
+
+      logo.onclick = function logoClickHandler() {
+        view.showComponents("home");
+      };
+      // console.dir(searchInput);
+      searchBtn.onclick = function iconClickHandler() {
+        console.log(searchInput.value);
+      };
+      let navLogInBtn = document.getElementById("btn-log-in-nav");
+
+      let navRegisterBtn = document.getElementById("btn-register-nav");
+
+      navLogInBtn.onclick = function logInLinkHandler() {
+        view.showComponents("logIn");
+      };
+
+      navRegisterBtn.onclick = function registerLinkHandler() {
+        view.showComponents("register");
+      };
       break;
     }
   }

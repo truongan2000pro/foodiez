@@ -216,7 +216,7 @@ components.home = ` <section class="home-container">
         </div>
         <div class="list-food-wrapper">
           <div class="food-wrapper">
-            <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
+            <figure class="img-food"><img src="./image/chicken.jpg" alt="" /></figure>
             <div class="food-contents">
               <div class="name-food">
                 tên đồ ăn
@@ -227,7 +227,7 @@ components.home = ` <section class="home-container">
             </div>
           </div>
           <div class="food-wrapper">
-            <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
+            <figure class="img-food"><img src="./image/spicy.jpg" alt="" /></figure>
             <div class="food-contents">
               <div class="name-food">
                 tên đồ ăn
@@ -238,7 +238,7 @@ components.home = ` <section class="home-container">
             </div>
           </div>
           <div class="food-wrapper">
-            <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
+            <figure class="img-food"><img src="./image/brooke-lark-V4MBq8kue3U-unsplash.jpg" alt=""  /></figure>
             <div class="food-contents">
               <div class="name-food">
                 tên đồ ăn
@@ -249,11 +249,12 @@ components.home = ` <section class="home-container">
             </div>
           </div>
         </div>
-        <div class="view-all">Xem tất cả</div>
+        <div id="view-extras" class="view-all"><i class="fas fa-angle-double-right">xem toàn bộ</i></div>
       </div>
 
 </section>`;
-components.extras = `    <section class="extras-wrapper" >
+components.extras = `
+<section class="content-container">
 
 <div class="content-wrapper">
 <table class="table table-light">
@@ -323,5 +324,8 @@ components.extras = `    <section class="extras-wrapper" >
   </tbody>
 </table>
 </div>
+
+
 </section>
+
 `;
