@@ -205,6 +205,50 @@ components.home = ` <section class="home-container">
 </div>
 
 
+<div class="article">
+        <div class="title-list-food">
+            alt=""
+            style="height: 30px; width: 30px;"
+          />
+          Đồ ăn
+        </div>
+        <div class="list-food-wrapper">
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+            </div>
+          </div>
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+            </div>
+          </div>
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view-all">Xem tất cả</div>
+      </div>
 
 </section>`;
 components.extras=`<div class="content-wrapper">
