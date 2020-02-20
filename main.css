@@ -296,8 +296,7 @@ li {
 /* home */
 .home-container {
   padding-top: 69px;
-  background-color: #e6e6e6;
-  height: 100vh;
+  background-color: #ebebeb;
 }
 i:hover {
   cursor: pointer;
@@ -360,4 +359,52 @@ i:hover {
 }
 .phone > * {
   width: 90px;
+}
+
+
+/* Hoang */
+/* list-food  */
+.article{
+  width: 1200px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.title-list-food{
+  margin-bottom: 10px;
+}
+
+.list-food-wrapper{
+  display: flex;
+  margin: 0px 0px -14px;
+}
+.food-wrapper{
+  width: 205px;
+  margin-bottom: 10px;
+}
+
+.food-contents {
+  width: 185px;
+  background: #fff;
+  border-radius: 0px 0px 6px 6px;
+}
+
+.food-contents>*{
+  padding: 1px 7px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.view-all {
+  text-align: right;
+}
+
+.img-food {
+  margin: 0px;
+}
+
+.img-food>* {
+  width: 185px;
+  height: 185px;
 }
