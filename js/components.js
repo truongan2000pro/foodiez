@@ -207,6 +207,8 @@ components.home = ` <section class="home-container">
 
 <div class="article">
         <div class="title-list-food">
+          <img
+            src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
             alt=""
             style="height: 30px; width: 30px;"
           />
