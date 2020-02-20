@@ -6,8 +6,18 @@
   /* font-family: "Open Sans", sans-serif; */
 }
 /* nav */
-#logo > * {
-  height: 50px;
+
+#logo {
+  border-radius: 10px;
+  background: url(./image/doglogo1.png) no-repeat;
+  /* background-position: center center center; */
+  background-size: 100% 100%;
+  height: 200%;
+  width: 80px;
+  line-height: 1.3;
+}
+#logo:hover {
+  cursor: pointer;
 }
 #btn-log-in-nav {
   color: black;
@@ -99,7 +109,7 @@
   display: flex;
   background-color: #f4f4f4;
   padding-left: 7px;
-  margin-left: 60px;
+  margin-left: 40px;
   border-radius: 5px;
   max-height: 40px;
 }
@@ -141,11 +151,16 @@
 .banner-container {
   display: flex;
 }
+.left-banner {
+  width: 618px;
+
+  margin-left: auto;
+}
 .right-banner {
   padding-top: 40px;
   margin-left: 20px;
   margin-right: auto;
-  width: 500px;
+  width: 469px;
 }
 /* register */
 .register-container {
@@ -263,11 +278,7 @@ li {
 }
 
 /* img */
-.left-banner {
-  width: 618px;
 
-  margin-left: auto;
-}
 .slide-img {
   width: 618px;
   height: 411px;
@@ -299,7 +310,6 @@ i:hover {
 }
 .top {
   background: url(./image/pen1.jpg);
-  background-color: red;
   background-size: 100% 100%;
   border-radius: 7px 7px 0px 0px;
   /* display: flex; */
@@ -346,7 +356,7 @@ i:hover {
   line-height: 3;
 }
 .mail > * {
-  width: 182.9px;
+  width: 140px;
 }
 .phone > * {
   width: 90px;

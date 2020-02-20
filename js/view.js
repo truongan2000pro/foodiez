@@ -113,17 +113,28 @@ view.showComponents = async function(screenName) {
     case "home": {
       let app = document.getElementById("app");
       app.innerHTML = components.nav + components.home;
+
       let searchBtn = document.getElementById("search-btn-cover");
+
       let searchInput = document.getElementById("search-input");
+
+      let logo = document.getElementById("logo");
+
+      logo.onclick = function logoClickHandler() {
+        view.showComponents("home");
+      };
       // console.dir(searchInput);
       searchBtn.onclick = function iconClickHandler() {
         console.log(searchInput.value);
       };
       let navLogInBtn = document.getElementById("btn-log-in-nav");
+
       let navRegisterBtn = document.getElementById("btn-register-nav");
+
       navLogInBtn.onclick = function logInLinkHandler() {
         view.showComponents("logIn");
       };
+
       navRegisterBtn.onclick = function registerLinkHandler() {
         view.showComponents("register");
       };
