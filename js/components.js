@@ -188,18 +188,19 @@ components.home = ` <section class="home-container">
 </div>
 <div class="right-banner">
 <div class="top food-suggestion">
-<p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+<p class="text">Khám Phá Đồ Ăn</p>
 
-<a class="post" href="">Chia Sẻ Ngay</a>
+<a class="post" href="">Xem Thêm</a>
 </div>
 <div class="mid food-suggestion">
 <p class="text">Hãy chia sẻ các món ngon bạn biết</p>
 
 <a class="post" href="">Chia Sẻ Ngay</a>
-</div>
-<div class="bot food-suggestion"><p class="text">Hãy chia sẻ các món ngon bạn biết</p>
 
-<a class="post" href="">Chia Sẻ Ngay</a>
+</div>
+<div class="bot food-suggestion"><p class="text">Khám Phá Đồ Uống</p>
+
+<a class="post" href="">Xem Thêm</a>
 </div>
 </div>
 </div>
@@ -212,7 +213,7 @@ components.home = ` <section class="home-container">
             alt=""
             style="height: 30px; width: 30px;"
           />
-          Đồ ăn
+          ĐỒ ĂN
         </div>
         <div class="list-food-wrapper">
           <div class="food-wrapper">

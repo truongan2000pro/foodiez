@@ -248,6 +248,7 @@
 }
 
 .form-footer > button {
+  border: none;
   width: 120px;
   height: 38px;
   padding: 10px;
@@ -308,17 +309,17 @@ i:hover {
   height: 120px;
 }
 .top {
-  background: url(./image/pen1.jpg);
+  background: url(./image/food1.jpg);
   background-size: 100% 100%;
   border-radius: 7px 7px 0px 0px;
   /* display: flex; */
 }
 .mid {
-  background: url(./image/pen1.jpg);
+  background: url(./image/pen2.jpg);
   background-size: 100% 100%;
 }
 .bot {
-  background: url(./image/pen1.jpg);
+  background: url(./image/cofe1.jpg);
   background-size: 100% 100%;
   border-radius: 0px 0px 7px 7px;
 }
@@ -331,7 +332,7 @@ i:hover {
   padding-top: 20px;
 }
 .post {
-  /* text-shadow: white 0px 0px 10px; */
+  background-color: gray;
 
   margin-left: 175px;
   color: white;
@@ -373,7 +374,10 @@ i:hover {
 }
 
 .title-list-food {
-  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: bold;
+
+  margin-bottom: 20px;
 }
 
 .list-food-wrapper {
@@ -415,7 +419,7 @@ i:hover {
 }
 /* dẹo */
 .turn-off-rbg {
-  border-bottom: solid 1.6px lightgrey;
+  border-bottom: solid 2px lightgrey;
 }
 .content-container {
   background: #f1f1f1;
