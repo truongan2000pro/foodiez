@@ -139,14 +139,14 @@ components.home = ` <section class="home-container">
     <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner">
-    <div class="carousel-item active" class="img-slide">
+    <div class="carousel-item " class="img-slide">
       <img src="image/art.jpg" class="d-block w-100" alt="..." />
       <div class="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>
         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
       </div>
     </div>
-    <div class="carousel-item" class="img-slide">
+    <div class="carousel-item active" class="img-slide">
       <img src="./image/chicken.jpg" class="d-block w-100" alt="..." />
       <div class="carousel-caption d-none d-md-block">
         <h5>Second slide label</h5>
@@ -188,19 +188,16 @@ components.home = ` <section class="home-container">
 </div>
 <div class="right-banner">
 <div class="top food-suggestion">
-<p class="text">Khám Phá Đồ Ăn</p>
+<p class="top text">Khám Phá Đồ Ăn >></p>
 
-<a class="post" href="">Xem Thêm</a>
 </div>
 <div class="mid food-suggestion">
-<p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+<p class="text">Hãy chia sẻ các món ngon bạn biết >></p>
 
-<a class="post" href="">Chia Sẻ Ngay</a>
 
 </div>
-<div class="bot food-suggestion"><p class="text">Khám Phá Đồ Uống</p>
+<div class="bot food-suggestion"><p class="text">Khám Phá Đồ Uống >></p>
 
-<a class="post" href="">Xem Thêm</a>
 </div>
 </div>
 </div>

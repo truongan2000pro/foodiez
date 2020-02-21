@@ -309,29 +309,36 @@ i:hover {
   height: 120px;
 }
 .top {
-  background: url(./image/food1.jpg);
+  background: url(./image/food.jpg);
   background-size: 100% 100%;
   border-radius: 7px 7px 0px 0px;
   /* display: flex; */
 }
 .mid {
-  background: url(./image/pen2.jpg);
+  background: url(./image/pen.jpg);
   background-size: 100% 100%;
 }
 .bot {
-  background: url(./image/cofe1.jpg);
+  background: url(./image/cofe.jpg);
   background-size: 100% 100%;
   border-radius: 0px 0px 7px 7px;
 }
 
 .text {
-  font-size: 16px;
+  font-size: 0.96em;
   color: white;
-  font-weight: bold;
+  background: pink;
+
+  font-weight: 629;
   text-align: center;
-  padding-top: 20px;
 }
-.post {
+.top {
+  border-radius: 7px 7px 0px 0px;
+}
+.text:hover {
+  cursor: pointer;
+}
+/* .post {
   background-color: gray;
 
   margin-left: 175px;
@@ -339,17 +346,17 @@ i:hover {
   font-weight: bold;
   overflow: hidden;
   display: inline-block;
-  width: 130px;
-  height: 40px;
+  width: 100px;
+  height: 35px;
   line-height: 36px;
   text-align: center;
   border: 2px solid #fff;
   border-radius: 5px;
   /* position: absolute; */
-  left: 50%;
-  top: 72%;
-  text-decoration: none;
-}
+/* left: 50%; */
+/* top: 72%; */
+/* text-decoration: none; */
+/* } */
 /* support */
 .support {
   padding-left: 20px;
