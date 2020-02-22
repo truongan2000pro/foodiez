@@ -51,18 +51,18 @@
 .nav-drop-down {
   margin-left: 29px;
 }
-.dropdown > button {
+.drop-on-nav > button {
   background: lightgray;
   color: black;
   font-weight: 500;
   border: none;
   margin-left: 40px;
 }
-.dropdown > button:hover {
+.drop-on-nav > button:hover {
   background: white;
   color: black;
 }
-.dropdown {
+.drop-on-nav {
   margin-top: 5px;
 }
 
@@ -170,7 +170,7 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  justify-content: 100px left;
+  /* justify-content: 100px; */
   background: url("./image/foodiesfeed.com_messy-pizza-on-a-black-table.jpg")
     center no-repeat;
   background-size: cover;
@@ -327,8 +327,8 @@ i:hover {
 .text {
   font-size: 0.96em;
   color: white;
-  background: pink;
-
+  background: #ffd2aa;
+  opacity: 0.91;
   font-weight: 629;
   text-align: center;
 }
@@ -337,6 +337,94 @@ i:hover {
 }
 .text:hover {
   cursor: pointer;
+}
+/* post */
+.post-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 50px;
+}
+.food-type {
+  margin-bottom: 11px;
+  padding-left: 21px;
+}
+.city {
+  margin-bottom: 11px;
+  padding-left: 21px;
+}
+#exampleModalCenterTitle {
+  padding-left: 40px;
+}
+#profile-img-tag {
+  max-height: 180px;
+  margin-bottom: 11px;
+  margin-left: 96px;
+  border-radius: 5px;
+}
+#img-button-update {
+  margin-bottom: 11px;
+  margin-left: 21px;
+  display: none;
+}
+
+/* .img-upload-wrapper {
+  width: 185px;
+  margin-bottom: 11px;
+  margin-left: 90px;
+}
+.img-upload-wrapper:hover {
+  cursor: pointer;
+} */
+.img-update {
+  width: 185px;
+  height: 185px;
+  background: #f1f1f1;
+}
+.add-image {
+  margin-left: 20px;
+  margin-bottom: 11px;
+  width: 96px;
+}
+
+#modal-btn {
+  position: fixed;
+  top: 49.5em;
+  /* bottom: 10rem; */
+  left: 100rem;
+  background: #d41872;
+  border: none;
+}
+.btn-post-wrapper {
+  background-color: #f1f1f1;
+}
+.post {
+  /* margin-left: ; */
+  margin-bottom: 11px;
+  width: 100%;
+  height: 29px;
+  background-color: #f1f1f1;
+  border-radius: 7px;
+  border: none;
+  outline: none;
+  padding: 10px;
+  height: 35px;
+}
+.food-container {
+  display: flex;
+}
+.fd {
+  width: 21px;
+  padding-right: 5px;
+  padding-top: 10px;
+}
+.ava {
+  /* max-width: 30px; */
+  /* height: 10px; */
+}
+.food {
+  background: url(https://tea-6.lozi.vn/v1/images/resized/do-an-1500526800);
+}
+.food-type {
 }
 /* .post {
   background-color: gray;

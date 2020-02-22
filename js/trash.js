@@ -39,10 +39,12 @@
 let db = firebase.firestore();
 
 window.onload = function() {
+  postDbGetInDesc();
+
   // let count = 3;
   let buton = document.getElementById("abc");
 
-  buton.onclick = addAndOrderUpdate;
+  // buton.onclick = addAndOrderUpdate;
 
   let orderUpdate = async function() {
     let detail = await db
@@ -73,7 +75,9 @@ window.onload = function() {
 
   // return localStorage.setItem("order", count);
 };
-let model = [];
+let model = {
+  post: null
+};
 
 let addAndOrderUpdate = async function() {
   let orderCountGet = await db
@@ -92,7 +96,8 @@ let addAndOrderUpdate = async function() {
       money: 20,
       order: orderCountDetail + 1,
       review: "ok",
-      user: ""
+      user: "",
+      type: "đồ ăn"
     })
     .then(async function() {
       // after update db we get orderCount from collection "orderCount"
@@ -156,10 +161,13 @@ let orderCountUpdate = async function() {
 let postDbGetInDesc = async function() {
   let result = await db
     .collection("post")
+    .where("city", "==", "hà nội")
+    // .where("type", "==", "đồ uống")
+    .where("order", ">", 0)
     .orderBy("order", "desc")
     .get();
   let detailByOrderDesc = await transformDocs(result.docs);
-  model.push(detailByOrderDesc);
+  model.post = detailByOrderDesc;
   console.log(model);
   // let detail = transformDocs(result.docs);
   console.log(detailByOrderDesc);
