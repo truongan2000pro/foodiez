@@ -79,7 +79,7 @@ components.nav = `
             </div>
             
               <div class="nav-drop-down">
-                <div class="dropdown">
+                <div class="dropdown drop-on-nav">
                   <button
                     class="btn btn-secondary dropdown-toggle"
                     type="button"
@@ -139,14 +139,14 @@ components.home = ` <section class="home-container">
     <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner">
-    <div class="carousel-item active" class="img-slide">
+    <div class="carousel-item " class="img-slide">
       <img src="image/art.jpg" class="d-block w-100" alt="..." />
       <div class="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>
         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
       </div>
     </div>
-    <div class="carousel-item" class="img-slide">
+    <div class="carousel-item active" class="img-slide">
       <img src="./image/chicken.jpg" class="d-block w-100" alt="..." />
       <div class="carousel-caption d-none d-md-block">
         <h5>Second slide label</h5>
@@ -188,81 +188,73 @@ components.home = ` <section class="home-container">
 </div>
 <div class="right-banner">
 <div class="top food-suggestion">
-<p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+<p class="top text">Khám Phá Đồ Ăn >></p>
 
-<a class="post" href="">Chia Sẻ Ngay</a>
 </div>
 <div class="mid food-suggestion">
-<p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+<p class="text" id="food-share">Hãy chia sẻ các món ngon bạn biết >></p>
 
-<a class="post" href="">Chia Sẻ Ngay</a>
+
 </div>
-<div class="bot food-suggestion"><p class="text">Hãy chia sẻ các món ngon bạn biết</p>
+<div class="bot food-suggestion"><p class="text">Khám Phá Đồ Uống >></p>
 
-<a class="post" href="">Chia Sẻ Ngay</a>
 </div>
 </div>
 </div>
 
 
 <div class="article">
-<div class="title-list-food">
-  <img
-    src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
-    alt=""
-    style="height: 30px; width: 30px;"
-  />
-  Đồ ăn
-</div>
-<div class="list-food-wrapper">
-  <div class="food-wrapper">
-    <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
-    <div class="food-contents">
-      <div class="name-food">
-        tên đồ ăn
-      </div>
-      <div class="address">
-        địa chỉ
-      </div> 
-      <div class="author">
-        HoangToViet
-      </div>
-    </div>
-  </div>
-  <div class="food-wrapper">
-    <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
-    <div class="food-contents">
-      <div class="name-food">
-        tên đồ ăn
-      </div>
-      <div class="address">
-        địa chỉ
-      </div>
-      <div class="author">
-        HoangToViet
-      </div>
-    </div>
-  </div>
-  <div class="food-wrapper">
-    <figure class="img-food"><img src="./ảnh-test/thumb-1920-1009981.jpg" alt="" /></figure>
-    <div class="food-contents">
-      <div class="name-food">
-        tên đồ ăn
-      </div>
-      <div class="address">
-        địa chỉ
-      </div>
-      <div class="author">
-        HoangToViet
-      </div>
-    </div>
-  </div>
-</div>
-<div class="view-all">Xem tất cả</div>
-</div>
+
+        <div class="title-list-food">
+          <img
+            src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
+            alt=""
+            style="height: 30px; width: 30px;"
+          />
+          ĐỒ ĂN
+        </div>
+        <div class="list-food-wrapper">
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./image/chicken.jpg" alt="" /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+            </div>
+          </div>
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./image/spicy.jpg" alt="" /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+            </div>
+          </div>
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./image/brooke-lark-V4MBq8kue3U-unsplash.jpg" alt=""  /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="view-extras" class="view-all"><i class="fas fa-angle-double-right">xem toàn bộ</i></div>
 
 </section>`;
-components.extras=`<div class="content-wrapper">
+components.extras = `
+<section class="content-container">
+
+<div class="content-wrapper">
 <table class="table table-light">
   <tbody class="">
     <tr class="turn-off-rbg">
@@ -329,4 +321,162 @@ components.extras=`<div class="content-wrapper">
     </tr>
   </tbody>
 </table>
-</div>`
+</div>
+
+
+</section>
+
+`;
+components.post = `
+
+<div id="btn-post-wrapper" class="btn-post-wrapper">
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary btn-post"
+  data-toggle="modal"
+  id="modal-btn"
+  data-target="#exampleModalCenter"
+>
+<i class="far fa-edit"></i>
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">
+          Hãy Chia Sẻ Những Món Ngon Bạn Biêt Nhé ^^
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section class="post-container">
+          <div class="post-wrapper">
+          <img src="" id="profile-img-tag" width="180px" />
+          <i id="add-image" class="fas add-image fa-plus">Thêm Ảnh</i>
+
+          <input
+                type="file"
+                onchange="readURL(this);" 
+                id="img-button-update"
+                accept="image/*"
+              />
+            <div class="dropdown food-type">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Thể Loại
+              </button>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <a class="dropdown-item dropdown-post" href="#">
+                  <img
+                    src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
+                    alt=""
+                    style="height: 25px; width: 25px; "
+                  />
+                  Đồ Ăn</a
+                >
+                <a class="dropdown-item dropdown-post" href="#">
+                  <img
+                    src="./image/drinkava.jpg"
+                    alt=""
+                    style="height: 25px;/* width: 25px; */"
+                  />
+                  Đồ Uống
+                </a>
+              </div>
+            </div>
+
+            <div class="food-container food-name-container">
+              <i class="fd-upload-name fd fas fa-file-signature"></i>
+              <input
+                type="text"
+                name=""
+                class="food-name post"
+                placeholder="Tên Món Ăn"
+              />
+            </div>
+
+            <div class="food-container food-address-container">
+              <i class="fas fa-map-marker-alt fd fd-upload-location"></i>
+              <input
+                type="text"
+                class="food-address post"
+                placeholder="Địa Chỉ "
+              />
+            </div>
+            <div class="food-container food-review-container">
+              <i class="far fd fa-clipboard"></i>
+
+              <input
+                type="text"
+                class="food-review post"
+                placeholder="Review Của Bạn"
+              />
+            </div>
+            <div class="dropdown city">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButtoncity"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Thành Phố
+              </button>
+              <div
+                class="dropdown-menu "
+                id="dropdown-city-select"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <a class="dropdown-item" href="#">Hà Nội</a>
+                <a class="dropdown-item" href="#">Hồ Chí Minh</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+`;

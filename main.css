@@ -51,18 +51,18 @@
 .nav-drop-down {
   margin-left: 29px;
 }
-.dropdown > button {
+.drop-on-nav > button {
   background: lightgray;
   color: black;
   font-weight: 500;
   border: none;
   margin-left: 40px;
 }
-.dropdown > button:hover {
+.drop-on-nav > button:hover {
   background: white;
   color: black;
 }
-.dropdown {
+.drop-on-nav {
   margin-top: 5px;
 }
 
@@ -170,7 +170,7 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  justify-content: 100px left;
+  /* justify-content: 100px; */
   background: url("./image/foodiesfeed.com_messy-pizza-on-a-black-table.jpg")
     center no-repeat;
   background-size: cover;
@@ -248,6 +248,7 @@
 }
 
 .form-footer > button {
+  border: none;
   width: 120px;
   height: 38px;
   padding: 10px;
@@ -296,7 +297,7 @@ li {
 /* home */
 .home-container {
   padding-top: 69px;
-  background-color: #ebebeb;
+  background-color: #f1f1f1;
 }
 i:hover {
   cursor: pointer;
@@ -308,47 +309,142 @@ i:hover {
   height: 120px;
 }
 .top {
-  background: url(./image/pen1.jpg);
+  background: url(./image/food.jpg);
   background-size: 100% 100%;
   border-radius: 7px 7px 0px 0px;
   /* display: flex; */
 }
 .mid {
-  background: url(./image/pen1.jpg);
+  background: url(./image/pen.jpg);
   background-size: 100% 100%;
 }
 .bot {
-  background: url(./image/pen1.jpg);
+  background: url(./image/cofe.jpg);
   background-size: 100% 100%;
   border-radius: 0px 0px 7px 7px;
 }
 
 .text {
-  font-size: 16px;
+  font-size: 0.96em;
   color: white;
-  font-weight: bold;
+  background: #ffd2aa;
+  opacity: 0.91;
+  font-weight: 629;
   text-align: center;
-  padding-top: 20px;
+}
+.top {
+  border-radius: 7px 7px 0px 0px;
+}
+.text:hover {
+  cursor: pointer;
+}
+/* post */
+.post-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 50px;
+}
+.food-type {
+  margin-bottom: 11px;
+  padding-left: 21px;
+}
+.city {
+  margin-bottom: 11px;
+  padding-left: 21px;
+}
+#exampleModalCenterTitle {
+  padding-left: 40px;
+}
+#profile-img-tag {
+  max-height: 180px;
+  margin-bottom: 11px;
+  margin-left: 96px;
+  border-radius: 5px;
+}
+#img-button-update {
+  margin-bottom: 11px;
+  margin-left: 21px;
+  display: none;
+}
+
+/* .img-upload-wrapper {
+  width: 185px;
+  margin-bottom: 11px;
+  margin-left: 90px;
+}
+.img-upload-wrapper:hover {
+  cursor: pointer;
+} */
+.img-update {
+  width: 185px;
+  height: 185px;
+  background: #f1f1f1;
+}
+.add-image {
+  margin-left: 20px;
+  margin-bottom: 11px;
+  width: 96px;
+}
+
+#modal-btn {
+  position: fixed;
+  top: 49.5em;
+  /* bottom: 10rem; */
+  left: 100rem;
+  background: #d41872;
+  border: none;
+}
+.btn-post-wrapper {
+  background-color: #f1f1f1;
 }
 .post {
-  /* text-shadow: white 0px 0px 10px; */
+  /* margin-left: ; */
+  margin-bottom: 11px;
+  width: 100%;
+  height: 29px;
+  background-color: #f1f1f1;
+  border-radius: 7px;
+  border: none;
+  outline: none;
+  padding: 10px;
+  height: 35px;
+}
+.food-container {
+  display: flex;
+}
+.fd {
+  width: 21px;
+  padding-right: 5px;
+  padding-top: 10px;
+}
+.ava {
+  /* max-width: 30px; */
+  /* height: 10px; */
+}
+.food {
+  background: url(https://tea-6.lozi.vn/v1/images/resized/do-an-1500526800);
+}
+.food-type {
+}
+/* .post {
+  background-color: gray;
 
   margin-left: 175px;
   color: white;
   font-weight: bold;
   overflow: hidden;
   display: inline-block;
-  width: 130px;
-  height: 40px;
+  width: 100px;
+  height: 35px;
   line-height: 36px;
   text-align: center;
   border: 2px solid #fff;
   border-radius: 5px;
   /* position: absolute; */
-  left: 50%;
-  top: 72%;
-  text-decoration: none;
-}
+/* left: 50%; */
+/* top: 72%; */
+/* text-decoration: none; */
+/* } */
 /* support */
 .support {
   padding-left: 20px;
@@ -363,6 +459,9 @@ i:hover {
 
 /* Hoang */
 /* list-food  */
+.address {
+  color: #9b9b9b;
+}
 .article {
   width: 1110px;
   margin: auto;
@@ -370,7 +469,10 @@ i:hover {
 }
 
 .title-list-food {
-  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: bold;
+
+  margin-bottom: 20px;
 }
 
 .list-food-wrapper {
@@ -403,7 +505,9 @@ i:hover {
 .view-all {
   text-align: right;
 }
-
+.view-all > * {
+  font-weight: 700;
+}
 .img-food {
   margin: 0px;
 }
@@ -412,4 +516,40 @@ i:hover {
   border-radius: 6px 6px 0px 0px;
   width: 185px;
   height: 185px;
+}
+/* dẹo */
+.turn-off-rbg {
+  border-bottom: solid 2px lightgrey;
+}
+.content-container {
+  background: #f1f1f1;
+}
+.content-wrapper {
+  padding-top: 100px;
+  margin: auto;
+  width: 1200px;
+}
+.image-details {
+  display: flex;
+}
+.img {
+  max-width: 100%;
+  width: 185px;
+  height: 185px;
+  border-radius: 10px;
+}
+.ten-quan {
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 555;
+  font-size: 150%;
+}
+.link-dia-chi {
+  color: #ff0000;
+}
+.anh {
+  max-width: 100%;
+  width: 185px;
+  height: 185px;
+  padding-left: 200px;
 }
