@@ -526,6 +526,11 @@ i:hover {
   white-space: nowrap;
 }
 
+.author{
+  padding-top: 1px;
+  border-top: 1px solid #e4e4e4;
+}
+
 .view-all {
   text-align: right;
 }

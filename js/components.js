@@ -204,6 +204,7 @@ components.home = ` <section class="home-container">
 
 
 <div class="article">
+
         <div class="title-list-food">
           <img
             src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
@@ -248,7 +249,6 @@ components.home = ` <section class="home-container">
           </div>
         </div>
         <div id="view-extras" class="view-all"><i class="fas fa-angle-double-right">xem toàn bộ</i></div>
-      </div>
 
 </section>`;
 components.extras = `
