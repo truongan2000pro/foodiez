@@ -6,7 +6,6 @@
   /* font-family: "Open Sans", sans-serif; */
 }
 /* nav */
-
 #logo {
   border-radius: 10px;
   background: url(./image/doglogo1.png) no-repeat;
@@ -49,10 +48,21 @@
   margin: auto;
 }
 .nav-drop-down {
-  margin-left: 29px;
+  position: fixed;
+  /* margin-left: 29px; */
+  /* right: 32px; */
+  /* top: 1rem; */
+  /* right: 100px; */
+  /* bottom: 10rem; */
+  /* top: 10px; */
+  /* background: #d41872; */
+  margin-left: 760px;
+  border: none;
+  /* width: 40px; */
+  /* height: 40px; */
 }
 .drop-on-nav > button {
-  background: lightgray;
+  background: #f4f4f4;
   color: black;
   font-weight: 500;
   border: none;
@@ -339,6 +349,22 @@ i:hover {
   cursor: pointer;
 }
 /* post */
+#dropdownMenuButton {
+  width: 139px;
+}
+.main-food-type {
+  color: white;
+}
+#dropdownMenuButtoncity {
+  width: 139px;
+}
+
+.post-message-error {
+  color: red;
+  margin-left: 21px;
+  margin-bottom: 5px;
+}
+
 .post-wrapper {
   display: flex;
   flex-direction: column;
@@ -388,14 +414,17 @@ i:hover {
 
 #modal-btn {
   position: fixed;
-  top: 49.5em;
+  right: 21px;
   /* bottom: 10rem; */
-  left: 100rem;
+  bottom: 10px;
   background: #d41872;
   border: none;
+  width: 40px;
+  height: 40px;
 }
 .btn-post-wrapper {
   background-color: #f1f1f1;
+  /* position: absolute; */
 }
 .post {
   /* margin-left: ; */
@@ -511,6 +540,8 @@ i:hover {
   border-radius: 6px 6px 0px 0px;
   width: 185px;
   height: 185px;
+  margin-left: auto;
+  margin-right: auto;
 }
 /* dẹo */
 .turn-off-rbg {

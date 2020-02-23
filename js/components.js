@@ -88,9 +88,9 @@ components.nav = `
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                  <i class="fas fa-user-circle"></i>
+                  Hà Nội
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <div class="dropdown-menu " syple=position:fixed id="dropdown-menu-nav" aria-labelledby="dropdownMenu2">
                     <button class="dropdown-item" type="button">Action</button>
                     <button class="dropdown-item" type="button">
                       Another action
@@ -369,7 +369,9 @@ components.post = `
         <section class="post-container">
           <div class="post-wrapper">
           <img src="" id="profile-img-tag" width="180px" />
+          
           <i id="add-image" class="fas add-image fa-plus">Thêm Ảnh</i>
+          <div id="food-img-error" class="post-message-error"></div>
 
           <input
                 type="file"
@@ -386,20 +388,29 @@ components.post = `
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Thể Loại
+              <a class="main-food-type" href="#">
+              <img
+                src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
+                alt=""
+                style="height: 25px; width: 25px; "
+              />
+              Đồ Ăn</a
+            >
               </button>
               <div
                 class="dropdown-menu"
                 aria-labelledby="dropdownMenuButton"
+                id="drink-dropdown-menu"
               >
-                <a class="dropdown-item dropdown-post" href="#">
-                  <img
-                    src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
-                    alt=""
-                    style="height: 25px; width: 25px; "
-                  />
-                  Đồ Ăn</a
-                >
+              <a class="dropdown-item dropdown-post" href="#">
+              <img
+                src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
+                alt=""
+                style="height: 25px; width: 25px; "
+              />
+              Đồ Ăn</a
+            >
+                
                 <a class="dropdown-item dropdown-post" href="#">
                   <img
                     src="./image/drinkava.jpg"
@@ -411,33 +422,44 @@ components.post = `
               </div>
             </div>
 
+
             <div class="food-container food-name-container">
               <i class="fd-upload-name fd fas fa-file-signature"></i>
               <input
+                id="food-name"
                 type="text"
                 name=""
                 class="food-name post"
                 placeholder="Tên Món Ăn"
               />
-            </div>
+              
+              </div>
+              <div id="food-name-error" class="post-message-error"></div>
 
             <div class="food-container food-address-container">
               <i class="fas fa-map-marker-alt fd fd-upload-location"></i>
               <input
+              id="food-address"
                 type="text"
                 class="food-address post"
                 placeholder="Địa Chỉ "
               />
-            </div>
+              
+              </div>
+              <div id="food-address-error" class="post-message-error"></div>
             <div class="food-container food-review-container">
               <i class="far fd fa-clipboard"></i>
 
               <input
+              id="food-review"
                 type="text"
                 class="food-review post"
                 placeholder="Review Của Bạn"
               />
-            </div>
+
+              
+              </div>
+              <div id="food-review-error" class="post-message-error"></div>
             <div class="dropdown city">
               <button
                 class="btn btn-secondary dropdown-toggle"
@@ -447,17 +469,19 @@ components.post = `
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Thành Phố
+                Hà Nội
               </button>
               <div
                 class="dropdown-menu "
                 id="dropdown-city-select"
                 aria-labelledby="dropdownMenuButton"
               >
-                <a class="dropdown-item" href="#">Hà Nội</a>
                 <a class="dropdown-item" href="#">Hồ Chí Minh</a>
+                <a class="dropdown-item" href="#">Hà Nội</a>
+
               </div>
-            </div>
+              
+              </div>
           </div>
         </section>
       </div>
@@ -466,10 +490,11 @@ components.post = `
           type="button"
           class="btn btn-secondary"
           data-dismiss="modal"
+          id="btn-cancel-upload-post"
         >
           Close
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" id="btn-upload-post" class="btn btn-primary">Upload</button>
       </div>
     </div>
   </div>

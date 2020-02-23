@@ -124,8 +124,6 @@ view.showComponents = async function(screenName) {
 
       let imgUploadWrapper = document.getElementById("img-upload-wrapper");
 
-      let imgButtonUpdate = document.getElementById("img-button-update");
-
       let foodShare = document.getElementById("food-share");
 
       let modalBtn = document.getElementById("modal-btn");
@@ -134,11 +132,82 @@ view.showComponents = async function(screenName) {
 
       let imgUpdate = document.getElementById("img-update");
 
-      let profireImgTag = document.getElementById("profile-img-tag");
-
       let addImg = document.getElementById("add-image");
 
       let dropdownCitySelect = document.getElementById("dropdown-city-select");
+
+      // get id post
+      let imgButtonUpdate = document.getElementById("img-button-update");
+
+      let profireImgTag = document.getElementById("profile-img-tag");
+
+      let foodName = document.getElementById("food-name");
+
+      let foodAddress = document.getElementById("food-address");
+
+      let foodReview = document.getElementById("food-review");
+
+      let btnUploadPost = document.getElementById("btn-upload-post");
+
+      let foodImgError = document.getElementById("food-img-error");
+
+      let btnCancelUpdatePost = document.getElementById(
+        "btn-cancel-upload-post"
+      );
+
+      console.dir(imgButtonUpdate);
+
+      btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
+        let postInfo = {
+          foodName: foodName,
+          foodAddress: foodAddress,
+          foodReview: foodReview,
+          srcImg: imgButtonUpdate
+        };
+        view.removeValue(postInfo.foodName);
+        view.removeValue(postInfo.foodAddress);
+        view.removeValue(postInfo.foodReview);
+        view.removeValue(postInfo.srcImg);
+
+        view.validate("food-name-error", [postInfo.foodName, ""]),
+          view.validate("food-address-error", [postInfo.foodAddress, ""]),
+          view.validate("food-review-error", [postInfo.foodReview, ""]),
+          view.validate("food-img-error", [postInfo.srcImg, ""]);
+        profireImgTag.src = "";
+      };
+
+      btnUploadPost.onclick = function postSubmitHandler() {
+        let postInfo = {
+          foodName: foodName.value,
+          foodAddress: foodAddress.value,
+          foodReview: foodReview.value,
+          srcImg: imgButtonUpdate.value
+        };
+
+        let validateResult = [
+          view.validate("food-name-error", [
+            postInfo.foodName,
+            "Bạn Vui Lòng Điền Thêm Tên Món"
+          ]),
+          view.validate("food-address-error", [
+            postInfo.foodAddress,
+            "Bạn Vui Lòng Điền Thêm Địa Chỉ"
+          ]),
+          view.validate("food-review-error", [
+            postInfo.foodReview,
+            "Bạn Vui Lòng Review Về Món Ăn"
+          ]),
+          view.validate("food-img-error", [
+            postInfo.srcImg,
+            "Bạn Vui Lòng Chọn Ảnh Món Bạn Muốn Đăng"
+          ])
+        ];
+        console.log(postInfo.srcImg);
+
+        if (view.allPassed(validateResult)) {
+          console.log("haha");
+        }
+      };
 
       let dropdownMenuButtoncity = document.getElementById(
         "dropdownMenuButtoncity"
@@ -214,13 +283,79 @@ view.showComponents = async function(screenName) {
 
       let imgUploadWrapper = document.getElementById("img-upload-wrapper");
 
-      let imgButtonUpdate = document.getElementById("img-button-update");
-
       let addImg = document.getElementById("add-image");
+
+      let dropdownCitySelect = document.getElementById("dropdown-city-select");
+      // post
+      let imgButtonUpdate = document.getElementById("img-button-update");
 
       let profireImgTag = document.getElementById("profile-img-tag");
 
-      let dropdownCitySelect = document.getElementById("dropdown-city-select");
+      let foodName = document.getElementById("food-name");
+
+      let foodAddress = document.getElementById("food-address");
+
+      let foodReview = document.getElementById("food-review");
+
+      let btnUploadPost = document.getElementById("btn-upload-post");
+
+      let foodImgError = document.getElementById("food-img-error");
+
+      let btnCancelUpdatePost = document.getElementById(
+        "btn-cancel-upload-post"
+      );
+
+      btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
+        let postInfo = {
+          foodName: foodName,
+          foodAddress: foodAddress,
+          foodReview: foodReview,
+          srcImg: imgButtonUpdate
+        };
+        view.removeValue(postInfo.foodName);
+        view.removeValue(postInfo.foodAddress);
+        view.removeValue(postInfo.foodReview);
+        view.removeValue(postInfo.srcImg);
+
+        view.validate("food-name-error", [postInfo.foodName, ""]),
+          view.validate("food-address-error", [postInfo.foodAddress, ""]),
+          view.validate("food-review-error", [postInfo.foodReview, ""]),
+          view.validate("food-img-error", [postInfo.srcImg, ""]);
+        profireImgTag.src = "";
+      };
+
+      btnUploadPost.onclick = function postSubmitHandler() {
+        let postInfo = {
+          foodName: foodName.value,
+          foodAddress: foodAddress.value,
+          foodReview: foodReview.value,
+          srcImg: imgButtonUpdate.value
+        };
+
+        let validateResult = [
+          view.validate("food-name-error", [
+            postInfo.foodName,
+            "Bạn Vui Lòng Điền Thêm Tên Món"
+          ]),
+          view.validate("food-address-error", [
+            postInfo.foodAddress,
+            "Bạn Vui Lòng Điền Thêm Địa Chỉ"
+          ]),
+          view.validate("food-review-error", [
+            postInfo.foodReview,
+            "Bạn Vui Lòng Review Về Món Ăn"
+          ]),
+          view.validate("food-img-error", [
+            postInfo.srcImg,
+            "Bạn Vui Lòng Chọn Ảnh Món Bạn Muốn Đăng"
+          ])
+        ];
+        console.log(postInfo.srcImg);
+
+        if (view.allPassed(validateResult)) {
+          console.log("haha");
+        }
+      };
 
       let dropdownMenuButtoncity = document.getElementById(
         "dropdownMenuButtoncity"
@@ -312,6 +447,10 @@ view.validate = function(idErrorTag, validateInfos) {
   }
   view.setText(idErrorTag, "");
   return true;
+};
+
+view.removeValue = function(v) {
+  v.value = "";
 };
 
 view.disable = function(id) {

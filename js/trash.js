@@ -44,7 +44,7 @@ window.onload = function() {
   // let count = 3;
   let buton = document.getElementById("abc");
 
-  // buton.onclick = addAndOrderUpdate;
+  buton.onclick = addAndOrderUpdate;
 
   let orderUpdate = async function() {
     let detail = await db
@@ -80,6 +80,9 @@ let model = {
 };
 
 let addAndOrderUpdate = async function() {
+  let nameInput = "súp gà";
+  let nameInputSplit = nameInput.split(" ");
+
   let orderCountGet = await db
     .collection("orderCount")
     .doc("orderCount")
@@ -92,7 +95,9 @@ let addAndOrderUpdate = async function() {
     .doc()
     .set({
       address: "11nghin ti  ",
-      city: "nam định",
+      name: nameInput,
+      arrName: nameInputSplit,
+      city: "hà nội",
       money: 20,
       order: orderCountDetail + 1,
       review: "ok",
@@ -159,11 +164,15 @@ let orderCountUpdate = async function() {
 };
 
 let postDbGetInDesc = async function() {
+  let nameInput = "súp gà";
+  let nameInputSplit = nameInput.split(" ");
+  let city = "hà nội";
+
   let result = await db
     .collection("post")
-    .where("city", "==", "hà nội")
+    .where("city", "==", city)
     // .where("type", "==", "đồ uống")
-    .where("order", ">", 0)
+    .where("arrName", "array-contains-any", nameInputSplit)
     .orderBy("order", "desc")
     .get();
   let detailByOrderDesc = await transformDocs(result.docs);
@@ -172,6 +181,7 @@ let postDbGetInDesc = async function() {
   // let detail = transformDocs(result.docs);
   console.log(detailByOrderDesc);
 };
+postDbGetInDesc();
 
 // add();
 // let load = async function() {
