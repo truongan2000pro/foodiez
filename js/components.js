@@ -91,13 +91,9 @@ components.nav = `
                   Hà Nội
                   </button>
                   <div class="dropdown-menu " syple=position:fixed id="dropdown-menu-nav" aria-labelledby="dropdownMenu2">
-                    <button class="dropdown-item" type="button">Action</button>
-                    <button class="dropdown-item" type="button">
-                      Another action
-                    </button>
-                    <button class="dropdown-item" type="button">
-                      Something else here
-                    </button>
+                  <button class="dropdown-item" type="button">Hà Nội</button>  
+                  <button class="dropdown-item" type="button">Hồ Chí Minh</button>
+                    
                   </div>
                 </div>
               </div>
@@ -253,77 +249,12 @@ components.home = ` <section class="home-container">
 </section>`;
 components.extras = `
 <section class="content-container">
-
 <div class="content-wrapper">
-<table class="table table-light">
-  <tbody class="">
-    <tr class="turn-off-rbg">
-      <td class="anh">
-        <img
-          class="img"
-          src="../foodiez/image/70389608_555107088561992_7772162248927084544_n.jpg"
-          alt=""
-        />
-      </td>
-      <td>
-        <div class="detai">
-          <div class="ten-quan">Pizza hut</div>
-          <div class="gia-tien">Giá tiền:50.000đ</div>
-          <div class="dia-chi">
-            Địa chỉ:
-            <a class="link-dia-chi" href="">day la dia chi</a>
-          </div>
-        </div>
-      </td>
-      <td>Day la cho nguoi ta review</td>
-    </tr>
-    <tr class="turn-off-rbg">
-      <td>
-        <img
-          class="img"
-          src="../foodiez/image/70389608_555107088561992_7772162248927084544_n.jpg"
-          alt=""
-        />
-      </td>
-      <td>
-        <div class="detai">
-          <div class="ten-quan">The coffee house</div>
-          <div class="gia-tien">Giá tiền:50.000đ</div>
-          <div class="dia-chi">
-            Địa chỉ:
-            <a class="link-dia-chi" href="">day la dia chi</a>
-          </div>
-        </div>
-      </td>
+  <table id="tbody-container" class="table table-light">
+    <tbody id="post-container" class="full-table"></tbody>
 
-      <td>Day la cho nguoi ta review</td>
-    </tr>
-    <tr class="turn-off-rbg">
-      <td>
-        <img
-          class="img"
-          src="../foodiez/image/burger-and-vegetables-placed-on-brown-wood-surface-1565982.jpg"
-          alt=""
-        />
-      </td>
-      <td>
-        <div class="detai">
-          <div class="ten-quan">Kafa cafe</div>
-          <div class="gia-tien">Giá tiền:50.000đ</div>
-          <div class="dia-chi">
-            Địa chỉ:
-            <a class="link-dia-chi" href="">day la dia chi</a>
-          </div>
-        </div>
-      </td>
-
-      <td>Day la cho nguoi ta review</td>
-    </tr>
-  </tbody>
-</table>
+  </table>
 </div>
-
-
 </section>
 
 `;

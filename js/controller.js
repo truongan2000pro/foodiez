@@ -1,5 +1,7 @@
 const controller = {};
 
+let db = firebase.firestore();
+
 controller.register = async function(registerInfo) {
   let email = registerInfo.email;
   let password = registerInfo.password;
@@ -52,3 +54,42 @@ controller.logIn = async function(logInInfo) {
   }
   view.enable("log-in-btn");
 };
+controller.postDbGetInDesc = async function() {
+  let nameInput = "phở gà";
+  let nameInputSplit = nameInput.split(" ");
+  let city = "hà nội";
+
+  let result = await db
+    .collection("post")
+    // .where("city", "==", city)
+    // .where("type", "==", "đồ uống")
+    // .where("arrName", "array-contains-any", nameInputSplit)
+
+    .orderBy("order", "desc")
+    .get();
+  console.log(result.docs);
+  let detailByOrderDesc = await transformDocs(result.docs);
+  model.post = detailByOrderDesc;
+  console.log(model);
+  // let detail = transformDocs(result.docs);
+  console.log(detailByOrderDesc);
+};
+function transformDocs(docs) {
+  // let datas = []
+  // for(let doc of docs) {
+  //   let data = doc.data()
+  //   data.id = doc.id
+  //   datas.push(data)
+  // }
+  // return datas
+  //   console.log(docs);
+  return docs.map(transformDoc);
+}
+
+function transformDoc(doc) {
+  let data = doc.data();
+  data.id = doc.id;
+  // data.arr = data.arrName;
+  // console.log(data);
+  return data;
+}

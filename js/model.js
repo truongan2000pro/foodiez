@@ -1,0 +1,3 @@
+const model = {
+  post: null
+};

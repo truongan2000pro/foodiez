@@ -304,6 +304,75 @@ view.showComponents = async function(screenName) {
       let btnCancelUpdatePost = document.getElementById(
         "btn-cancel-upload-post"
       );
+      let screenSwap = async function() {
+        await controller.postDbGetInDesc();
+        showPost();
+      };
+      if (view.currentScreen == "extras") {
+        screenSwap();
+      }
+
+      let showPost = function() {
+        let postContainer = document.getElementById("post-container");
+        postContainer.innerHTML = "";
+        let tbodyContainer = document.getElementById("tbody-container");
+        if (model.post && model.post.length) {
+          let posts = model.post;
+          for (let post of posts) {
+            let { id: postId, name, address, review, money, user } = post;
+            let html = `
+      <tr   id="${postId}" class="turn-off-rbg">
+      <td class="anh">
+      
+        <img
+          id="td-img"
+          class="img"
+          src="../foodiez/image/spicy.jpg"
+          alt=""
+        />
+      </td>
+      <td>
+        <div class="detai">
+          <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
+          <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${money}Đ</div></div>
+          <div class="dia-chi">
+            Địa chỉ:
+            <a id="td-address" class="link-dia-chi" href=""
+              >${address}</a
+            >
+            </div>
+            <i class="fas fa-heart"></i>
+            <i class="far fa-angry"></i>
+                  <i class="far fa-thumbs-up"></i>
+                  <i class="fas fa-thumbtack"></i>
+        </div>
+        
+        <td>
+        <img class="ava" src="./image/burger.jpg" alt="" />
+        <div class="name-review">${capitalize_Words(user)}</div>
+        <div class="comment">${capitalize_Words(review)}</div>
+        <span class="chitiet" href=""><i class="fas fa-angle-double-right">Xem Chi Tiết</i></span>
+      </td>
+    </tr>
+
+      `;
+            postContainer.innerHTML += html;
+          }
+          for (let post of posts) {
+            let postId = post.id;
+            let postCard = document.getElementById(postId);
+            postCard.onclick = async function() {
+              console.log(postCard.id);
+              let result = await db
+                .collection("post")
+                .doc(postCard.id)
+                .get();
+              // view.transformDoc(result);
+              // console.log(view.transformDoc(result));
+            };
+          }
+        }
+      };
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
         let postInfo = {
@@ -460,3 +529,8 @@ view.disable = function(id) {
 view.enable = function(id) {
   document.getElementById(id).removeAttribute("disabled");
 };
+function capitalize_Words(str) {
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}

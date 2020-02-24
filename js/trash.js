@@ -37,6 +37,9 @@
 // });
 // console.log(spArr);
 let db = firebase.firestore();
+let model = {
+  post: null
+};
 
 window.onload = function() {
   postDbGetInDesc();
@@ -44,7 +47,11 @@ window.onload = function() {
   // let count = 3;
   let buton = document.getElementById("abc");
 
-  buton.onclick = addAndOrderUpdate;
+  let button = document.getElementById("exact");
+
+  // buton.onclick = postDbGetInDesc;
+
+  // button.onclick = exactlyPostDbGetInDesc;
 
   let orderUpdate = async function() {
     let detail = await db
@@ -75,8 +82,67 @@ window.onload = function() {
 
   // return localStorage.setItem("order", count);
 };
-let model = {
-  post: null
+
+let showPost = function() {
+  let postContainer = document.getElementById("post-container");
+  postContainer.innerHTML = "";
+  let tbodyContainer = document.getElementById("tbody-container");
+  if (model.post && model.post.length) {
+    let posts = model.post;
+    for (let post of posts) {
+      let { id: postId, name, address, review, money, user } = post;
+      let html = `
+      <tr   id="${postId}" class="turn-off-rbg">
+      <td class="anh">
+      
+        <img
+          id="td-img"
+          class="img"
+          src="../foodiez/image/spicy.jpg"
+          alt=""
+        />
+      </td>
+      <td>
+        <div class="detai">
+          <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
+          <div id="td-money" class="gia-tien">Giá tiền:${money}</div>
+          <div class="dia-chi">
+            Địa chỉ:
+            <a id="td-address" class="link-dia-chi" href=""
+              >${address}</a
+            >
+            </div>
+            <i class="fas fa-heart"></i>
+            <i class="far fa-angry"></i>
+                  <i class="far fa-thumbs-up"></i>
+                  <i class="fas fa-thumbtack"></i>
+        </div>
+        
+        <td>
+        <img class="ava" src="./image/burger.jpg" alt="" />
+        <div class="name-review">${capitalize_Words(user)}</div>
+        <div class="comment">${capitalize_Words(review)}</div>
+        <a class="chitiet" href="">Xem chi tiết~~ </a>
+      </td>
+    </tr>
+
+      `;
+      postContainer.innerHTML += html;
+    }
+    for (let post of posts) {
+      let postId = post.id;
+      let postCard = document.getElementById(postId);
+      postCard.onclick = async function() {
+        console.log(postCard.id);
+        let result = await db
+          .collection("post")
+          .doc(postCard.id)
+          .get();
+        transformDoc(result);
+        console.log(transformDoc(result));
+      };
+    }
+  }
 };
 
 let addAndOrderUpdate = async function() {
@@ -164,15 +230,16 @@ let orderCountUpdate = async function() {
 };
 
 let postDbGetInDesc = async function() {
-  let nameInput = "súp gà";
+  let nameInput = "phở gà";
   let nameInputSplit = nameInput.split(" ");
   let city = "hà nội";
 
   let result = await db
     .collection("post")
-    .where("city", "==", city)
+    // .where("city", "==", city)
     // .where("type", "==", "đồ uống")
-    .where("arrName", "array-contains-any", nameInputSplit)
+    // .where("arrName", "array-contains-any", nameInputSplit)
+
     .orderBy("order", "desc")
     .get();
   let detailByOrderDesc = await transformDocs(result.docs);
@@ -181,7 +248,27 @@ let postDbGetInDesc = async function() {
   // let detail = transformDocs(result.docs);
   console.log(detailByOrderDesc);
 };
-postDbGetInDesc();
+let test = async function() {
+  await postDbGetInDesc();
+  showPost();
+};
+test();
+// let exactlyPostDbGetInDesc = async function() {
+//   let nameInput = "phở bò";
+//   let city = "hà nội";
+
+//   let result = await db
+//     .collection("post")
+//     .where("city", "==", city)
+//     // .where("type", "==", "đồ uống")
+//     .where("name", "==", nameInput)
+
+//     .orderBy("order", "desc")
+//     .get();
+//   let detailByOrderDesc = await transformDocs(result.docs);
+
+//   console.log(detailByOrderDesc);
+// };
 
 // add();
 // let load = async function() {
@@ -216,7 +303,13 @@ function transformDocs(docs) {
 function transformDoc(doc) {
   let data = doc.data();
   data.id = doc.id;
+  // data.arr = data.arrName;
   // console.log(data);
   return data;
 }
 // load();
+function capitalize_Words(str) {
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
