@@ -1,10 +1,9 @@
 const view = {
-  currentScreen: null
+  currentScreen: null,
+  city: null
 };
-
 view.showComponents = async function(screenName) {
   view.currentScreen = screenName;
-
   switch (screenName) {
     case "register": {
       let app = document.getElementById("app");
@@ -120,7 +119,7 @@ view.showComponents = async function(screenName) {
 
       let logo = document.getElementById("logo");
 
-      let viewExtras = document.getElementById("view-extras");
+      let viewExtras = document.getElementById("show-more-food");
 
       let imgUploadWrapper = document.getElementById("img-upload-wrapper");
 
@@ -154,8 +153,6 @@ view.showComponents = async function(screenName) {
       let btnCancelUpdatePost = document.getElementById(
         "btn-cancel-upload-post"
       );
-
-      console.dir(imgButtonUpdate);
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
         let postInfo = {
@@ -202,7 +199,6 @@ view.showComponents = async function(screenName) {
             "Bạn Vui Lòng Chọn Ảnh Món Bạn Muốn Đăng"
           ])
         ];
-        console.log(postInfo.srcImg);
 
         if (view.allPassed(validateResult)) {
           console.log("haha");
@@ -256,10 +252,34 @@ view.showComponents = async function(screenName) {
       searchBtn.onclick = function iconClickHandler() {
         console.log(searchInput.value);
       };
+
+      // nav bar
+      let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
+      let dropdownMenu2 = document.getElementById("dropdownMenu2");
+
       let navLogInBtn = document.getElementById("btn-log-in-nav");
 
       let navRegisterBtn = document.getElementById("btn-register-nav");
 
+      let navLogOutBtn = document.getElementById("btn-log-out-nav");
+
+      for (let i = 0; i < dropdownMenuNav.children.length; i++) {
+        dropdownMenuNav.children[i].onclick = function() {
+          dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
+        };
+      }
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          navLogInBtn.style.display = "none";
+          navRegisterBtn.style.display = "none";
+        } else {
+          navLogOutBtn.style.display = "none";
+        }
+      });
+
+      navLogOutBtn.onclick = function logOutHandler() {
+        firebase.auth().signOut();
+      };
       navLogInBtn.onclick = function logInLinkHandler() {
         view.showComponents("logIn");
       };
@@ -267,12 +287,41 @@ view.showComponents = async function(screenName) {
       navRegisterBtn.onclick = function registerLinkHandler() {
         view.showComponents("register");
       };
-      viewExtras.onclick = function viewAllClickHandler() {
+      // view.city = dropdownMenu2.innerText;
+      // dropdownMenu2.innerText = capitalize_Words(view.city);
+
+      let city = dropdownMenu2.innerText.toLowerCase().trim();
+      view.city = city;
+      viewExtras.onclick = function viewAllFoodClickHandler() {
+        controller.postDbGetInDescFood = async function() {
+          let nameInput = "phở gà";
+          let nameInputSplit = nameInput.split(" ");
+          city = dropdownMenu2.innerText.toLowerCase().trim();
+          view.city = city;
+
+          for (let i = 0; i < dropdownMenuNav.children.length; i++) {
+            dropdownMenuNav.children[i].onclick = function() {
+              dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
+            };
+          }
+          let result = await db
+            .collection("post")
+            .where("city", "==", city)
+            .where("type", "==", "đồ ăn")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+
+            .orderBy("order", "desc")
+            .get();
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.post = detailByOrderDesc;
+        };
         view.showComponents("extras");
       };
       break;
     }
     case "extras": {
+      console.log(view.currentScreen);
+
       let app = document.getElementById("app");
       app.innerHTML = components.nav + components.extras + components.post;
       let searchBtn = document.getElementById("search-btn-cover");
@@ -304,8 +353,9 @@ view.showComponents = async function(screenName) {
       let btnCancelUpdatePost = document.getElementById(
         "btn-cancel-upload-post"
       );
+
       let screenSwap = async function() {
-        await controller.postDbGetInDesc();
+        await controller.postDbGetInDescFood();
         showPost();
       };
       if (view.currentScreen == "extras") {
@@ -319,43 +369,43 @@ view.showComponents = async function(screenName) {
         if (model.post && model.post.length) {
           let posts = model.post;
           for (let post of posts) {
-            let { id: postId, name, address, review, money, user } = post;
+            let { id: postId, name, address, review, money, user, city } = post;
             let html = `
-      <tr   id="${postId}" class="turn-off-rbg">
-      <td class="anh">
-      
-        <img
-          id="td-img"
-          class="img"
-          src="../foodiez/image/spicy.jpg"
-          alt=""
-        />
-      </td>
-      <td>
-        <div class="detai">
-          <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
-          <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${money}Đ</div></div>
-          <div class="dia-chi">
-            Địa chỉ:
-            <a id="td-address" class="link-dia-chi" href=""
-              >${address}</a
-            >
-            </div>
-            <i class="fas fa-heart"></i>
-            <i class="far fa-angry"></i>
-                  <i class="far fa-thumbs-up"></i>
-                  <i class="fas fa-thumbtack"></i>
-        </div>
+        <tr   id="${postId}" class="turn-off-rbg">
+        <td class="anh">
         
+          <img
+            id="td-img"
+            class="img"
+            src="../foodiez/image/spicy.jpg"
+            alt=""
+          />
+        </td>
         <td>
-        <img class="ava" src="./image/burger.jpg" alt="" />
-        <div class="name-review">${capitalize_Words(user)}</div>
-        <div class="comment">${capitalize_Words(review)}</div>
-        <span class="chitiet" href=""><i class="fas fa-angle-double-right">Xem Chi Tiết</i></span>
-      </td>
-    </tr>
-
-      `;
+          <div class="detai">
+            <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
+            <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${money}Đ</div></div>
+            <div class="dia-chi">
+              Địa chỉ:
+              <a id="td-address" class="link-dia-chi" href=""
+                >${capitalize_Words(address + " " + city)}</a
+              >
+              </div>
+              <i class="fas fa-heart"></i>
+              <i class="far fa-angry"></i>
+                    <i class="far fa-thumbs-up"></i>
+                    <i class="fas fa-thumbtack"></i>
+          </div>
+          
+          <td>
+          <img class="ava" src="./image/burger.jpg" alt="" />
+          <div class="name-review">${capitalize_Words(user)}</div>
+          <div class="comment">${capitalize_Words(review)}</div>
+          <span class="chitiet" href=""><i class="fas fa-angle-double-right">Xem Chi Tiết</i></span>
+        </td>
+      </tr>
+  
+        `;
             postContainer.innerHTML += html;
           }
           for (let post of posts) {
@@ -429,9 +479,6 @@ view.showComponents = async function(screenName) {
       let dropdownMenuButtoncity = document.getElementById(
         "dropdownMenuButtoncity"
       );
-      console.dir(dropdownMenuButton);
-
-      console.dir(dropdownCitySelect.children[0]);
 
       for (let i = 0; i < dropdownCitySelect.children.length; i++) {
         dropdownCitySelect.children[i].onclick = function() {
@@ -466,12 +513,82 @@ view.showComponents = async function(screenName) {
         view.showComponents("home");
       };
       // console.dir(searchInput);
-      searchBtn.onclick = function iconClickHandler() {
-        console.log(searchInput.value);
-      };
+
+      // nav
+      let dropdownMenu2 = document.getElementById("dropdownMenu2");
+
+      let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
+
       let navLogInBtn = document.getElementById("btn-log-in-nav");
 
       let navRegisterBtn = document.getElementById("btn-register-nav");
+
+      let navLogOutBtn = document.getElementById("btn-log-out-nav");
+
+      dropdownMenu2.innerText = capitalize_Words(view.city);
+      for (let i = 0; i < dropdownMenuNav.children.length; i++) {
+        dropdownMenuNav.children[i].onclick = async function() {
+          dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
+          view.city = capitalize_Words(dropdownMenu2.innerText);
+
+          controller.postDbGetInDescFood = async function() {
+            let nameInput = "phở gà";
+            let nameInputSplit = nameInput.split(" ");
+            let city = "hà nội";
+
+            let result = await db
+              .collection("post")
+              .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+              .where("type", "==", "đồ ăn")
+              // .where("arrName", "array-contains-any", nameInputSplit)
+
+              .orderBy("order", "desc")
+              .get();
+            console.log(result.docs);
+            let detailByOrderDesc = await transformDocs(result.docs);
+            model.post = detailByOrderDesc;
+            // let detail = transformDocs(result.docs);
+            // showPost();
+          };
+          view.showComponents("extras");
+        };
+      }
+
+      searchBtn.onclick = function iconClickHandler() {
+        controller.postDbGetInDescFood = async function() {
+          let nameInput = searchInput.value;
+          let nameInputSplit = nameInput.split(" ");
+          let city = "hà nội";
+
+          let result = await db
+            .collection("post")
+            .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+            // .where("type", "==", "")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+            .where("name", "==", nameInput)
+            .orderBy("order", "desc")
+            .get();
+
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.post = detailByOrderDesc;
+          // let detail = transformDocs(result.docs);
+          // showPost();
+        };
+        view.showComponents("extras");
+      };
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          navLogInBtn.style.display = "none";
+          navRegisterBtn.style.display = "none";
+        } else {
+          navLogOutBtn.style.display = "none";
+        }
+      });
+
+      navLogOutBtn.onclick = function logOutHandler() {
+        firebase.auth().signOut();
+      };
 
       navLogInBtn.onclick = function logInLinkHandler() {
         view.showComponents("logIn");
@@ -481,6 +598,11 @@ view.showComponents = async function(screenName) {
         view.showComponents("register");
       };
       break;
+    }
+    case "loading": {
+      let app = document.getElementById("app");
+
+      app.innerHTML = components.loading;
     }
   }
 };

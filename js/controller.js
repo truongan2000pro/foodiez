@@ -54,7 +54,7 @@ controller.logIn = async function(logInInfo) {
   }
   view.enable("log-in-btn");
 };
-controller.postDbGetInDesc = async function() {
+controller.postDbGetInDescFood = async function() {
   let nameInput = "phở gà";
   let nameInputSplit = nameInput.split(" ");
   let city = "hà nội";
@@ -62,7 +62,7 @@ controller.postDbGetInDesc = async function() {
   let result = await db
     .collection("post")
     // .where("city", "==", city)
-    // .where("type", "==", "đồ uống")
+    // .where("type", "==", "")
     // .where("arrName", "array-contains-any", nameInputSplit)
 
     .orderBy("order", "desc")
