@@ -112,7 +112,7 @@ components.nav = `
               <div class="nav-btn">
                 <button class="" id="btn-register-nav">Đăng Ký</button>
               </div>
-              <div class="user-detail-wrapper"> 
+              <div id="user-detail" class="user-detail-wrapper"> 
               <i id="user-nav" class="fas fa-user"></i>
               
               </div>

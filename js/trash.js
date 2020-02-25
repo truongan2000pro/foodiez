@@ -146,7 +146,7 @@ let showPost = function() {
 };
 
 let addAndOrderUpdate = async function() {
-  let nameInput = "súp gà";
+  let nameInput = "bún gà";
   let nameInputSplit = nameInput.split(" ");
 
   let orderCountGet = await db
@@ -157,14 +157,16 @@ let addAndOrderUpdate = async function() {
   // console.log(orderCountDetail);
 
   // update db
-  db.collection("post")
+  firebase
+    .firestore()
+    .collection("post")
     .doc()
     .set({
       address: "11nghin ti  ",
       name: nameInput,
       arrName: nameInputSplit,
       city: "hà nội",
-      money: 20,
+      money: 20.0,
       order: orderCountDetail + 1,
       review: "ok",
       user: "",
@@ -207,7 +209,7 @@ let addAndOrderUpdate = async function() {
       console.error("Error writing document: ", error);
     });
 };
-
+addAndOrderUpdate();
 let orderCountGetDb = async function() {
   let orderCountGet = await db
     .collection("orderCount")

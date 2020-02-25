@@ -6,6 +6,17 @@
   /* font-family: "Open Sans", sans-serif; */
 }
 /* nav */
+.user-detail-wrapper {
+  height: 29px;
+  width: 69px;
+  margin-top: 8px;
+  margin-right: 100px;
+}
+#user-nav {
+  font-size: 15px;
+  width: 90px;
+  height: 29px;
+}
 #on-nav-modal {
   /* position: fixed; */
   right: 300px;

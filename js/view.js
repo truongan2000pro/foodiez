@@ -112,7 +112,6 @@ view.showComponents = async function(screenName) {
     case "home": {
       let app = document.getElementById("app");
       app.innerHTML = components.nav + components.home + components.post;
-
       let searchBtn = document.getElementById("search-btn-cover");
 
       let searchInput = document.getElementById("search-input");
@@ -249,19 +248,21 @@ view.showComponents = async function(screenName) {
         view.showComponents("home");
       };
       // console.dir(searchInput);
-      searchBtn.onclick = function iconClickHandler() {
-        console.log(searchInput.value);
-      };
 
       // nav bar
       let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
       let dropdownMenu2 = document.getElementById("dropdownMenu2");
+      let userDetail = document.getElementById("user-nav");
 
       let navLogInBtn = document.getElementById("btn-log-in-nav");
 
       let navRegisterBtn = document.getElementById("btn-register-nav");
 
       let navLogOutBtn = document.getElementById("btn-log-out-nav");
+
+      let userName = firebase.auth().currentUser.displayName;
+      userDetail.innerText += " " + userName;
+      console.log(userName);
 
       for (let i = 0; i < dropdownMenuNav.children.length; i++) {
         dropdownMenuNav.children[i].onclick = function() {
@@ -317,6 +318,38 @@ view.showComponents = async function(screenName) {
         };
         view.showComponents("extras");
       };
+
+      searchBtn.onclick = function iconClickHandler() {
+        let nameInput = searchInput.value.trim().toLowerCase();
+
+        controller.postDbGetInDescFood = async function() {
+          let nameInputSplit = nameInput.split(" ");
+
+          let result = await db
+            .collection("post")
+            .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+            // .where("type", "==", "")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+            .where("name", "==", nameInput)
+            .orderBy("order", "desc")
+            .get();
+
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.post = detailByOrderDesc;
+
+          // let detail = transformDocs(result.docs);
+          // showPost();};
+        };
+        view.city = dropdownMenu2.innerText;
+
+        if (nameInput == "") {
+          alert("Bạn Chưa Nhập Gì Cả");
+        } else {
+          if (view.currentScreen != "extras") {
+            view.showComponents("extras");
+          }
+        }
+      };
       break;
     }
     case "extras": {
@@ -350,6 +383,8 @@ view.showComponents = async function(screenName) {
 
       let foodImgError = document.getElementById("food-img-error");
 
+      let postContainer = document.getElementById("post-container");
+
       let btnCancelUpdatePost = document.getElementById(
         "btn-cancel-upload-post"
       );
@@ -361,8 +396,6 @@ view.showComponents = async function(screenName) {
       if (view.currentScreen == "extras") {
         screenSwap();
       }
-
-      let postContainer = document.getElementById("post-container");
       let showPost = function() {
         postContainer.innerHTML = "";
         let tbodyContainer = document.getElementById("tbody-container");
@@ -370,6 +403,22 @@ view.showComponents = async function(screenName) {
           let posts = model.post;
           for (let post of posts) {
             let { id: postId, name, address, review, money, user, city } = post;
+            if (money >= 100 && money < 1000) {
+              arrMoney = money;
+              zeroPlus = ",000";
+            } else if (money < 100 && money >= 0) {
+              arrMoney = money;
+              zeroPlus = ",000";
+            } else if (money >= 1000 && money < 10000) {
+              arrMoneySplit = money.toString();
+              arrMoney = arrMoneySplit[0];
+              zeroPlus =
+                "," +
+                arrMoneySplit[1] +
+                arrMoneySplit[2] +
+                arrMoneySplit[3] +
+                ",000";
+            }
             let html = `
         <tr   id="${postId}" class="turn-off-rbg">
         <td class="anh">
@@ -384,11 +433,14 @@ view.showComponents = async function(screenName) {
         <td>
           <div class="detai">
             <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
-            <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${money}Đ</div></div>
+            <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${arrMoney +
+              zeroPlus} Đ</div></div>
             <div class="dia-chi">
               Địa chỉ:
               <a id="td-address" class="link-dia-chi" href=""
-                >${capitalize_Words(address + " " + city)}</a
+                >${capitalize_Words(
+                  address + " " + "Thành Phố" + " " + city
+                )}</a
               >
               </div>
               <i class="fas fa-heart"></i>
@@ -421,6 +473,10 @@ view.showComponents = async function(screenName) {
               // console.log(view.transformDoc(result));
             };
           }
+        }
+        console.log(postContainer.children.length);
+        if (postContainer.children.length == 0) {
+          console.log("haha");
         }
       };
 
@@ -536,7 +592,7 @@ view.showComponents = async function(screenName) {
             let result = await db
               .collection("post")
               .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
-              .where("type", "==", "đồ ăn")
+              // .where("type", "==", "đồ ăn")
               // .where("arrName", "array-contains-any", nameInputSplit)
 
               .orderBy("order", "desc")
@@ -556,7 +612,6 @@ view.showComponents = async function(screenName) {
 
         controller.postDbGetInDescFood = async function() {
           let nameInputSplit = nameInput.split(" ");
-          let city = "hà nội";
 
           let result = await db
             .collection("post")
@@ -569,7 +624,6 @@ view.showComponents = async function(screenName) {
 
           let detailByOrderDesc = await transformDocs(result.docs);
           model.post = detailByOrderDesc;
-          console.log(model.post);
 
           // let detail = transformDocs(result.docs);
           // showPost();};
