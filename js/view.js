@@ -252,7 +252,6 @@ view.showComponents = async function(screenName) {
       // nav bar
       let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
       let dropdownMenu2 = document.getElementById("dropdownMenu2");
-      let userDetail = document.getElementById("user-nav");
 
       let navLogInBtn = document.getElementById("btn-log-in-nav");
 
@@ -260,9 +259,21 @@ view.showComponents = async function(screenName) {
 
       let navLogOutBtn = document.getElementById("btn-log-out-nav");
 
-      let userName = firebase.auth().currentUser.displayName;
-      userDetail.innerText += " " + userName;
-      console.log(userName);
+      let userDetail = document.getElementById("user-nav");
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          let userName = firebase.auth().currentUser.displayName;
+          userDetail.innerText += " " + userName;
+          console.log(userName);
+        } else {
+          let userDetail = document.getElementById("user-detail");
+          userDetail.style.display = "none";
+        }
+      });
+      // let userName = firebase.auth().currentUser.displayName;
+      // userDetail.innerText += " " + userName;
+      // console.log(userName);
 
       for (let i = 0; i < dropdownMenuNav.children.length; i++) {
         dropdownMenuNav.children[i].onclick = function() {
@@ -582,6 +593,19 @@ view.showComponents = async function(screenName) {
       let navLogOutBtn = document.getElementById("btn-log-out-nav");
 
       dropdownMenu2.innerText = capitalize_Words(view.city);
+
+      let userDetail = document.getElementById("user-nav");
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          let userName = firebase.auth().currentUser.displayName;
+          userDetail.innerText += " " + userName;
+          console.log(userName);
+        } else {
+          let userDetail = document.getElementById("user-detail");
+          userDetail.style.display = "none";
+        }
+      });
 
       for (let i = 0; i < dropdownMenuNav.children.length; i++) {
         dropdownMenuNav.children[i].onclick = async function() {
