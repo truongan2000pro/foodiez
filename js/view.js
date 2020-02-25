@@ -362,8 +362,8 @@ view.showComponents = async function(screenName) {
         screenSwap();
       }
 
+      let postContainer = document.getElementById("post-container");
       let showPost = function() {
-        let postContainer = document.getElementById("post-container");
         postContainer.innerHTML = "";
         let tbodyContainer = document.getElementById("tbody-container");
         if (model.post && model.post.length) {
@@ -526,16 +526,13 @@ view.showComponents = async function(screenName) {
       let navLogOutBtn = document.getElementById("btn-log-out-nav");
 
       dropdownMenu2.innerText = capitalize_Words(view.city);
+
       for (let i = 0; i < dropdownMenuNav.children.length; i++) {
         dropdownMenuNav.children[i].onclick = async function() {
           dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
           view.city = capitalize_Words(dropdownMenu2.innerText);
 
           controller.postDbGetInDescFood = async function() {
-            let nameInput = "phở gà";
-            let nameInputSplit = nameInput.split(" ");
-            let city = "hà nội";
-
             let result = await db
               .collection("post")
               .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
@@ -544,19 +541,20 @@ view.showComponents = async function(screenName) {
 
               .orderBy("order", "desc")
               .get();
-            console.log(result.docs);
             let detailByOrderDesc = await transformDocs(result.docs);
             model.post = detailByOrderDesc;
             // let detail = transformDocs(result.docs);
             // showPost();
           };
-          view.showComponents("extras");
+          if (view.currentScreen == "extras") {
+            screenSwap();
+          }
         };
       }
-
       searchBtn.onclick = function iconClickHandler() {
+        let nameInput = searchInput.value.trim().toLowerCase();
+
         controller.postDbGetInDescFood = async function() {
-          let nameInput = searchInput.value;
           let nameInputSplit = nameInput.split(" ");
           let city = "hà nội";
 
@@ -571,10 +569,19 @@ view.showComponents = async function(screenName) {
 
           let detailByOrderDesc = await transformDocs(result.docs);
           model.post = detailByOrderDesc;
+          console.log(model.post);
+
           // let detail = transformDocs(result.docs);
-          // showPost();
+          // showPost();};
         };
-        view.showComponents("extras");
+
+        if (nameInput == "") {
+          alert("Bạn Chưa Nhập Gì Cả");
+        } else {
+          if (view.currentScreen == "extras") {
+            screenSwap();
+          }
+        }
       };
 
       firebase.auth().onAuthStateChanged(function(user) {
