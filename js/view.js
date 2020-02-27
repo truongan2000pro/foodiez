@@ -111,7 +111,7 @@ view.showComponents = async function(screenName) {
     }
     case "home": {
       let app = document.getElementById("app");
-      app.innerHTML = components.nav + components.home + components.post;
+      app.innerHTML = components.nav + components.home + components.post+components.footer;
       let searchBtn = document.getElementById("search-btn-cover");
 
       let searchInput = document.getElementById("search-input");
@@ -152,6 +152,7 @@ view.showComponents = async function(screenName) {
       let btnCancelUpdatePost = document.getElementById(
         "btn-cancel-upload-post"
       );
+      let viewExtrasDrink= document.getElementById("view-extras-drink")
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
         let postInfo = {
@@ -329,6 +330,32 @@ view.showComponents = async function(screenName) {
         };
         view.showComponents("extras");
       };
+      viewExtrasDrink.onclick=function drinkClickHandler(){
+        controller.postDbGetInDescFood = async function() {
+          let nameInput = "phở gà";
+          let nameInputSplit = nameInput.split(" ");
+          city = dropdownMenu2.innerText.toLowerCase().trim();
+          view.city = city;
+
+          for (let i = 0; i < dropdownMenuNav.children.length; i++) {
+            dropdownMenuNav.children[i].onclick = function() {
+              dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
+            };
+          }
+          let result = await db
+            .collection("post")
+            .where("city", "==", city)
+            .where("type", "==", "đồ uống")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+
+            .orderBy("order", "desc")
+            .get();
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.post = detailByOrderDesc;
+        };
+        view.showComponents("extras");
+
+      }
 
       searchBtn.onclick = function iconClickHandler() {
         let nameInput = searchInput.value.trim().toLowerCase();
@@ -365,9 +392,10 @@ view.showComponents = async function(screenName) {
     }
     case "extras": {
       console.log(view.currentScreen);
+    
 
       let app = document.getElementById("app");
-      app.innerHTML = components.nav + components.extras + components.post;
+      app.innerHTML = components.nav + components.extras + components.post+components.footer;
       let searchBtn = document.getElementById("search-btn-cover");
 
       let searchInput = document.getElementById("search-input");
@@ -437,7 +465,7 @@ view.showComponents = async function(screenName) {
           <img
             id="td-img"
             class="img"
-            src="../foodiez/image/spicy.jpg"
+            src="./image/spicy.jpg"
             alt=""
           />
         </td>
@@ -464,7 +492,7 @@ view.showComponents = async function(screenName) {
           <img class="ava" src="./image/burger.jpg" alt="" />
           <div class="name-review">${capitalize_Words(user)}</div>
           <div class="comment">${capitalize_Words(review)}</div>
-          <span class="chitiet" href=""><i class="fas fa-angle-double-right">Xem Chi Tiết</i></span>
+          <span class="chitiet" href="">Xem Chi Tiết <i class="fas fa-angle-double-right"></i></span>
         </td>
       </tr>
   
@@ -475,11 +503,12 @@ view.showComponents = async function(screenName) {
             let postId = post.id;
             let postCard = document.getElementById(postId);
             postCard.onclick = async function() {
-              console.log(postCard.id);
-              let result = await db
-                .collection("post")
-                .doc(postCard.id)
-                .get();
+              view.showComponents("detail");
+              // console.log(postCard.id);
+              // let result = await db
+              //   .collection("post")
+              //   .doc(postCard.id)
+              //   .get();
               // view.transformDoc(result);
               // console.log(view.transformDoc(result));
             };
@@ -688,6 +717,112 @@ view.showComponents = async function(screenName) {
       let app = document.getElementById("app");
 
       app.innerHTML = components.loading;
+      break;
+    }
+    case "detail": {
+     
+      
+      let app = document.getElementById("app");
+      app.innerHTML = components.nav + components.detail + components.post+components.footer;
+      
+      let searchBtn = document.getElementById("search-btn-cover");
+      
+      
+      let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
+      let dropdownMenu2 = document.getElementById("dropdownMenu2");
+      
+      let searchInput = document.getElementById("search-input");
+      let navLogInBtn = document.getElementById("btn-log-in-nav");
+
+      let navRegisterBtn = document.getElementById("btn-register-nav");
+
+      let navLogOutBtn = document.getElementById("btn-log-out-nav");
+
+      let userDetail = document.getElementById("user-nav");
+
+      let logo=document.getElementById("logo")
+
+      logo.onclick = function logoClickHandler() {
+        view.showComponents("home");
+      };
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          let userName = firebase.auth().currentUser.displayName;
+          userDetail.innerText += " " + userName;
+          console.log(userName);
+        } else {
+          let userDetail = document.getElementById("user-detail");
+          userDetail.style.display = "none";
+        }
+      });
+      // let userName = firebase.auth().currentUser.displayName;
+      // userDetail.innerText += " " + userName;
+      // console.log(userName);
+
+      for (let i = 0; i < dropdownMenuNav.children.length; i++) {
+        dropdownMenuNav.children[i].onclick = function() {
+          dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
+        };
+      }
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          navLogInBtn.style.display = "none";
+          navRegisterBtn.style.display = "none";
+        } else {
+          navLogOutBtn.style.display = "none";
+        }
+      });
+
+      navLogOutBtn.onclick = function logOutHandler() {
+        firebase.auth().signOut();
+      };
+      navLogInBtn.onclick = function logInLinkHandler() {
+        view.showComponents("logIn");
+      };
+
+      navRegisterBtn.onclick = function registerLinkHandler() {
+        view.showComponents("register");
+      };
+      // view.city = dropdownMenu2.innerText;
+      // dropdownMenu2.innerText = capitalize_Words(view.city);
+
+      let city = dropdownMenu2.innerText.toLowerCase().trim();
+      view.city = city;
+  
+      searchBtn.onclick = function iconClickHandler() {
+        let nameInput = searchInput.value.trim().toLowerCase();
+
+        controller.postDbGetInDescFood = async function() {
+          let nameInputSplit = nameInput.split(" ");
+
+          let result = await db
+            .collection("post")
+            .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+            // .where("type", "==", "")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+            .where("name", "==", nameInput)
+            .orderBy("order", "desc")
+            .get();
+
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.post = detailByOrderDesc;
+
+          // let detail = transformDocs(result.docs);
+          // showPost();};
+        };
+        view.city = dropdownMenu2.innerText;
+
+        if (nameInput == "") {
+          alert("Bạn Chưa Nhập Gì Cả");
+        } else {
+          if (view.currentScreen != "extras") {
+            view.showComponents("extras");
+          }
+        }
+      };
+
+      break;
     }
   }
 };

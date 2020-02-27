@@ -227,6 +227,9 @@ components.home = ` <section class="home-container">
               <div class="address">
                 địa chỉ
               </div>
+              
+              <div class="poster">Hoàng Béo</div>
+              
             </div>
           </div>
           <div class="food-wrapper">
@@ -238,6 +241,9 @@ components.home = ` <section class="home-container">
               <div class="address">
                 địa chỉ
               </div>
+
+              <div class="poster"> hoàng ko ko </div>
+              
             </div>
           </div>
           <div class="food-wrapper">
@@ -249,11 +255,65 @@ components.home = ` <section class="home-container">
               <div class="address">
                 địa chỉ
               </div>
+              <div class="poster" > hoàng keo kiệt </div>
             </div>
           </div>
         </div>
-        <div id="view-extras" class="view-all"><i id="show-more-food" class="fas fa-angle-double-right">xem toàn bộ</i></div>
+        <div id="view-extras" class="view-all"><span id="show-more-food">Xem Toàn Bộ </span><i id="show-more-food" class="fas fa-angle-double-right"></i></div>
 
+        <div class="article">
+
+        <div class="title-list-food">
+          <img
+            src="./image/binhsua.png"
+            alt=""
+            style="height: 30px; width: 30px;"
+          />
+          ĐỒ UỐNG
+        </div>
+        <div class="list-food-wrapper">
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./image/chicken.jpg" alt="" /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+              
+              <div class="poster">Hoàng Béo</div>
+              
+            </div>
+          </div>
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./image/spicy.jpg" alt="" /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+
+              <div class="poster"> hoàng ko ko </div>
+              
+            </div>
+          </div>
+          <div class="food-wrapper">
+            <figure class="img-food"><img src="./image/brooke-lark-V4MBq8kue3U-unsplash.jpg" alt=""  /></figure>
+            <div class="food-contents">
+              <div class="name-food">
+                tên đồ ăn
+              </div>
+              <div class="address">
+                địa chỉ
+              </div>
+              <div class="poster" > hoàng keo kiệt </div>
+            </div>
+          </div>
+        </div>
+        <div id="view-extras-drink" class="view-all"><span id="show-more-food">Xem Toàn Bộ </span><i id="show-more-food" class="fas fa-angle-double-right"></i></div>
 </section>`;
 components.extras = `
 <section class="content-container">
@@ -477,3 +537,90 @@ components.user = `
 components.loading = `<div id="loading" class="spinner-border text-danger" role="status">
 <span class="sr-only">Loading...</span>
 </div>`;
+components.detail = `<section>
+<div class="detail-food">
+  <div class="detail-address">
+    <div class="home-address">Trang chủ</div>
+    <span style="font-weight: bold;">></span>
+    <div class="home-address">Đồ ăn</div>
+    <span style="font-weight: bold;">></span>
+    <div class="name-food">Bim bim gắp bằng đũa của con mạt loz Linh</div>
+  </div>
+  <div class="detail-food-wrapper">
+    <div class="photo-pics">
+      <div class="img-food-detail">
+        <img src="./image/spicy.jpg" alt="" />
+      </div>
+      <button class="share-btn">
+        <span><i class="fab fa-facebook-f"></i> </span> Chia sẻ Facebook
+      </button>
+      <div class="comment-detail"><span>Chưa có bình luận nào</span></div>
+    </div>
+    <div class="food-info">
+      <div class="name-food-detail">Bim bim gắp bằng đũa của con mạt loz Linh</div>
+      <div class="price">
+        Giá tiền: <span>6.000.000</span> <span style="font-size: 12px;">đ</span>
+      </div>
+      <div class="kind-of-food">Thể loại: <span style="color: #4a90e2;">Đồ ăn</span></div>
+      <div class="address-food">
+        Địa chỉ:
+        <span style="color: #424242;"
+          >475/27 Cách Mạng Tháng Tám, phường 13, Quận 10, Hồ Chí 475/27 Cách Mạng Tháng Tám,
+          phường 13, Quận 10, Hồ Chí Minh475/27 Cách Mạng Tháng Tám, phường 13, Quận 10, Hồ
+          Chí Minh</span
+        >
+      </div>
+      <button class="oder-btn">Đặt mua ngay</button>
+      <div class="review-food">
+        <div class="media">
+          <img
+            src="./image/burger.jpg"
+            class="mr-3"
+            alt="..."
+            style="width: 30px;
+          height: 30px;
+          border-radius: 50%;"
+          />
+          <div class="media-body">
+            <h5 class="mt-0">An Chân Lắm Lông</h5>
+            Địt mẹ như loz
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>`;
+components.footer = `<footer class="footer">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>Foodiez</h1>
+      Foodiez là một ứng dụng chia sẻ món ăn mang đậm trải nghiệm cá nhân, bạn còn có thể
+        đăng bán miễn phí trên Foodiez tất tật những món ăn ngon. Nhận lấy bất ngờ nhỏ
+        trong 4,8 giây đầu tiên đăng bán nhé!
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm">
+      <ul>
+        <li>
+          <h1>L iên hệ</h1>
+        </li>
+        <li>Hòm thư góp ý: Foodiez@gmail.com</li>
+        <li>Hotline: 0584681228</li>
+      </ul>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm">
+      <ul>
+        <li>
+          <h1>Follow Us</h1>
+        </li>
+        <li>Vũ Phúc Trường An</li>
+        <li>Hoàng Tô Việt</li>
+        <li>Dẹo Dẹo</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</footer>`;
