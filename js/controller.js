@@ -5,7 +5,9 @@ let db = firebase.firestore();
 controller.register = async function(registerInfo) {
   let email = registerInfo.email;
   let password = registerInfo.password;
-  let displayName = registerInfo.lastname + " " + registerInfo.firstname;
+  let displayName = registerInfo.firstname + " " + registerInfo.lastname;
+  let photoUrl =
+    "https://scontent.fhan2-4.fna.fbcdn.net/v/t1.15752-9/88161152_239071737253921_1030333598856642560_n.png?_nc_cat=103&_nc_sid=b96e70&_nc_ohc=znb17txxjFwAX_RYjN3&_nc_ht=scontent.fhan2-4.fna&oh=a80997ec560e97b61bcac7ed229db099&oe=5EF23270";
   view.setText("register-success", "");
   view.setText("register-error", "");
   view.disable("register-btn");
@@ -13,7 +15,8 @@ controller.register = async function(registerInfo) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     await firebase.auth().currentUser.updateProfile({
-      displayName: displayName
+      displayName: displayName,
+      photoURL: photoUrl
     });
     await firebase
       .auth()
@@ -73,6 +76,16 @@ controller.postDbGetInDescFood = async function() {
   console.log(model);
   // let detail = transformDocs(result.docs);
   console.log(detailByOrderDesc);
+};
+controller.postDetail = async function(id) {
+  let postDetail = await firebase
+    .firestore()
+    .collection("post")
+    .doc(id)
+    .get();
+  transformDoc(postDetail);
+  model.detail = transformDoc(postDetail);
+  // console.log(model.detail);
 };
 function transformDocs(docs) {
   // let datas = []

@@ -1,3 +1,4 @@
 const model = {
-  post: null
+  post: null,
+  detail: null
 };

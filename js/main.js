@@ -7,7 +7,7 @@ function init() {
       return;
     }
     if (user && user.emaiVerified) {
-      view.showComponents("home");
+      // view.showComponents("home");
     } else {
       view.showComponents("home");
     }

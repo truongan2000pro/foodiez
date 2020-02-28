@@ -113,7 +113,10 @@ components.nav = `
                 <button class="" id="btn-register-nav">Đăng Ký</button>
               </div>
               <div id="user-detail" class="user-detail-wrapper"> 
-              <i id="user-nav" class="fas fa-user"></i>
+              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              height: 30px;
+              border-radius: 50%;">
+              <span id="user-nav"> </span>
               
               </div>
               <div class="nav-btn">
@@ -124,7 +127,7 @@ components.nav = `
           </div>
         </nav>
       </div>`;
-components.home = ` <section class="home-container">
+components.home = ` <section style="min-height: 100vh" class="home-container">
 <div class="banner-container">
 <div class="left-banner">
 <div class="slide-img">
@@ -228,12 +231,17 @@ components.home = ` <section class="home-container">
                 địa chỉ
               </div>
               
-              <div class="poster">Hoàng Béo</div>
+              <div class="poster">
+              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              height: 30px;
+              border-radius: 50%;">
+               Hoàng Béo</div>
               
             </div>
           </div>
           <div class="food-wrapper">
-            <figure class="img-food"><img src="./image/spicy.jpg" alt="" /></figure>
+            <figure class="img-food">
+            <img src="./image/spicy.jpg" alt="" /></figure>
             <div class="food-contents">
               <div class="name-food">
                 tên đồ ăn
@@ -242,7 +250,11 @@ components.home = ` <section class="home-container">
                 địa chỉ
               </div>
 
-              <div class="poster"> hoàng ko ko </div>
+              <div class="poster">
+              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              height: 30px;
+              border-radius: 50%;"> 
+              hoàng ko ko </div>
               
             </div>
           </div>
@@ -255,7 +267,11 @@ components.home = ` <section class="home-container">
               <div class="address">
                 địa chỉ
               </div>
-              <div class="poster" > hoàng keo kiệt </div>
+              <div class="poster" >
+              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              height: 30px;
+              border-radius: 50%;"> 
+              hoàng keo kiệt </div>
             </div>
           </div>
         </div>
@@ -282,7 +298,11 @@ components.home = ` <section class="home-container">
                 địa chỉ
               </div>
               
-              <div class="poster">Hoàng Béo</div>
+              <div class="poster">
+              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              height: 30px;
+              border-radius: 50%;">
+              Hoàng Béo</div>
               
             </div>
           </div>
@@ -296,7 +316,12 @@ components.home = ` <section class="home-container">
                 địa chỉ
               </div>
 
-              <div class="poster"> hoàng ko ko </div>
+              <div class="poster">
+              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              height: 30px;
+              border-radius: 50%;">
+
+              hoàng ko ko </div>
               
             </div>
           </div>
@@ -309,17 +334,28 @@ components.home = ` <section class="home-container">
               <div class="address">
                 địa chỉ
               </div>
-              <div class="poster" > hoàng keo kiệt </div>
+              <div class="poster" > 
+              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              height: 30px;
+              border-radius: 50%;">
+              
+              hoàng keo kiệt </div>
             </div>
           </div>
         </div>
-        <div id="view-extras-drink" class="view-all"><span id="show-more-food">Xem Toàn Bộ </span><i id="show-more-food" class="fas fa-angle-double-right"></i></div>
+        <div id="view-extras-drink" class="view-all"><span id="show-more-food-drinks">Xem Toàn Bộ </span><i id="show-more-food" class="fas fa-angle-double-right"></i></div>
 </section>`;
 components.extras = `
-<section class="content-container">
+<section style="min-height: 100vh" class="content-container">
 <div class="content-wrapper">
   <table id="tbody-container" class="table table-light">
-    <tbody id="post-container" class="full-table"></tbody>
+    <tbody id="post-container" class="full-table">
+
+      <div id="no-result" class="no-result"> 
+      <img class="img-error-holder" src="./image/monster.png" alt="">
+
+      <div class="no-result-mess">Không có món ăn như bạn tìm <i class="fas fa-frown"></i></div> </div>
+    </tbody>
 
   </table>
 </div>
@@ -534,62 +570,22 @@ components.user = `
 
 </div>
 `;
-components.loading = `<div id="loading" class="spinner-border text-danger" role="status">
-<span class="sr-only">Loading...</span>
-</div>`;
-components.detail = `<section>
-<div class="detail-food">
-  <div class="detail-address">
-    <div class="home-address">Trang chủ</div>
-    <span style="font-weight: bold;">></span>
-    <div class="home-address">Đồ ăn</div>
-    <span style="font-weight: bold;">></span>
-    <div class="name-food">Bim bim gắp bằng đũa của con mạt loz Linh</div>
-  </div>
-  <div class="detail-food-wrapper">
-    <div class="photo-pics">
-      <div class="img-food-detail">
-        <img src="./image/spicy.jpg" alt="" />
-      </div>
-      <button class="share-btn">
-        <span><i class="fab fa-facebook-f"></i> </span> Chia sẻ Facebook
-      </button>
-      <div class="comment-detail"><span>Chưa có bình luận nào</span></div>
-    </div>
-    <div class="food-info">
-      <div class="name-food-detail">Bim bim gắp bằng đũa của con mạt loz Linh</div>
-      <div class="price">
-        Giá tiền: <span>6.000.000</span> <span style="font-size: 12px;">đ</span>
-      </div>
-      <div class="kind-of-food">Thể loại: <span style="color: #4a90e2;">Đồ ăn</span></div>
-      <div class="address-food">
-        Địa chỉ:
-        <span style="color: #424242;"
-          >475/27 Cách Mạng Tháng Tám, phường 13, Quận 10, Hồ Chí 475/27 Cách Mạng Tháng Tám,
-          phường 13, Quận 10, Hồ Chí Minh475/27 Cách Mạng Tháng Tám, phường 13, Quận 10, Hồ
-          Chí Minh</span
-        >
-      </div>
-      <button class="oder-btn">Đặt mua ngay</button>
-      <div class="review-food">
-        <div class="media">
-          <img
-            src="./image/burger.jpg"
-            class="mr-3"
-            alt="..."
-            style="width: 30px;
-          height: 30px;
-          border-radius: 50%;"
-          />
-          <div class="media-body">
-            <h5 class="mt-0">An Chân Lắm Lông</h5>
-            Địt mẹ như loz
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+components.loading = `<div class="flex" >
+<div class="spinner-border text-danger" role="status">
+  <span class="sr-only">Loading...</span>
 </div>
+</div>`;
+components.detail = `<section id="detail-container" style="min-height: 100vh" >
+<div id="detail-food" class="detail-food">
+  <div id="return-extras" class="detail-address">
+  <i  class="fas fa-backward"> Quay Lại</i>
+  </div>
+  <div id="detail-food-wrapper" class="detail-food-wrapper">
+ 
+</div>
+ 
+</div>
+
 </section>`;
 components.footer = `<footer class="footer">
 <div class="container">
@@ -604,7 +600,7 @@ components.footer = `<footer class="footer">
     <div class="col-sm">
       <ul>
         <li>
-          <h1>L iên hệ</h1>
+          <h1>Liên hệ</h1>
         </li>
         <li>Hòm thư góp ý: Foodiez@gmail.com</li>
         <li>Hotline: 0584681228</li>

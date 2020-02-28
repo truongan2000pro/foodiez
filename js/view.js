@@ -1,6 +1,7 @@
 const view = {
   currentScreen: null,
-  city: null
+  city: null,
+  id: null
 };
 view.showComponents = async function(screenName) {
   view.currentScreen = screenName;
@@ -111,7 +112,8 @@ view.showComponents = async function(screenName) {
     }
     case "home": {
       let app = document.getElementById("app");
-      app.innerHTML = components.nav + components.home + components.post+components.footer;
+      app.innerHTML =
+        components.nav + components.home + components.post + components.footer;
       let searchBtn = document.getElementById("search-btn-cover");
 
       let searchInput = document.getElementById("search-input");
@@ -152,7 +154,7 @@ view.showComponents = async function(screenName) {
       let btnCancelUpdatePost = document.getElementById(
         "btn-cancel-upload-post"
       );
-      let viewExtrasDrink= document.getElementById("view-extras-drink")
+      let viewExtrasDrink = document.getElementById("show-more-food-drinks");
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
         let postInfo = {
@@ -266,7 +268,7 @@ view.showComponents = async function(screenName) {
         if (user) {
           let userName = firebase.auth().currentUser.displayName;
           userDetail.innerText += " " + userName;
-          console.log(userName);
+          // console.log(userName);
         } else {
           let userDetail = document.getElementById("user-detail");
           userDetail.style.display = "none";
@@ -330,7 +332,7 @@ view.showComponents = async function(screenName) {
         };
         view.showComponents("extras");
       };
-      viewExtrasDrink.onclick=function drinkClickHandler(){
+      viewExtrasDrink.onclick = function drinkClickHandler() {
         controller.postDbGetInDescFood = async function() {
           let nameInput = "phở gà";
           let nameInputSplit = nameInput.split(" ");
@@ -354,8 +356,7 @@ view.showComponents = async function(screenName) {
           model.post = detailByOrderDesc;
         };
         view.showComponents("extras");
-
-      }
+      };
 
       searchBtn.onclick = function iconClickHandler() {
         let nameInput = searchInput.value.trim().toLowerCase();
@@ -392,10 +393,13 @@ view.showComponents = async function(screenName) {
     }
     case "extras": {
       console.log(view.currentScreen);
-    
 
       let app = document.getElementById("app");
-      app.innerHTML = components.nav + components.extras + components.post+components.footer;
+      app.innerHTML =
+        components.nav +
+        components.extras +
+        components.post +
+        components.footer;
       let searchBtn = document.getElementById("search-btn-cover");
 
       let searchInput = document.getElementById("search-input");
@@ -442,6 +446,8 @@ view.showComponents = async function(screenName) {
           let posts = model.post;
           for (let post of posts) {
             let { id: postId, name, address, review, money, user, city } = post;
+            let userFbdetail = firebase.auth().currentUser;
+            let photoUrl = userFbdetail.photoURL;
             if (money >= 100 && money < 1000) {
               arrMoney = money;
               zeroPlus = ",000";
@@ -489,7 +495,7 @@ view.showComponents = async function(screenName) {
           </div>
           
           <td>
-          <img class="ava" src="./image/burger.jpg" alt="" />
+          <img class="ava" src="${photoUrl}" alt="" />
           <div class="name-review">${capitalize_Words(user)}</div>
           <div class="comment">${capitalize_Words(review)}</div>
           <span class="chitiet" href="">Xem Chi Tiết <i class="fas fa-angle-double-right"></i></span>
@@ -503,6 +509,9 @@ view.showComponents = async function(screenName) {
             let postId = post.id;
             let postCard = document.getElementById(postId);
             postCard.onclick = async function() {
+              let postCardId = postCard.id;
+              view.id = postCardId;
+
               view.showComponents("detail");
               // console.log(postCard.id);
               // let result = await db
@@ -516,7 +525,11 @@ view.showComponents = async function(screenName) {
         }
         console.log(postContainer.children.length);
         if (postContainer.children.length == 0) {
-          console.log("haha");
+          let noResult = document.getElementById("no-result");
+          noResult.style.display = "block";
+        } else {
+          let noResult = document.getElementById("no-result");
+          noResult.style.display = "none";
         }
       };
 
@@ -720,17 +733,20 @@ view.showComponents = async function(screenName) {
       break;
     }
     case "detail": {
-     
-      
       let app = document.getElementById("app");
-      app.innerHTML = components.nav + components.detail + components.post+components.footer;
-      
+      app.innerHTML =
+        components.nav +
+        components.detail +
+        components.post +
+        components.footer;
+
+      let detailContainer = document.getElementById("detail-container");
+
       let searchBtn = document.getElementById("search-btn-cover");
-      
-      
+
       let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
       let dropdownMenu2 = document.getElementById("dropdownMenu2");
-      
+
       let searchInput = document.getElementById("search-input");
       let navLogInBtn = document.getElementById("btn-log-in-nav");
 
@@ -740,7 +756,38 @@ view.showComponents = async function(screenName) {
 
       let userDetail = document.getElementById("user-nav");
 
-      let logo=document.getElementById("logo")
+      let logo = document.getElementById("logo");
+      let detailFood = document.getElementById("detail-food-wrapper");
+
+      let returnExtras = document.getElementById("return-extras");
+
+      dropdownMenu2.innerText = capitalize_Words(view.city);
+
+      returnExtras.onclick = function returnExtrasClickHandler() {
+        controller.postDbGetInDescFood = async function() {
+          let nameInput = "phở gà";
+          let nameInputSplit = nameInput.split(" ");
+          city = dropdownMenu2.innerText.toLowerCase().trim();
+          view.city = city;
+
+          for (let i = 0; i < dropdownMenuNav.children.length; i++) {
+            dropdownMenuNav.children[i].onclick = function() {
+              dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
+            };
+          }
+          let result = await db
+            .collection("post")
+            .where("city", "==", city)
+            // .where("type", "==", "đồ uống")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+
+            .orderBy("order", "desc")
+            .get();
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.post = detailByOrderDesc;
+        };
+        view.showComponents("extras");
+      };
 
       logo.onclick = function logoClickHandler() {
         view.showComponents("home");
@@ -750,7 +797,6 @@ view.showComponents = async function(screenName) {
         if (user) {
           let userName = firebase.auth().currentUser.displayName;
           userDetail.innerText += " " + userName;
-          console.log(userName);
         } else {
           let userDetail = document.getElementById("user-detail");
           userDetail.style.display = "none";
@@ -789,7 +835,7 @@ view.showComponents = async function(screenName) {
 
       let city = dropdownMenu2.innerText.toLowerCase().trim();
       view.city = city;
-  
+
       searchBtn.onclick = function iconClickHandler() {
         let nameInput = searchInput.value.trim().toLowerCase();
 
@@ -819,6 +865,81 @@ view.showComponents = async function(screenName) {
           if (view.currentScreen != "extras") {
             view.showComponents("extras");
           }
+        }
+      };
+
+      let screenSwap = async function() {
+        await controller.postDetail(view.id);
+        showDetail();
+      };
+      screenSwap();
+
+      let showDetail = function() {
+        // detailFood.innerHTML = "";
+        if (model.detail) {
+          let detail = model.detail;
+          let { name, address, review, money, city, type, user } = detail;
+          let userFbdetail = firebase.auth().currentUser;
+          let photoUrl = userFbdetail.photoURL;
+          if (money >= 100 && money < 1000) {
+            arrMoney = money;
+            zeroPlus = ",000";
+          } else if (money < 100 && money >= 0) {
+            arrMoney = money;
+            zeroPlus = ",000";
+          } else if (money >= 1000 && money < 10000) {
+            arrMoneySplit = money.toString();
+            arrMoney = arrMoneySplit[0];
+            zeroPlus =
+              "," +
+              arrMoneySplit[1] +
+              arrMoneySplit[2] +
+              arrMoneySplit[3] +
+              ",000";
+          }
+
+          let html = `  <div class="photo-pics">
+          <div class="img-food-detail">
+            <img src="./image/spicy.jpg" alt="" />
+          </div>
+          <button class="share-btn">
+            <span><i class="fab fa-facebook-f"></i> </span> Chia sẻ Facebook
+          </button>
+          <div class="comment-detail"><span>Chưa có bình luận nào</span></div>
+        </div>
+        <div class="food-info">
+          <div class="name-food-detail">${capitalize_Words(name)}</div>
+          <div class="price">
+            Giá tiền: <span>${arrMoney +
+              zeroPlus}</span> <span style="font-size: 12px;">đ</span>
+          </div>
+          <div class="kind-of-food">Thể loại: <span style="color: #4a90e2;">${type.toUpperCase()}
+          </span></div>
+          <div class="address-food">
+            Địa chỉ:
+            <span style="color: #424242;"
+              >${capitalize_Words(address) + " " + capitalize_Words(city)}</span
+            >
+          </div>
+          <button class="oder-btn">Đặt mua ngay</button>
+          <div class="review-food">
+            <div class="media">
+              <img
+                src="${photoUrl}"
+                class=""
+                alt="..."
+                style="width: 30px;
+              height: 30px;
+              border-radius: 50%;"
+              />
+              <div class="media-body">
+                <h5 class="mt-0">${capitalize_Words(user)}</h5>
+                ${capitalize_Words(review)}
+              </div>
+            </div>
+          </div>
+        </div>`;
+          detailFood.innerHTML += html;
         }
       };
 
@@ -872,7 +993,13 @@ view.enable = function(id) {
   document.getElementById(id).removeAttribute("disabled");
 };
 function capitalize_Words(str) {
-  return str.replace(/\w\S*/g, function(txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
+  var splitStr = str.toLowerCase().split(" ");
+  for (var i = 0; i < splitStr.length; i++) {
+    // You do not need to check if i is larger than splitStr length, as your for does that for you
+    // Assign it back to the array
+    splitStr[i] =
+      splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+  // Directly return the joined string
+  return splitStr.join(" ");
 }

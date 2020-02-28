@@ -7,14 +7,18 @@
 }
 /* nav */
 .user-detail-wrapper {
+  display: flex;
   height: 29px;
-  width: 69px;
+  /* width: 121px; */
   margin-top: 8px;
-  margin-right: 100px;
+  /* margin-right: 80px; */
 }
 #user-nav {
-  font-size: 15px;
-  width: 90px;
+  font-weight: 400;
+  margin-left: 2px;
+  margin-top: 2px;
+  font-size: 16px;
+  width: 120px;
   height: 29px;
 }
 #on-nav-modal {
@@ -504,6 +508,10 @@ i:hover {
 
 /* Hoang */
 /* list-food  */
+.media-body {
+  margin-top: 4px;
+  margin-left: 4px;
+}
 
 .address {
   color: #9b9b9b;
@@ -578,18 +586,23 @@ i:hover {
 /* detail-food */
 
 .detail-food {
-  padding: 100px;
+  /* padding-top: 90px; */
+  padding: 90px 100px 100px 100px;
   padding-bottom: 0px;
   width: 1200px;
   margin: 0 auto;
 }
 
 .detail-address {
-  display: inline-flex;
+  margin-bottom: 7px;
+  /* padding-top: 100px;
+  padding-bottom: 20px;
+  padding-left: 269px; */
+  /* display: inline-flex;
   width: 300px;
   padding-left: 50px;
   padding-bottom: 25px;
-  white-space: nowrap;
+  white-space: nowrap; */
 }
 .name-food {
   font-weight: 500;
@@ -603,11 +616,11 @@ i:hover {
   font-weight: 500;
 }
 
-.detail-address > * {
-  padding-right: 5px;
-}
 .home-address {
   font-weight: bold;
+}
+.small-bar {
+  margin-top: 7px;
 }
 
 .detail-food-wrapper {
@@ -816,5 +829,30 @@ tr:hover {
 .spinner-border {
   height: 60px;
   width: 60px;
-  margin: 329px 855px;
+
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+.flex {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.no-result {
+  display: none;
+  margin: auto;
+  width: 435px;
+  height: 429px;
+}
+.img-error-holder {
+  width: 221px;
+  height: 200px;
+  margin-left: 118px;
+}
+.no-result-mess {
+  font-size: 21px;
+  font-weight: 700;
+  margin-left: 69px;
 }
