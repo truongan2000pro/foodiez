@@ -445,9 +445,24 @@ view.showComponents = async function(screenName) {
         if (model.post && model.post.length) {
           let posts = model.post;
           for (let post of posts) {
-            let { id: postId, name, address, review, money, user, city } = post;
-            let userFbdetail = firebase.auth().currentUser;
-            let photoUrl = userFbdetail.photoURL;
+            let {
+              id: postId,
+              name,
+              address,
+              review,
+              money,
+              user,
+              city,
+              photoUrl
+            } = post;
+            // let userFbdetail = firebase.auth().currentUser;
+            // firebase.auth().onAuthStateChanged(function(user) {
+            //   if (user) {
+            //     let photoUrl = userFbdetail.photoURL;
+            //   } else {
+            //     // No user is signed in.
+            //   }
+            // });
             if (money >= 100 && money < 1000) {
               arrMoney = money;
               zeroPlus = ",000";
@@ -878,9 +893,18 @@ view.showComponents = async function(screenName) {
         // detailFood.innerHTML = "";
         if (model.detail) {
           let detail = model.detail;
-          let { name, address, review, money, city, type, user } = detail;
-          let userFbdetail = firebase.auth().currentUser;
-          let photoUrl = userFbdetail.photoURL;
+          let {
+            name,
+            address,
+            review,
+            money,
+            city,
+            type,
+            user,
+            photoUrl
+          } = detail;
+          // let userFbdetail = firebase.auth().currentUser;
+          // let photoUrl = userFbdetail.photoURL;
           if (money >= 100 && money < 1000) {
             arrMoney = money;
             zeroPlus = ",000";
