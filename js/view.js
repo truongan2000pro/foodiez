@@ -139,6 +139,8 @@ view.showComponents = async function(screenName) {
       // get id post
       let imgButtonUpdate = document.getElementById("img-button-update");
 
+      let foodPrice = document.getElementById("food-price");
+
       let profireImgTag = document.getElementById("profile-img-tag");
 
       let foodName = document.getElementById("food-name");
@@ -151,36 +153,155 @@ view.showComponents = async function(screenName) {
 
       let foodImgError = document.getElementById("food-img-error");
 
+      let dropdownMenuButton = document.getElementById("dropdownMenuButton");
+      let dropdownMenu2 = document.getElementById("dropdownMenu2");
+
+
+      let drinkDropDownMenu = document.getElementById("drink-dropdown-menu");
+
+      let dropdownMenuButtoncity = document.getElementById(
+        "dropdownMenuButtoncity"
+      );
+
       let btnCancelUpdatePost = document.getElementById(
         "btn-cancel-upload-post"
       );
       let viewExtrasDrink = document.getElementById("show-more-food-drinks");
+
+      let listFoodWrapper = document.getElementById("list-food-wrapper")
+
+      let listDrinkWrapper= document.getElementById("list-drink-wrapper")
+
+      let showListFood = async function(){
+          let result = await db
+            .collection("post")
+            .where("city", "==",dropdownMenu2.innerText.toLowerCase().trim() )
+            .where("type", "==", "đồ ăn")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+        
+            .orderBy("order", "desc")
+            .limit(5).get();
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.food = detailByOrderDesc;
+          // let detail = transformDocs(result.docs);
+          listFoodWrapper.innerHTML=""
+          if(model.food && model.food.length){
+            let foods=model.food
+            for(let food of foods){
+              let{name,address,photoUrl,user,id,srcImg}=food
+
+          html =` <div id="${id}" class="food-wrapper"> 
+          <figure class="img-food"><img src="${srcImg}" alt="" /></figure>
+          <div class="food-contents">
+            <div class="name-food">
+              ${name}
+            </div>
+            <div class="address">
+              ${address}
+            </div>
+            
+            <div class="poster">
+            <img src="${photoUrl}" class="" alt="..." style="width: 30px;
+            height: 30px;
+            border-radius: 50%;">
+             ${user}</div>
+            
+          </div>
+        </div>
+      `
+      listFoodWrapper.innerHTML+=html
+            }
+
+
+          }
+          
+        
+
+      }
+let showListDrink = async function(){
+  let result = await db
+            .collection("post")
+            .where("city", "==",dropdownMenu2.innerText.toLowerCase().trim() )
+            .where("type", "==", "đồ uống")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+        
+            .orderBy("order", "desc")
+            .limit(5).get();
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.drink = detailByOrderDesc;
+          // let detail = transformDocs(result.docs);
+          listDrinkWrapper.innerHTML=""
+          if(model.drink && model.drink.length){
+            let drinks=model.drink
+            for(let drink of drinks){
+              let{name,address,photoUrl,user,id,srcImg}=drink
+
+          html =` <div id="${id}" class="food-wrapper"> 
+          <figure class="img-food"><img src="${srcImg}" alt="" /></figure>
+          <div class="food-contents">
+            <div class="name-food">
+              ${name}
+            </div>
+            <div class="address">
+              ${address}
+            </div>
+            
+            <div class="poster">
+            <img src="${photoUrl}" class="" alt="..." style="width: 30px;
+            height: 30px;
+            border-radius: 50%;">
+             ${user}</div>
+            
+          </div>
+        </div>
+      `
+      listDrinkWrapper.innerHTML+=html
+            }
+
+
+          }
+          
+
+
+}
+
+      if(view.currentScreen=="home"){
+        showListFood()
+        showListDrink()
+      }
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
         let postInfo = {
           foodName: foodName,
           foodAddress: foodAddress,
           foodReview: foodReview,
-          srcImg: imgButtonUpdate
+          srcImg: imgButtonUpdate,
+          foodPrice: foodPrice
         };
         view.removeValue(postInfo.foodName);
         view.removeValue(postInfo.foodAddress);
         view.removeValue(postInfo.foodReview);
         view.removeValue(postInfo.srcImg);
+        view.removeValue(postInfo.foodPrice);
 
         view.validate("food-name-error", [postInfo.foodName, ""]),
           view.validate("food-address-error", [postInfo.foodAddress, ""]),
           view.validate("food-review-error", [postInfo.foodReview, ""]),
-          view.validate("food-img-error", [postInfo.srcImg, ""]);
+          view.validate("food-img-error", [postInfo.srcImg, ""]),
+          view.validate("food-price-error", [postInfo.foodPrice, ""]);
         profireImgTag.src = "";
       };
 
-      btnUploadPost.onclick = function postSubmitHandler() {
+      btnUploadPost.onclick = async function postSubmitHandler() {
         let postInfo = {
           foodName: foodName.value,
           foodAddress: foodAddress.value,
           foodReview: foodReview.value,
-          srcImg: imgButtonUpdate.value
+          foodPrice: foodPrice.value,
+          foodCity: dropdownMenuButtoncity.textContent.trim(),
+          foodType: dropdownMenuButton.textContent.trim(),
+          inputImg: imgButtonUpdate.value,
+          photoUrl:firebase.auth().currentUser.photoURL
         };
 
         let validateResult = [
@@ -197,22 +318,37 @@ view.showComponents = async function(screenName) {
             "Bạn Vui Lòng Review Về Món Ăn"
           ]),
           view.validate("food-img-error", [
-            postInfo.srcImg,
+            postInfo.inputImg,
             "Bạn Vui Lòng Chọn Ảnh Món Bạn Muốn Đăng"
+          ]),
+          view.validate("food-price-error", [
+            postInfo.foodPrice,
+            "Bạn Vui Lòng Nhập Giá Tiền"
           ])
         ];
 
         if (view.allPassed(validateResult)) {
-          console.log("haha");
+          view.disable("btn-upload-post")
+          let postWrapper=document.getElementById("post-wrapper")
+          try {
+            let file = imgButtonUpdate.files[0];
+            let link = await controller.upload(file);
+            postInfo.srcImg = link;
+  
+            controller.addAndOrderUpdate(postInfo);
+            
+          } catch (error) {
+            console.log(error.message)
+           }
+          view.enable("btn-upload-post")
+          postWrapper.innerHTML=`<div class="upload-success" > Bạn đã đăng bài thành công ^.^</div>
+          `
+          btnUploadPost.style.display="none"
+         
         }
       };
 
-      let dropdownMenuButtoncity = document.getElementById(
-        "dropdownMenuButtoncity"
-      );
-      console.dir(dropdownMenuButton);
-
-      console.dir(dropdownCitySelect.children[0]);
+      // console.dir(drinkDropDownMenu.children[0].children[0]);
 
       for (let i = 0; i < dropdownCitySelect.children.length; i++) {
         dropdownCitySelect.children[i].onclick = function() {
@@ -221,6 +357,11 @@ view.showComponents = async function(screenName) {
         };
       }
 
+      for (let i = 0; i < drinkDropDownMenu.children.length; i++) {
+        drinkDropDownMenu.children[i].onclick = function() {
+          dropdownMenuButton.textContent = drinkDropDownMenu.children[i].text;
+        };
+      }
       addImg.onclick = function addImgHandler() {
         imgButtonUpdate.click();
       };
@@ -229,16 +370,6 @@ view.showComponents = async function(screenName) {
         profireImgTag.src = "";
       };
 
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-
-          reader.onload = function(e) {
-            $("#profile-img-tag").attr("src", e.target.result);
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
       $("#img-button-update").change(function() {
         readURL(this);
       });
@@ -254,7 +385,6 @@ view.showComponents = async function(screenName) {
 
       // nav bar
       let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
-      let dropdownMenu2 = document.getElementById("dropdownMenu2");
 
       let navLogInBtn = document.getElementById("btn-log-in-nav");
 
@@ -281,6 +411,8 @@ view.showComponents = async function(screenName) {
       for (let i = 0; i < dropdownMenuNav.children.length; i++) {
         dropdownMenuNav.children[i].onclick = function() {
           dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
+          showListFood()
+          showListDrink()
         };
       }
       firebase.auth().onAuthStateChanged(function(user) {
@@ -307,10 +439,8 @@ view.showComponents = async function(screenName) {
 
       let city = dropdownMenu2.innerText.toLowerCase().trim();
       view.city = city;
-      viewExtras.onclick = function viewAllFoodClickHandler() {
+      viewExtras.onclick = async function viewAllFoodClickHandler() {
         controller.postDbGetInDescFood = async function() {
-          let nameInput = "phở gà";
-          let nameInputSplit = nameInput.split(" ");
           city = dropdownMenu2.innerText.toLowerCase().trim();
           view.city = city;
 
@@ -328,14 +458,14 @@ view.showComponents = async function(screenName) {
             .orderBy("order", "desc")
             .get();
           let detailByOrderDesc = await transformDocs(result.docs);
+          console.log(detailByOrderDesc);
           model.post = detailByOrderDesc;
+          // console.log(model.post);
         };
         view.showComponents("extras");
       };
       viewExtrasDrink.onclick = function drinkClickHandler() {
         controller.postDbGetInDescFood = async function() {
-          let nameInput = "phở gà";
-          let nameInputSplit = nameInput.split(" ");
           city = dropdownMenu2.innerText.toLowerCase().trim();
           view.city = city;
 
@@ -392,8 +522,6 @@ view.showComponents = async function(screenName) {
       break;
     }
     case "extras": {
-      console.log(view.currentScreen);
-
       let app = document.getElementById("app");
       app.innerHTML =
         components.nav +
@@ -403,6 +531,9 @@ view.showComponents = async function(screenName) {
       let searchBtn = document.getElementById("search-btn-cover");
 
       let searchInput = document.getElementById("search-input");
+
+      let foodPrice = document.getElementById("food-price");
+
 
       let logo = document.getElementById("logo");
 
@@ -425,6 +556,8 @@ view.showComponents = async function(screenName) {
       let btnUploadPost = document.getElementById("btn-upload-post");
 
       let foodImgError = document.getElementById("food-img-error");
+
+      let drinkDropDownMenu=document.getElementById("drink-dropdown-menu")
 
       let postContainer = document.getElementById("post-container");
 
@@ -453,7 +586,8 @@ view.showComponents = async function(screenName) {
               money,
               user,
               city,
-              photoUrl
+              photoUrl, // avatar user
+              srcImg
             } = post;
             // let userFbdetail = firebase.auth().currentUser;
             // firebase.auth().onAuthStateChanged(function(user) {
@@ -463,22 +597,7 @@ view.showComponents = async function(screenName) {
             //     // No user is signed in.
             //   }
             // });
-            if (money >= 100 && money < 1000) {
-              arrMoney = money;
-              zeroPlus = ",000";
-            } else if (money < 100 && money >= 0) {
-              arrMoney = money;
-              zeroPlus = ",000";
-            } else if (money >= 1000 && money < 10000) {
-              arrMoneySplit = money.toString();
-              arrMoney = arrMoneySplit[0];
-              zeroPlus =
-                "," +
-                arrMoneySplit[1] +
-                arrMoneySplit[2] +
-                arrMoneySplit[3] +
-                ",000";
-            }
+           
             let html = `
         <tr   id="${postId}" class="turn-off-rbg">
         <td class="anh">
@@ -486,15 +605,14 @@ view.showComponents = async function(screenName) {
           <img
             id="td-img"
             class="img"
-            src="./image/spicy.jpg"
+            src="${srcImg}"
             alt=""
           />
         </td>
         <td>
           <div class="detai">
             <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
-            <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${arrMoney +
-              zeroPlus} Đ</div></div>
+            <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${numberWithCommas(money)} Đ</div></div>
             <div class="dia-chi">
               Địa chỉ:
               <a id="td-address" class="link-dia-chi" href=""
@@ -567,12 +685,16 @@ view.showComponents = async function(screenName) {
         profireImgTag.src = "";
       };
 
-      btnUploadPost.onclick = function postSubmitHandler() {
+      btnUploadPost.onclick = async function postSubmitHandler() {
         let postInfo = {
           foodName: foodName.value,
           foodAddress: foodAddress.value,
           foodReview: foodReview.value,
-          srcImg: imgButtonUpdate.value
+          foodPrice: foodPrice.value,
+          foodCity: dropdownMenuButtoncity.textContent.trim(),
+          foodType: dropdownMenuButton.textContent.trim(),
+          inputImg: imgButtonUpdate.value,
+          photoUrl:firebase.auth().currentUser.photoURL
         };
 
         let validateResult = [
@@ -589,14 +711,33 @@ view.showComponents = async function(screenName) {
             "Bạn Vui Lòng Review Về Món Ăn"
           ]),
           view.validate("food-img-error", [
-            postInfo.srcImg,
+            postInfo.inputImg,
             "Bạn Vui Lòng Chọn Ảnh Món Bạn Muốn Đăng"
+          ]),
+          view.validate("food-price-error", [
+            postInfo.foodPrice,
+            "Bạn Vui Lòng Nhập Giá Tiền"
           ])
         ];
-        console.log(postInfo.srcImg);
 
         if (view.allPassed(validateResult)) {
-          console.log("haha");
+          view.disable("btn-upload-post")
+          let postWrapper=document.getElementById("post-wrapper")
+          try {
+            let file = imgButtonUpdate.files[0];
+            let link = await controller.upload(file);
+            postInfo.srcImg = link;
+  
+            controller.addAndOrderUpdate(postInfo);
+            
+          } catch (error) {
+            console.log(error.message)
+           }
+          view.enable("btn-upload-post")
+          postWrapper.innerHTML=`<div class="upload-success" > Bạn đã đăng bài thành công ^.^</div>
+          `
+          btnUploadPost.style.display="none"
+         
         }
       };
 
@@ -611,6 +752,12 @@ view.showComponents = async function(screenName) {
         };
       }
 
+      for (let i = 0; i < drinkDropDownMenu.children.length; i++) {
+        drinkDropDownMenu.children[i].onclick = function() {
+          dropdownMenuButton.textContent = drinkDropDownMenu.children[i].text;
+        };
+      }
+
       addImg.onclick = function addImgHandler() {
         imgButtonUpdate.click();
       };
@@ -619,16 +766,6 @@ view.showComponents = async function(screenName) {
         profireImgTag.src = "";
       };
 
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-
-          reader.onload = function(e) {
-            $("#profile-img-tag").attr("src", e.target.result);
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
       $("#img-button-update").change(function() {
         readURL(this);
       });
@@ -755,6 +892,11 @@ view.showComponents = async function(screenName) {
         components.post +
         components.footer;
 
+        let btnUploadPost = document.getElementById("btn-upload-post");
+        let addImg = document.getElementById("add-image");
+
+
+
       let detailContainer = document.getElementById("detail-container");
 
       let searchBtn = document.getElementById("search-btn-cover");
@@ -776,7 +918,72 @@ view.showComponents = async function(screenName) {
 
       let returnExtras = document.getElementById("return-extras");
 
+      let imgButtonUpdate = document.getElementById("img-button-update");
+
+      let foodPrice = document.getElementById("food-price");
+
+      let profireImgTag = document.getElementById("profile-img-tag");
+
+      let foodName = document.getElementById("food-name");
+
+      let foodAddress = document.getElementById("food-address");
+
+      let foodReview = document.getElementById("food-review");
+
+
+      let foodImgError = document.getElementById("food-img-error");
+
+      let dropdownMenuButton = document.getElementById("dropdownMenuButton");
+
+      let drinkDropDownMenu = document.getElementById("drink-dropdown-menu");
+
+      let dropdownCitySelect=document.getElementById("dropdown-city-select")
+
+      let dropdownMenuButtoncity = document.getElementById(
+        "dropdownMenuButtoncity"
+      );
+
+      let btnCancelUpdatePost = document.getElementById(
+        "btn-cancel-upload-post"
+      );
+      let viewExtrasDrink = document.getElementById("show-more-food-drinks");
+
+      btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
+        let postInfo = {
+          foodName: foodName,
+          foodAddress: foodAddress,
+          foodReview: foodReview,
+          srcImg: imgButtonUpdate,
+          foodPrice: foodPrice
+        };
+        view.removeValue(postInfo.foodName);
+        view.removeValue(postInfo.foodAddress);
+        view.removeValue(postInfo.foodReview);
+        view.removeValue(postInfo.srcImg);
+        view.removeValue(postInfo.foodPrice);
+
+        view.validate("food-name-error", [postInfo.foodName, ""]),
+          view.validate("food-address-error", [postInfo.foodAddress, ""]),
+          view.validate("food-review-error", [postInfo.foodReview, ""]),
+          view.validate("food-img-error", [postInfo.srcImg, ""]),
+          view.validate("food-price-error", [postInfo.foodPrice, ""]);
+        profireImgTag.src = "";
+      };
+
       dropdownMenu2.innerText = capitalize_Words(view.city);
+
+      for (let i = 0; i < dropdownCitySelect.children.length; i++) {
+        dropdownCitySelect.children[i].onclick = function() {
+          dropdownMenuButtoncity.textContent =
+            dropdownCitySelect.children[i].text;
+        };
+      }
+
+      for (let i = 0; i < drinkDropDownMenu.children.length; i++) {
+        drinkDropDownMenu.children[i].onclick = function() {
+          dropdownMenuButton.textContent = drinkDropDownMenu.children[i].text;
+        };
+      }
 
       returnExtras.onclick = function returnExtrasClickHandler() {
         controller.postDbGetInDescFood = async function() {
@@ -785,11 +992,7 @@ view.showComponents = async function(screenName) {
           city = dropdownMenu2.innerText.toLowerCase().trim();
           view.city = city;
 
-          for (let i = 0; i < dropdownMenuNav.children.length; i++) {
-            dropdownMenuNav.children[i].onclick = function() {
-              dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
-            };
-          }
+          
           let result = await db
             .collection("post")
             .where("city", "==", city)
@@ -889,6 +1092,63 @@ view.showComponents = async function(screenName) {
       };
       screenSwap();
 
+      btnUploadPost.onclick = async function postSubmitHandler() {
+        let postInfo = {
+          foodName: foodName.value,
+          foodAddress: foodAddress.value,
+          foodReview: foodReview.value,
+          foodPrice: foodPrice.value,
+          foodCity: dropdownMenuButtoncity.textContent.trim(),
+          foodType: dropdownMenuButton.textContent.trim(),
+          inputImg: imgButtonUpdate.value,
+          photoUrl:firebase.auth().currentUser.photoURL
+        };
+
+        let validateResult = [
+          view.validate("food-name-error", [
+            postInfo.foodName,
+            "Bạn Vui Lòng Điền Thêm Tên Món"
+          ]),
+          view.validate("food-address-error", [
+            postInfo.foodAddress,
+            "Bạn Vui Lòng Điền Thêm Địa Chỉ"
+          ]),
+          view.validate("food-review-error", [
+            postInfo.foodReview,
+            "Bạn Vui Lòng Review Về Món Ăn"
+          ]),
+          view.validate("food-img-error", [
+            postInfo.inputImg,
+            "Bạn Vui Lòng Chọn Ảnh Món Bạn Muốn Đăng"
+          ]),
+          view.validate("food-price-error", [
+            postInfo.foodPrice,
+            "Bạn Vui Lòng Nhập Giá Tiền"
+          ])
+        ];
+
+        if (view.allPassed(validateResult)) {
+          view.disable("btn-upload-post")
+          let postWrapper=document.getElementById("post-wrapper")
+          try {
+            let file = imgButtonUpdate.files[0];
+            let link = await controller.upload(file);
+            postInfo.srcImg = link;
+  
+            controller.addAndOrderUpdate(postInfo);
+            
+          } catch (error) {
+            console.log(error.message)
+           }
+          view.enable("btn-upload-post")
+          postWrapper.innerHTML=`<div class="upload-success" > Bạn đã đăng bài thành công ^.^</div>
+          `
+          btnUploadPost.style.display="none"
+         
+        }
+      };
+
+
       let showDetail = function() {
         // detailFood.innerHTML = "";
         if (model.detail) {
@@ -901,30 +1161,16 @@ view.showComponents = async function(screenName) {
             city,
             type,
             user,
-            photoUrl
+            photoUrl,
+            srcImg
           } = detail;
           // let userFbdetail = firebase.auth().currentUser;
           // let photoUrl = userFbdetail.photoURL;
-          if (money >= 100 && money < 1000) {
-            arrMoney = money;
-            zeroPlus = ",000";
-          } else if (money < 100 && money >= 0) {
-            arrMoney = money;
-            zeroPlus = ",000";
-          } else if (money >= 1000 && money < 10000) {
-            arrMoneySplit = money.toString();
-            arrMoney = arrMoneySplit[0];
-            zeroPlus =
-              "," +
-              arrMoneySplit[1] +
-              arrMoneySplit[2] +
-              arrMoneySplit[3] +
-              ",000";
-          }
+          
 
           let html = `  <div class="photo-pics">
           <div class="img-food-detail">
-            <img src="./image/spicy.jpg" alt="" />
+            <img src="${srcImg}" alt="" />
           </div>
           <button class="share-btn">
             <span><i class="fab fa-facebook-f"></i> </span> Chia sẻ Facebook
@@ -934,8 +1180,7 @@ view.showComponents = async function(screenName) {
         <div class="food-info">
           <div class="name-food-detail">${capitalize_Words(name)}</div>
           <div class="price">
-            Giá tiền: <span>${arrMoney +
-              zeroPlus}</span> <span style="font-size: 12px;">đ</span>
+            Giá tiền: <span>${numberWithCommas(money)}</span> <span style="font-size: 12px;">đ</span>
           </div>
           <div class="kind-of-food">Thể loại: <span style="color: #4a90e2;">${type.toUpperCase()}
           </span></div>
@@ -967,6 +1212,18 @@ view.showComponents = async function(screenName) {
         }
       };
 
+      addImg.onclick = function addImgHandler() {
+        imgButtonUpdate.click();
+      };
+
+      imgButtonUpdate.onclick = function() {
+        profireImgTag.src = "";
+      };
+
+      $("#img-button-update").change(function() {
+        readURL(this);
+      });
+
       break;
     }
   }
@@ -992,6 +1249,17 @@ view.allPassed = function(validateResult) {
  * ]
  *
  */
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $("#profile-img-tag").attr("src", e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 view.validate = function(idErrorTag, validateInfos) {
   for (let i = 0; i < validateInfos.length; i += 2) {
     let condition = validateInfos[i];
@@ -1026,4 +1294,7 @@ function capitalize_Words(str) {
   }
   // Directly return the joined string
   return splitStr.join(" ");
+}
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

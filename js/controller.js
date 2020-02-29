@@ -58,10 +58,6 @@ controller.logIn = async function(logInInfo) {
   view.enable("log-in-btn");
 };
 controller.postDbGetInDescFood = async function() {
-  let nameInput = "phở gà";
-  let nameInputSplit = nameInput.split(" ");
-  let city = "hà nội";
-
   let result = await db
     .collection("post")
     // .where("city", "==", city)
@@ -87,6 +83,24 @@ controller.postDetail = async function(id) {
   model.detail = transformDoc(postDetail);
   // console.log(model.detail);
 };
+
+controller.upload = async function(file) {
+  let fileName = file.name;
+  let filePatch = `upload/${fileName}`;
+  let fileRef = firebase
+    .storage()
+    .ref()
+    .child(filePatch);
+  await fileRef.put(file);
+  let fileLink = getFileUrl(fileRef);
+  return fileLink;
+};
+
+function getFileUrl(fileRef) {
+  return `https://firebasestorage.googleapis.com/v0/b/${
+    fileRef.bucket
+  }/o/${encodeURIComponent(fileRef.fullPath)}?alt=media`;
+}
 function transformDocs(docs) {
   // let datas = []
   // for(let doc of docs) {
@@ -106,3 +120,67 @@ function transformDoc(doc) {
   // console.log(data);
   return data;
 }
+controller.orderCountGetDb = async function() {
+  let orderCountGet = await db
+    .collection("orderCount")
+    .doc("orderCount")
+    .get();
+  let orderCountDetail = orderCountGet.data().order;
+  // console.log(orderCountDetail);
+};
+controller.orderCountUpdate = async function() {
+  let orderCountGet = await db
+    .collection("orderCount")
+    .doc("orderCount")
+    .get();
+  let count = orderCountGet.data().order;
+  console.log(count);
+  await db
+    .collection("orderCount")
+    .doc("orderCount")
+    .update({ order: count + 1 });
+};
+
+controller.addAndOrderUpdate = async function(postInfo) {
+  let nameInput = postInfo.foodName;
+  let nameInputSplit = nameInput.split(" ");
+
+  let orderCountGet = await db
+    .collection("orderCount")
+    .doc("orderCount")
+    .get();
+  let orderCountDetail = orderCountGet.data().order;
+  // console.log(orderCountDetail);
+
+  // update db
+  firebase
+    .firestore()
+    .collection("post")
+    .doc()
+    .set({
+      address: postInfo.foodAddress,
+      name: nameInput.toLowerCase(),
+      arrName: nameInputSplit,
+      city: postInfo.foodCity.toLowerCase(),
+      money: postInfo.foodPrice,
+      order: orderCountDetail + 1,
+      review: postInfo.foodReview,
+      user: firebase.auth().currentUser.displayName,
+      type: postInfo.foodType.toLowerCase(),
+      srcImg: postInfo.srcImg,
+      photoUrl: postInfo.photoUrl
+    })
+    .then(async function() {
+      await controller
+        .orderCountGetDb()
+        .then(async function(detail) {
+          await controller.orderCountUpdate();
+        })
+        .then(async function() {
+          await controller.postDbGetInDescFood();
+        });
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });
+};

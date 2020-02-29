@@ -339,17 +339,17 @@ i:hover {
   height: 120px;
 }
 .top {
-  background: url(./image/food.jpg);
+  background: url(./image/kem.jpg);
   background-size: 100% 100%;
   border-radius: 7px 7px 0px 0px;
   /* display: flex; */
 }
 .mid {
-  background: url(./image/pen.jpg);
+  background: url(./image/sach.jpg);
   background-size: 100% 100%;
 }
 .bot {
-  background: url(./image/cofe.jpg);
+  background: url(./image/capuchino.jpg);
   background-size: 100% 100%;
   border-radius: 0px 0px 7px 7px;
 }
@@ -357,9 +357,9 @@ i:hover {
 .text {
   font-size: 0.96em;
   color: white;
-  background: #ffd2aa;
-  opacity: 0.91;
-  font-weight: 629;
+  /* background: #ffd2aa; */
+  /* opacity: 0.91; */
+  font-weight: 700;
   text-align: center;
 }
 .top {
@@ -535,12 +535,13 @@ i:hover {
   margin: 0px 0px -14px;
 }
 .food-wrapper {
-  width: 205px;
-  margin-bottom: 10px;
+  width: 240px;
+  margin-bottom: 25px;
+  margin-left: 5px;
 }
 
 .food-contents {
-  width: 185px;
+  width: 210px;
   background: #fff;
   border-radius: 0px 0px 6px 6px;
 }
@@ -577,8 +578,8 @@ i:hover {
 
 .img-food > * {
   border-radius: 6px 6px 0px 0px;
-  width: 185px;
-  height: 185px;
+  width: 210px;
+  height: 210px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -855,4 +856,11 @@ tr:hover {
   font-size: 21px;
   font-weight: 700;
   margin-left: 69px;
+}
+.upload-success{
+  font-size: 15px;
+  font-weight: bold;
+  color: #92FF04;
+  text-align: center;
+}
 }

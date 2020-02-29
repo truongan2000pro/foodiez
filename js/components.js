@@ -195,7 +195,7 @@ components.home = ` <section style="min-height: 100vh" class="home-container">
 </div>
 <div class="right-banner">
 <div class="top food-suggestion">
-<p class="top text">Khám Phá Đồ Ăn >></p>
+<p class="text">Khám Phá Đồ Ăn >></p>
 
 </div>
 <div class="mid food-suggestion">
@@ -220,60 +220,9 @@ components.home = ` <section style="min-height: 100vh" class="home-container">
           />
           ĐỒ ĂN
         </div>
-        <div class="list-food-wrapper">
-          <div class="food-wrapper">
-            <figure class="img-food"><img src="./image/chicken.jpg" alt="" /></figure>
-            <div class="food-contents">
-              <div class="name-food">
-                tên đồ ăn
-              </div>
-              <div class="address">
-                địa chỉ
-              </div>
-              
-              <div class="poster">
-              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
-              height: 30px;
-              border-radius: 50%;">
-               Hoàng Béo</div>
-              
-            </div>
-          </div>
-          <div class="food-wrapper">
-            <figure class="img-food">
-            <img src="./image/spicy.jpg" alt="" /></figure>
-            <div class="food-contents">
-              <div class="name-food">
-                tên đồ ăn
-              </div>
-              <div class="address">
-                địa chỉ
-              </div>
+        <div id="list-food-wrapper" class="list-food-wrapper">
 
-              <div class="poster">
-              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
-              height: 30px;
-              border-radius: 50%;"> 
-              hoàng ko ko </div>
-              
-            </div>
-          </div>
-          <div class="food-wrapper">
-            <figure class="img-food"><img src="./image/brooke-lark-V4MBq8kue3U-unsplash.jpg" alt=""  /></figure>
-            <div class="food-contents">
-              <div class="name-food">
-                tên đồ ăn
-              </div>
-              <div class="address">
-                địa chỉ
-              </div>
-              <div class="poster" >
-              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
-              height: 30px;
-              border-radius: 50%;"> 
-              hoàng keo kiệt </div>
-            </div>
-          </div>
+
         </div>
         <div id="view-extras" class="view-all"><span id="show-more-food">Xem Toàn Bộ </span><i id="show-more-food" class="fas fa-angle-double-right"></i></div>
 
@@ -287,61 +236,8 @@ components.home = ` <section style="min-height: 100vh" class="home-container">
           />
           ĐỒ UỐNG
         </div>
-        <div class="list-food-wrapper">
-          <div class="food-wrapper">
-            <figure class="img-food"><img src="./image/chicken.jpg" alt="" /></figure>
-            <div class="food-contents">
-              <div class="name-food">
-                tên đồ ăn
-              </div>
-              <div class="address">
-                địa chỉ
-              </div>
-              
-              <div class="poster">
-              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
-              height: 30px;
-              border-radius: 50%;">
-              Hoàng Béo</div>
-              
-            </div>
-          </div>
-          <div class="food-wrapper">
-            <figure class="img-food"><img src="./image/spicy.jpg" alt="" /></figure>
-            <div class="food-contents">
-              <div class="name-food">
-                tên đồ ăn
-              </div>
-              <div class="address">
-                địa chỉ
-              </div>
-
-              <div class="poster">
-              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
-              height: 30px;
-              border-radius: 50%;">
-
-              hoàng ko ko </div>
-              
-            </div>
-          </div>
-          <div class="food-wrapper">
-            <figure class="img-food"><img src="./image/brooke-lark-V4MBq8kue3U-unsplash.jpg" alt=""  /></figure>
-            <div class="food-contents">
-              <div class="name-food">
-                tên đồ ăn
-              </div>
-              <div class="address">
-                địa chỉ
-              </div>
-              <div class="poster" > 
-              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
-              height: 30px;
-              border-radius: 50%;">
-              
-              hoàng keo kiệt </div>
-            </div>
-          </div>
+        <div id="list-drink-wrapper" class="list-food-wrapper">
+  
         </div>
         <div id="view-extras-drink" class="view-all"><span id="show-more-food-drinks">Xem Toàn Bộ </span><i id="show-more-food" class="fas fa-angle-double-right"></i></div>
 </section>`;
@@ -402,7 +298,7 @@ components.post = `
       </div>
       <div class="modal-body">
         <section class="post-container">
-          <div class="post-wrapper">
+          <div id="post-wrapper" class="post-wrapper">
           <img src="" id="profile-img-tag" width="180px" />
           
           <i id="add-image" class="fas add-image fa-plus">Thêm Ảnh</i>
@@ -424,11 +320,7 @@ components.post = `
                 aria-expanded="false"
               >
               <a class="main-food-type" href="#">
-              <img
-                src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
-                alt=""
-                style="height: 25px; width: 25px; "
-              />
+          
               Đồ Ăn</a
             >
               </button>
@@ -438,20 +330,12 @@ components.post = `
                 id="drink-dropdown-menu"
               >
               <a class="dropdown-item dropdown-post" href="#">
-              <img
-                src="./ảnh-test/config-tab-mobile-3-1494405112.jfif"
-                alt=""
-                style="height: 25px; width: 25px; "
-              />
+             
               Đồ Ăn</a
             >
                 
                 <a class="dropdown-item dropdown-post" href="#">
-                  <img
-                    src="./image/drinkava.jpg"
-                    alt=""
-                    style="height: 25px;/* width: 25px; */"
-                  />
+               
                   Đồ Uống
                 </a>
               </div>
@@ -495,6 +379,17 @@ components.post = `
               
               </div>
               <div id="food-review-error" class="post-message-error"></div>
+              <div class="food-container food-price-container">
+              <i class="fas far fd fa-dollar-sign"></i>
+              <input
+              id="food-price"
+                type="text"
+                class="food-price post"
+                placeholder="Giá Tiền"
+              />
+              </div>
+              <div id="food-price-error" class="post-message-error"></div>
+
             <div class="dropdown city">
               <button
                 class="btn btn-secondary dropdown-toggle"
