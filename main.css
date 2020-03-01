@@ -857,10 +857,9 @@ tr:hover {
   font-weight: 700;
   margin-left: 69px;
 }
-.upload-success{
+.upload-success {
   font-size: 15px;
   font-weight: bold;
-  color: #92FF04;
+  color: #92ff04;
   text-align: center;
-}
 }

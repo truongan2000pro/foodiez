@@ -156,7 +156,6 @@ view.showComponents = async function(screenName) {
       let dropdownMenuButton = document.getElementById("dropdownMenuButton");
       let dropdownMenu2 = document.getElementById("dropdownMenu2");
 
-
       let drinkDropDownMenu = document.getElementById("drink-dropdown-menu");
 
       let dropdownMenuButtoncity = document.getElementById(
@@ -168,29 +167,30 @@ view.showComponents = async function(screenName) {
       );
       let viewExtrasDrink = document.getElementById("show-more-food-drinks");
 
-      let listFoodWrapper = document.getElementById("list-food-wrapper")
+      let listFoodWrapper = document.getElementById("list-food-wrapper");
 
-      let listDrinkWrapper= document.getElementById("list-drink-wrapper")
+      let listDrinkWrapper = document.getElementById("list-drink-wrapper");
 
-      let showListFood = async function(){
-          let result = await db
-            .collection("post")
-            .where("city", "==",dropdownMenu2.innerText.toLowerCase().trim() )
-            .where("type", "==", "đồ ăn")
-            // .where("arrName", "array-contains-any", nameInputSplit)
-        
-            .orderBy("order", "desc")
-            .limit(5).get();
-          let detailByOrderDesc = await transformDocs(result.docs);
-          model.food = detailByOrderDesc;
-          // let detail = transformDocs(result.docs);
-          listFoodWrapper.innerHTML=""
-          if(model.food && model.food.length){
-            let foods=model.food
-            for(let food of foods){
-              let{name,address,photoUrl,user,id,srcImg}=food
+      let showListFood = async function() {
+        let result = await db
+          .collection("post")
+          .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+          .where("type", "==", "đồ ăn")
+          // .where("arrName", "array-contains-any", nameInputSplit)
 
-          html =` <div id="${id}" class="food-wrapper"> 
+          .orderBy("order", "desc")
+          .limit(5)
+          .get();
+        let detailByOrderDesc = await transformDocs(result.docs);
+        model.food = detailByOrderDesc;
+        // let detail = transformDocs(result.docs);
+        listFoodWrapper.innerHTML = "";
+        if (model.food && model.food.length) {
+          let foods = model.food;
+          for (let food of foods) {
+            let { name, address, photoUrl, user, id, srcImg } = food;
+
+            html = ` <div id="${id}" class="food-wrapper"> 
           <figure class="img-food"><img src="${srcImg}" alt="" /></figure>
           <div class="food-contents">
             <div class="name-food">
@@ -208,35 +208,31 @@ view.showComponents = async function(screenName) {
             
           </div>
         </div>
-      `
-      listFoodWrapper.innerHTML+=html
-            }
-
-
+      `;
+            listFoodWrapper.innerHTML += html;
           }
-          
-        
+        }
+      };
+      let showListDrink = async function() {
+        let result = await db
+          .collection("post")
+          .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+          .where("type", "==", "đồ uống")
+          // .where("arrName", "array-contains-any", nameInputSplit)
 
-      }
-let showListDrink = async function(){
-  let result = await db
-            .collection("post")
-            .where("city", "==",dropdownMenu2.innerText.toLowerCase().trim() )
-            .where("type", "==", "đồ uống")
-            // .where("arrName", "array-contains-any", nameInputSplit)
-        
-            .orderBy("order", "desc")
-            .limit(5).get();
-          let detailByOrderDesc = await transformDocs(result.docs);
-          model.drink = detailByOrderDesc;
-          // let detail = transformDocs(result.docs);
-          listDrinkWrapper.innerHTML=""
-          if(model.drink && model.drink.length){
-            let drinks=model.drink
-            for(let drink of drinks){
-              let{name,address,photoUrl,user,id,srcImg}=drink
+          .orderBy("order", "desc")
+          .limit(5)
+          .get();
+        let detailByOrderDesc = await transformDocs(result.docs);
+        model.drink = detailByOrderDesc;
+        // let detail = transformDocs(result.docs);
+        listDrinkWrapper.innerHTML = "";
+        if (model.drink && model.drink.length) {
+          let drinks = model.drink;
+          for (let drink of drinks) {
+            let { name, address, photoUrl, user, id, srcImg } = drink;
 
-          html =` <div id="${id}" class="food-wrapper"> 
+            html = ` <div id="${id}" class="food-wrapper"> 
           <figure class="img-food"><img src="${srcImg}" alt="" /></figure>
           <div class="food-contents">
             <div class="name-food">
@@ -254,20 +250,15 @@ let showListDrink = async function(){
             
           </div>
         </div>
-      `
-      listDrinkWrapper.innerHTML+=html
-            }
-
-
+      `;
+            listDrinkWrapper.innerHTML += html;
           }
-          
+        }
+      };
 
-
-}
-
-      if(view.currentScreen=="home"){
-        showListFood()
-        showListDrink()
+      if (view.currentScreen == "home") {
+        showListFood();
+        showListDrink();
       }
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
@@ -301,7 +292,7 @@ let showListDrink = async function(){
           foodCity: dropdownMenuButtoncity.textContent.trim(),
           foodType: dropdownMenuButton.textContent.trim(),
           inputImg: imgButtonUpdate.value,
-          photoUrl:firebase.auth().currentUser.photoURL
+          photoUrl: firebase.auth().currentUser.photoURL
         };
 
         let validateResult = [
@@ -328,23 +319,40 @@ let showListDrink = async function(){
         ];
 
         if (view.allPassed(validateResult)) {
-          view.disable("btn-upload-post")
-          let postWrapper=document.getElementById("post-wrapper")
+          view.disable("btn-upload-post");
+          let postWrapper = document.getElementById("post-wrapper");
+          let postUploadContainer = document.getElementById(
+            "post-upload-container"
+          );
           try {
             let file = imgButtonUpdate.files[0];
             let link = await controller.upload(file);
             postInfo.srcImg = link;
-  
+
             controller.addAndOrderUpdate(postInfo);
-            
           } catch (error) {
-            console.log(error.message)
-           }
-          view.enable("btn-upload-post")
-          postWrapper.innerHTML=`<div class="upload-success" > Bạn đã đăng bài thành công ^.^</div>
-          `
-          btnUploadPost.style.display="none"
-         
+            console.log(error.message);
+          }
+          view.enable("btn-upload-post");
+          // btnUploadPost.style.display = "none";
+          let uploadSucess = document.getElementById("upload-success");
+          uploadSucess.style.display = "block";
+
+          setTimeout(function() {
+            //   let postUploadContainer = document.getElementById(
+            //     "post-upload-container"
+            //   );
+            uploadSucess.style.display = "none";
+            //   let uploadSucess = document.getElementById("upload-success");
+            //   let postWrapper = document.getElementById("post-wrapper");
+            //   uploadSucess.style.display = "none";
+            //   postWrapper.style.display = "flex";
+            //   btnUploadPost.style.display = "block";
+            //   btnCancelUpdatePost.click();
+            //   profireImgTag.src = "";
+            //   btnUploadPost.onclick = postSubmitHandler;
+            //   btnCancelUpdatePost.onclick = cancelUpdateHandler;
+          }, 2000);
         }
       };
 
@@ -411,8 +419,8 @@ let showListDrink = async function(){
       for (let i = 0; i < dropdownMenuNav.children.length; i++) {
         dropdownMenuNav.children[i].onclick = function() {
           dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
-          showListFood()
-          showListDrink()
+          showListFood();
+          showListDrink();
         };
       }
       firebase.auth().onAuthStateChanged(function(user) {
@@ -534,7 +542,6 @@ let showListDrink = async function(){
 
       let foodPrice = document.getElementById("food-price");
 
-
       let logo = document.getElementById("logo");
 
       let imgUploadWrapper = document.getElementById("img-upload-wrapper");
@@ -557,7 +564,7 @@ let showListDrink = async function(){
 
       let foodImgError = document.getElementById("food-img-error");
 
-      let drinkDropDownMenu=document.getElementById("drink-dropdown-menu")
+      let drinkDropDownMenu = document.getElementById("drink-dropdown-menu");
 
       let postContainer = document.getElementById("post-container");
 
@@ -597,7 +604,7 @@ let showListDrink = async function(){
             //     // No user is signed in.
             //   }
             // });
-           
+
             let html = `
         <tr   id="${postId}" class="turn-off-rbg">
         <td class="anh">
@@ -612,7 +619,9 @@ let showListDrink = async function(){
         <td>
           <div class="detai">
             <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
-            <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${numberWithCommas(money)} Đ</div></div>
+            <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${numberWithCommas(
+              money
+            )} Đ</div></div>
             <div class="dia-chi">
               Địa chỉ:
               <a id="td-address" class="link-dia-chi" href=""
@@ -694,7 +703,7 @@ let showListDrink = async function(){
           foodCity: dropdownMenuButtoncity.textContent.trim(),
           foodType: dropdownMenuButton.textContent.trim(),
           inputImg: imgButtonUpdate.value,
-          photoUrl:firebase.auth().currentUser.photoURL
+          photoUrl: firebase.auth().currentUser.photoURL
         };
 
         let validateResult = [
@@ -721,25 +730,31 @@ let showListDrink = async function(){
         ];
 
         if (view.allPassed(validateResult)) {
-          view.disable("btn-upload-post")
-          let postWrapper=document.getElementById("post-wrapper")
+          view.disable("btn-upload-post");
+          let postWrapper = document.getElementById("post-wrapper");
+          let postUploadContainer = document.getElementById(
+            "post-upload-container"
+          );
           try {
             let file = imgButtonUpdate.files[0];
             let link = await controller.upload(file);
             postInfo.srcImg = link;
-  
+
             controller.addAndOrderUpdate(postInfo);
-            
           } catch (error) {
-            console.log(error.message)
-           }
-          view.enable("btn-upload-post")
-          postWrapper.innerHTML=`<div class="upload-success" > Bạn đã đăng bài thành công ^.^</div>
-          `
-          btnUploadPost.style.display="none"
-         
+            console.log(error.message);
+          }
+          view.enable("btn-upload-post");
+          // btnUploadPost.style.display = "none";
+          let uploadSucess = document.getElementById("upload-success");
+          uploadSucess.style.display = "block";
+
+          setTimeout(function() {
+            uploadSucess.style.display = "none";
+          }, 2000);
         }
       };
+      controller.dbChange();
 
       let dropdownMenuButtoncity = document.getElementById(
         "dropdownMenuButtoncity"
@@ -820,6 +835,7 @@ let showListDrink = async function(){
             // let detail = transformDocs(result.docs);
             // showPost();
           };
+
           if (view.currentScreen == "extras") {
             screenSwap();
           }
@@ -892,10 +908,8 @@ let showListDrink = async function(){
         components.post +
         components.footer;
 
-        let btnUploadPost = document.getElementById("btn-upload-post");
-        let addImg = document.getElementById("add-image");
-
-
+      let btnUploadPost = document.getElementById("btn-upload-post");
+      let addImg = document.getElementById("add-image");
 
       let detailContainer = document.getElementById("detail-container");
 
@@ -930,14 +944,13 @@ let showListDrink = async function(){
 
       let foodReview = document.getElementById("food-review");
 
-
       let foodImgError = document.getElementById("food-img-error");
 
       let dropdownMenuButton = document.getElementById("dropdownMenuButton");
 
       let drinkDropDownMenu = document.getElementById("drink-dropdown-menu");
 
-      let dropdownCitySelect=document.getElementById("dropdown-city-select")
+      let dropdownCitySelect = document.getElementById("dropdown-city-select");
 
       let dropdownMenuButtoncity = document.getElementById(
         "dropdownMenuButtoncity"
@@ -992,7 +1005,6 @@ let showListDrink = async function(){
           city = dropdownMenu2.innerText.toLowerCase().trim();
           view.city = city;
 
-          
           let result = await db
             .collection("post")
             .where("city", "==", city)
@@ -1101,7 +1113,7 @@ let showListDrink = async function(){
           foodCity: dropdownMenuButtoncity.textContent.trim(),
           foodType: dropdownMenuButton.textContent.trim(),
           inputImg: imgButtonUpdate.value,
-          photoUrl:firebase.auth().currentUser.photoURL
+          photoUrl: firebase.auth().currentUser.photoURL
         };
 
         let validateResult = [
@@ -1128,26 +1140,30 @@ let showListDrink = async function(){
         ];
 
         if (view.allPassed(validateResult)) {
-          view.disable("btn-upload-post")
-          let postWrapper=document.getElementById("post-wrapper")
+          view.disable("btn-upload-post");
+          let postWrapper = document.getElementById("post-wrapper");
+          let postUploadContainer = document.getElementById(
+            "post-upload-container"
+          );
           try {
             let file = imgButtonUpdate.files[0];
             let link = await controller.upload(file);
             postInfo.srcImg = link;
-  
+
             controller.addAndOrderUpdate(postInfo);
-            
           } catch (error) {
-            console.log(error.message)
-           }
-          view.enable("btn-upload-post")
-          postWrapper.innerHTML=`<div class="upload-success" > Bạn đã đăng bài thành công ^.^</div>
-          `
-          btnUploadPost.style.display="none"
-         
+            console.log(error.message);
+          }
+          view.enable("btn-upload-post");
+          // btnUploadPost.style.display = "none";
+          let uploadSucess = document.getElementById("upload-success");
+          uploadSucess.style.display = "block";
+
+          setTimeout(function() {
+            uploadSucess.style.display = "none";
+          }, 2000);
         }
       };
-
 
       let showDetail = function() {
         // detailFood.innerHTML = "";
@@ -1166,7 +1182,6 @@ let showListDrink = async function(){
           } = detail;
           // let userFbdetail = firebase.auth().currentUser;
           // let photoUrl = userFbdetail.photoURL;
-          
 
           let html = `  <div class="photo-pics">
           <div class="img-food-detail">
@@ -1180,7 +1195,9 @@ let showListDrink = async function(){
         <div class="food-info">
           <div class="name-food-detail">${capitalize_Words(name)}</div>
           <div class="price">
-            Giá tiền: <span>${numberWithCommas(money)}</span> <span style="font-size: 12px;">đ</span>
+            Giá tiền: <span>${numberWithCommas(
+              money
+            )}</span> <span style="font-size: 12px;">đ</span>
           </div>
           <div class="kind-of-food">Thể loại: <span style="color: #4a90e2;">${type.toUpperCase()}
           </span></div>
@@ -1298,3 +1315,113 @@ function capitalize_Words(str) {
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+view.showPost = async function() {
+  let dropdownMenu2 = document.getElementById("dropdownMenu2");
+
+  let result = await db
+    .collection("post")
+    .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+    // .where("type", "==", "")
+    // .where("arrName", "array-contains-any", nameInputSplit)
+
+    .orderBy("order", "desc")
+    .get();
+  console.log(result.docs);
+  let detailByOrderDesc = await transformDocs(result.docs);
+  model.post = detailByOrderDesc;
+  // console.log(model);
+  // let detail = transformDocs(result.docs);
+  // console.log(detailByOrderDesc);
+  let postContainer = document.getElementById("post-container");
+  postContainer.innerHTML = "";
+  let tbodyContainer = document.getElementById("tbody-container");
+  if (model.post && model.post.length) {
+    let posts = model.post;
+    for (let post of posts) {
+      let {
+        id: postId,
+        name,
+        address,
+        review,
+        money,
+        user,
+        city,
+        photoUrl, // avatar user
+        srcImg
+      } = post;
+      // let userFbdetail = firebase.auth().currentUser;
+      // firebase.auth().onAuthStateChanged(function(user) {
+      //   if (user) {
+      //     let photoUrl = userFbdetail.photoURL;
+      //   } else {
+      //     // No user is signed in.
+      //   }
+      // });
+
+      let html = `
+  <tr   id="${postId}" class="turn-off-rbg">
+  <td class="anh">
+  
+    <img
+      id="td-img"
+      class="img"
+      src="${srcImg}"
+      alt=""
+    />
+  </td>
+  <td>
+    <div class="detai">
+      <div id="td-name" class="ten-quan">${capitalize_Words(name)}</div>
+      <div id="td-money" class="gia-tien">Giá tiền:<div class="money">${numberWithCommas(
+        money
+      )} Đ</div></div>
+      <div class="dia-chi">
+        Địa chỉ:
+        <a id="td-address" class="link-dia-chi" href=""
+          >${capitalize_Words(address + " " + "Thành Phố" + " " + city)}</a
+        >
+        </div>
+        <i class="fas fa-heart"></i>
+        <i class="far fa-angry"></i>
+              <i class="far fa-thumbs-up"></i>
+              <i class="fas fa-thumbtack"></i>
+    </div>
+    
+    <td>
+    <img class="ava" src="${photoUrl}" alt="" />
+    <div class="name-review">${capitalize_Words(user)}</div>
+    <div class="comment">${capitalize_Words(review)}</div>
+    <span class="chitiet" href="">Xem Chi Tiết <i class="fas fa-angle-double-right"></i></span>
+  </td>
+</tr>
+
+  `;
+      postContainer.innerHTML += html;
+    }
+    for (let post of posts) {
+      let postId = post.id;
+      let postCard = document.getElementById(postId);
+      postCard.onclick = async function() {
+        let postCardId = postCard.id;
+        view.id = postCardId;
+
+        view.showComponents("detail");
+        // console.log(postCard.id);
+        // let result = await db
+        //   .collection("post")
+        //   .doc(postCard.id)
+        //   .get();
+        // view.transformDoc(result);
+        // console.log(view.transformDoc(result));
+      };
+    }
+  }
+  console.log(postContainer.children.length);
+  if (postContainer.children.length == 0) {
+    let noResult = document.getElementById("no-result");
+    noResult.style.display = "block";
+  } else {
+    let noResult = document.getElementById("no-result");
+    noResult.style.display = "none";
+  }
+};

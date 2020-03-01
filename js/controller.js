@@ -184,3 +184,21 @@ controller.addAndOrderUpdate = async function(postInfo) {
       console.error("Error writing document: ", error);
     });
 };
+controller.dbChange = function() {
+  let isFisrtRun = true;
+  firebase
+    .firestore()
+    .collection("post")
+    .onSnapshot(function(snapshot) {
+      if (isFisrtRun) {
+        isFisrtRun = false;
+        return;
+      }
+      snapshot.docChanges().forEach(function(change) {
+        if (change.type === "added") {
+          console.log("haha ", change.doc.data());
+          view.showPost();
+        }
+      });
+    });
+};
