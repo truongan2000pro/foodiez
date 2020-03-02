@@ -81,7 +81,7 @@ controller.postDetail = async function(id) {
     .get();
   transformDoc(postDetail);
   model.detail = transformDoc(postDetail);
-  // console.log(model.detail);
+  console.log(model.detail);
 };
 
 controller.upload = async function(file) {
@@ -168,7 +168,10 @@ controller.addAndOrderUpdate = async function(postInfo) {
       user: firebase.auth().currentUser.displayName,
       type: postInfo.foodType.toLowerCase(),
       srcImg: postInfo.srcImg,
-      photoUrl: postInfo.photoUrl
+      photoUrl: postInfo.photoUrl,
+      like: postInfo.like,
+      likeCheck: postInfo.likeCheck,
+      userUid: postInfo.userUid
     })
     .then(async function() {
       await controller

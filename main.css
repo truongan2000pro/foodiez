@@ -637,8 +637,11 @@ i:hover {
 }
 
 .share-btn {
-  margin: 15px;
-  margin-left: 290px;
+  /* margin: 15px; */
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 240px;
   background: #3e6ec0;
   width: 178px;
   height: 35px;
@@ -862,4 +865,8 @@ tr:hover {
   font-weight: bold;
   color: #92ff04;
   text-align: center;
+}
+.fa-heart {
+  margin-left: 6px;
+  margin-top: 4px;
 }

@@ -178,7 +178,7 @@ view.showComponents = async function(screenName) {
           .where("type", "==", "đồ ăn")
           // .where("arrName", "array-contains-any", nameInputSplit)
 
-          .orderBy("order", "desc")
+          .orderBy("like", "desc")
           .limit(5)
           .get();
         let detailByOrderDesc = await transformDocs(result.docs);
@@ -188,7 +188,7 @@ view.showComponents = async function(screenName) {
         if (model.food && model.food.length) {
           let foods = model.food;
           for (let food of foods) {
-            let { name, address, photoUrl, user, id, srcImg } = food;
+            let { name, address, photoUrl, user, id, srcImg, like } = food;
 
             html = ` <div id="${id}" class="food-wrapper"> 
           <figure class="img-food"><img src="${srcImg}" alt="" /></figure>
@@ -205,6 +205,8 @@ view.showComponents = async function(screenName) {
             height: 30px;
             border-radius: 50%;">
              ${user}</div>
+             <i class="fas fa-heart"> ${like}</i>
+
             
           </div>
         </div>
@@ -220,7 +222,7 @@ view.showComponents = async function(screenName) {
           .where("type", "==", "đồ uống")
           // .where("arrName", "array-contains-any", nameInputSplit)
 
-          .orderBy("order", "desc")
+          .orderBy("like", "desc")
           .limit(5)
           .get();
         let detailByOrderDesc = await transformDocs(result.docs);
@@ -230,7 +232,7 @@ view.showComponents = async function(screenName) {
         if (model.drink && model.drink.length) {
           let drinks = model.drink;
           for (let drink of drinks) {
-            let { name, address, photoUrl, user, id, srcImg } = drink;
+            let { name, address, photoUrl, user, id, srcImg, like } = drink;
 
             html = ` <div id="${id}" class="food-wrapper"> 
           <figure class="img-food"><img src="${srcImg}" alt="" /></figure>
@@ -247,6 +249,8 @@ view.showComponents = async function(screenName) {
             height: 30px;
             border-radius: 50%;">
              ${user}</div>
+             <i class="fas fa-heart"> ${like}</i>
+
             
           </div>
         </div>
@@ -292,7 +296,10 @@ view.showComponents = async function(screenName) {
           foodCity: dropdownMenuButtoncity.textContent.trim(),
           foodType: dropdownMenuButton.textContent.trim(),
           inputImg: imgButtonUpdate.value,
-          photoUrl: firebase.auth().currentUser.photoURL
+          photoUrl: firebase.auth().currentUser.photoURL,
+          like: 0,
+          likeCheck: false,
+          userUid: []
         };
 
         let validateResult = [
@@ -594,7 +601,8 @@ view.showComponents = async function(screenName) {
               user,
               city,
               photoUrl, // avatar user
-              srcImg
+              srcImg,
+              like
             } = post;
             // let userFbdetail = firebase.auth().currentUser;
             // firebase.auth().onAuthStateChanged(function(user) {
@@ -630,10 +638,8 @@ view.showComponents = async function(screenName) {
                 )}</a
               >
               </div>
-              <i class="fas fa-heart"></i>
-              <i class="far fa-angry"></i>
-                    <i class="far fa-thumbs-up"></i>
-                    <i class="fas fa-thumbtack"></i>
+              <i class="fas fa-heart"> ${like}</i>
+              
           </div>
           
           <td>
@@ -703,7 +709,10 @@ view.showComponents = async function(screenName) {
           foodCity: dropdownMenuButtoncity.textContent.trim(),
           foodType: dropdownMenuButton.textContent.trim(),
           inputImg: imgButtonUpdate.value,
-          photoUrl: firebase.auth().currentUser.photoURL
+          photoUrl: firebase.auth().currentUser.photoURL,
+          like: 0,
+          likeCheck: false,
+          userUid: []
         };
 
         let validateResult = [
@@ -1113,7 +1122,10 @@ view.showComponents = async function(screenName) {
           foodCity: dropdownMenuButtoncity.textContent.trim(),
           foodType: dropdownMenuButton.textContent.trim(),
           inputImg: imgButtonUpdate.value,
-          photoUrl: firebase.auth().currentUser.photoURL
+          photoUrl: firebase.auth().currentUser.photoURL,
+          like: 0,
+          likeCheck: false,
+          userUid: []
         };
 
         let validateResult = [
@@ -1170,6 +1182,7 @@ view.showComponents = async function(screenName) {
         if (model.detail) {
           let detail = model.detail;
           let {
+            id,
             name,
             address,
             review,
@@ -1178,7 +1191,8 @@ view.showComponents = async function(screenName) {
             type,
             user,
             photoUrl,
-            srcImg
+            srcImg,
+            like
           } = detail;
           // let userFbdetail = firebase.auth().currentUser;
           // let photoUrl = userFbdetail.photoURL;
@@ -1187,9 +1201,16 @@ view.showComponents = async function(screenName) {
           <div class="img-food-detail">
             <img src="${srcImg}" alt="" />
           </div>
+          <div> 
+          <span id="post-like">
+
+          <i id="fa-heart" class="fas fa-heart"> ${like}</i>
+          </span>
+          
           <button class="share-btn">
             <span><i class="fab fa-facebook-f"></i> </span> Chia sẻ Facebook
           </button>
+          </div>
           <div class="comment-detail"><span>Chưa có bình luận nào</span></div>
         </div>
         <div class="food-info">
@@ -1226,6 +1247,90 @@ view.showComponents = async function(screenName) {
           </div>
         </div>`;
           detailFood.innerHTML += html;
+          let postLike = document.getElementById("post-like");
+          let faHeart = document.getElementById("fa-heart");
+
+          postLike.onclick = async function() {
+            // let result = controller.postDetail(id);
+            console.log(model.detail.userUid);
+            let userUid = await firebase.auth().currentUser.uid;
+            console.log(typeof userUid);
+
+            if (
+              // model.detail.likeCheck == false &&
+              model.detail.userUid.indexOf(userUid) == -1
+            ) {
+              await controller.postDetail(id);
+              let likeNumber = Number(faHeart.textContent);
+              let likeCount = (faHeart.textContent = likeNumber + 1);
+              await firebase
+                .firestore()
+                .collection("post")
+                .doc(id)
+                .update({
+                  like: likeCount,
+                  likeCheck: true,
+                  userUid: firebase.firestore.FieldValue.arrayUnion(userUid)
+                });
+              await controller.postDetail(id);
+            } else if (
+              // model.detail.likeCheck == false &&
+              model.detail.userUid.indexOf(userUid) != -1
+            ) {
+              await controller.postDetail(id);
+              let likeNumber = Number(faHeart.textContent);
+              let likeCount = (faHeart.textContent = likeNumber - 1);
+              let userId = await firebase.auth().currentUser.uid;
+
+              await firebase
+                .firestore()
+                .collection("post")
+                .doc(id)
+                .update({
+                  like: likeCount,
+                  likeCheck: true,
+                  userUid: firebase.firestore.FieldValue.arrayRemove(userUid)
+                });
+              await controller.postDetail(id);
+            }
+            // if (
+            //   // model.detail.likeCheck == true &&
+            //   model.userUid.indexOf(firebase.auth().currentUser.uid) == -1
+            // ) {
+            //   await controller.postDetail(id);
+            //   let likeNumber = Number(faHeart.textContent);
+            //   let likeCount = (faHeart.textContent = likeNumber + 1);
+            //   await db
+            //     .collection("post")
+            //     .doc(id)
+            //     .update({
+            //       like: likeCount,
+            //       likeCheck: false,
+            //       userUid: firebase
+            //         .firestore()
+            //         .FieldValue.arrayUnion(firebase.auth().currentUser.uid)
+            //     });
+            //   await controller.postDetail(id);
+            // } else if (
+            //   // model.detail.likeCheck == true &&
+            //   model.userUid.indexOf(firebase.auth().currentUser.uid) != -1
+            // ) {
+            //   await controller.postDetail(id);
+            //   let likeNumber = Number(faHeart.textContent);
+            //   let likeCount = (faHeart.textContent = likeNumber - 1);
+            //   await db
+            //     .collection("post")
+            //     .doc(id)
+            //     .update({
+            //       like: likeCount,
+            //       likeCheck: false,
+            //       userUid: firebase
+            //         .firestore()
+            //         .FieldValue.arrayUnion(firebase.auth().currentUser.uid)
+            //     });
+            //   await controller.postDetail(id);
+            // }
+          };
         }
       };
 
@@ -1347,7 +1452,8 @@ view.showPost = async function() {
         user,
         city,
         photoUrl, // avatar user
-        srcImg
+        srcImg,
+        like
       } = post;
       // let userFbdetail = firebase.auth().currentUser;
       // firebase.auth().onAuthStateChanged(function(user) {
@@ -1381,10 +1487,8 @@ view.showPost = async function() {
           >${capitalize_Words(address + " " + "Thành Phố" + " " + city)}</a
         >
         </div>
-        <i class="fas fa-heart"></i>
-        <i class="far fa-angry"></i>
-              <i class="far fa-thumbs-up"></i>
-              <i class="fas fa-thumbtack"></i>
+        <i class="fas fa-heart">${like}</i>
+      
     </div>
     
     <td>
