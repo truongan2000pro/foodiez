@@ -205,3 +205,33 @@ controller.dbChange = function() {
       });
     });
 };
+controller.addComment = function(id, comment) {
+  return firebase
+    .firestore()
+    .collection("post")
+    .doc(id)
+    .update({ comments: firebase.firestore.FieldValue.arrayUnion(comment) });
+};
+controller.cmt = function(postId) {
+  let isFisrtRun = true;
+  firebase
+    .firestore()
+    .collection("post")
+    .doc(postId)
+    .onSnapshot(async function(snapshot) {
+      // if (isFisrtRun) {
+      //   isFisrtRun = false;
+      //   return;
+      // }
+      // snapshot.docChanges()(function(change) {
+      //   if (change.type === "added") {
+      //     console.log("haha ", change.doc.data());
+      //     view.cmt();
+      //   }
+      // });
+      let result = await snapshot.data();
+      // model.detail.comments.push(result.comments[model.detail.comments.length]);
+      model.detail.comments = result.comments;
+      view.cmt();
+    });
+};

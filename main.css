@@ -466,14 +466,9 @@ i:hover {
   padding-right: 5px;
   padding-top: 10px;
 }
-.ava {
-  /* max-width: 30px; */
-  /* height: 10px; */
-}
+
 .food {
   background: url(https://tea-6.lozi.vn/v1/images/resized/do-an-1500526800);
-}
-.food-type {
 }
 /* .post {
   background-color: gray;
@@ -538,6 +533,10 @@ i:hover {
   width: 240px;
   margin-bottom: 25px;
   margin-left: 5px;
+}
+
+.food-wrapper:hover {
+  cursor: pointer;
 }
 
 .food-contents {
@@ -630,20 +629,23 @@ i:hover {
 .photo-pics {
   width: 468px;
 }
-.img-food-detail > * {
+.img-food-detail > img {
   height: 468px;
   width: 468px;
   border-radius: 5px;
 }
+#post-like {
+  margin-top: 16px;
+}
 
 .share-btn {
-  /* margin: 15px; */
   border: none;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 240px;
+  /* margin: 15px; */
+  margin-top: 11px;
+  margin-bottom: 11px;
+  margin-left: 231px;
   background: #3e6ec0;
-  width: 178px;
+  width: 155px;
   height: 35px;
   color: #fff;
   line-height: 30px;
@@ -653,15 +655,79 @@ i:hover {
 .share-btn > span {
   margin-right: 8px;
 }
+
 .comment-detail {
+  padding: 10px 0px;
   border-top: solid 1px #9b9b9b;
-  text-align: center;
-  position: relative;
+}
+
+.comment-detail > span {
+  margin: 110px;
   font-size: 20px;
   font-weight: 700;
-  margin: 0 auto 30px;
-  z-index: -1;
 }
+
+.cmt {
+  padding-top: 10px;
+}
+
+.content-comment {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.cmt-box > div {
+  display: flex;
+  margin: 10px 0px;
+}
+
+.submit-btn {
+  margin: 5px;
+  margin-left: 290px;
+  background: #3e6ec0;
+  width: 178px;
+  height: 35px;
+  color: #fff;
+  line-height: 30px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.submit-btn:disabled {
+  background: #9cb4d8;
+}
+
+.text-box {
+  margin-left: 4px;
+}
+
+.text-box > * {
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  padding: 15px;
+  height: 76px;
+  resize: none;
+  width: 433px;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
 .food-info {
   margin-left: 50px;
 }
@@ -713,6 +779,7 @@ i:hover {
 
 .footer {
   /* width: 1200px; */
+  margin-top: 20px;
   height: 211px;
   padding: 50px 0px;
   background: lightgrey;
@@ -866,7 +933,7 @@ tr:hover {
   color: #92ff04;
   text-align: center;
 }
-.fa-heart {
-  margin-left: 6px;
-  margin-top: 4px;
+.home-heart {
+  margin-top: 5px;
+  margin-left: 5px;
 }

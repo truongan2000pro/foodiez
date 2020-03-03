@@ -471,17 +471,37 @@ components.loading = `<div class="flex" >
   <span class="sr-only">Loading...</span>
 </div>
 </div>`;
-components.detail = `<section id="detail-container" style="min-height: 100vh" >
+components.detail = `<section id="detail-container" style="min-height: 100vh">
 <div id="detail-food" class="detail-food">
   <div id="return-extras" class="detail-address">
-  <i  class="fas fa-backward"> Quay Lại</i>
+    <i class="fas fa-backward"> Quay Lại</i>
   </div>
   <div id="detail-food-wrapper" class="detail-food-wrapper">
- 
-</div>
- 
-</div>
+    <div class="photo-pics">
+      <div id="img-food-detail" class="img-food-detail"></div>
+     
+      <div id="comment-detail" class="comment-detail"></div>
+    </div>
 
+    <div id="food-info" class="food-info"></div>
+  </div>
+    <form id="form-add-comment">
+      <div class="cmt-box">
+        <div>
+          <div id="user-img"></div>
+          <div class="text-box">
+            <textarea
+            onkeyup="textAreaAdjust(this)"
+            name="commentContent"
+            placeholder="Để lại bình luận của bạn ^.^ "
+            style="overflow:hidden"
+            ></textarea>
+          </div>
+        </div>
+      <button id="submit-btn" class="submit-btn" type="submit">Gửi bình luận</button>
+      </div>
+    </form>
+  </div>
 </section>`;
 components.footer = `<footer class="footer">
 <div class="container">

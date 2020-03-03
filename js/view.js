@@ -171,6 +171,8 @@ view.showComponents = async function(screenName) {
 
       let listDrinkWrapper = document.getElementById("list-drink-wrapper");
 
+      view.city = dropdownMenu2.textContent.trim();
+
       let showListFood = async function() {
         let result = await db
           .collection("post")
@@ -205,13 +207,24 @@ view.showComponents = async function(screenName) {
             height: 30px;
             border-radius: 50%;">
              ${user}</div>
-             <i class="fas fa-heart"> ${like}</i>
+             <i class="fas home-heart fa-heart"> ${like}</i>
 
             
           </div>
         </div>
       `;
             listFoodWrapper.innerHTML += html;
+          }
+          for (let post of foods) {
+            let postId = post.id;
+            let postCard = document.getElementById(postId);
+            postCard.onclick = async function() {
+              city = dropdownMenu2.innerText.toLowerCase().trim();
+              view.city = city;
+              let postCardId = postCard.id;
+              view.id = postCardId;
+              view.showComponents("detail");
+            };
           }
         }
       };
@@ -249,13 +262,24 @@ view.showComponents = async function(screenName) {
             height: 30px;
             border-radius: 50%;">
              ${user}</div>
-             <i class="fas fa-heart"> ${like}</i>
+             <i class="fas home-heart fa-heart"> ${like}</i>
 
             
           </div>
         </div>
       `;
             listDrinkWrapper.innerHTML += html;
+          }
+          for (let post of drinks) {
+            let postId = post.id;
+            let postCard = document.getElementById(postId);
+            postCard.onclick = async function() {
+              city = dropdownMenu2.innerText.toLowerCase().trim();
+              view.city = city;
+              let postCardId = postCard.id;
+              view.id = postCardId;
+              view.showComponents("detail");
+            };
           }
         }
       };
@@ -970,6 +994,18 @@ view.showComponents = async function(screenName) {
       );
       let viewExtrasDrink = document.getElementById("show-more-food-drinks");
 
+      let imgFoodDetail = document.getElementById("img-food-detail");
+
+      let commentDetail = document.getElementById("comment-detail");
+
+      let foodInfo = document.getElementById("food-info");
+
+      let userImg = document.getElementById("user-img");
+
+      let formAddComment = document.getElementById("form-add-comment");
+      console.log(dropdownMenu2.innerText);
+      // dropdownMenu2.innerText = view.city.trim();
+
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
         let postInfo = {
           foodName: foodName,
@@ -1111,8 +1147,8 @@ view.showComponents = async function(screenName) {
         await controller.postDetail(view.id);
         showDetail();
       };
-      screenSwap();
 
+      screenSwap();
       btnUploadPost.onclick = async function postSubmitHandler() {
         let postInfo = {
           foodName: foodName.value,
@@ -1123,9 +1159,8 @@ view.showComponents = async function(screenName) {
           foodType: dropdownMenuButton.textContent.trim(),
           inputImg: imgButtonUpdate.value,
           photoUrl: firebase.auth().currentUser.photoURL,
-          like: 0,
-          likeCheck: false,
-          userUid: []
+          userUid: [],
+          like: 0
         };
 
         let validateResult = [
@@ -1154,9 +1189,6 @@ view.showComponents = async function(screenName) {
         if (view.allPassed(validateResult)) {
           view.disable("btn-upload-post");
           let postWrapper = document.getElementById("post-wrapper");
-          let postUploadContainer = document.getElementById(
-            "post-upload-container"
-          );
           try {
             let file = imgButtonUpdate.files[0];
             let link = await controller.upload(file);
@@ -1167,13 +1199,9 @@ view.showComponents = async function(screenName) {
             console.log(error.message);
           }
           view.enable("btn-upload-post");
-          // btnUploadPost.style.display = "none";
-          let uploadSucess = document.getElementById("upload-success");
-          uploadSucess.style.display = "block";
-
-          setTimeout(function() {
-            uploadSucess.style.display = "none";
-          }, 2000);
+          postWrapper.innerHTML = `<div class="upload-success" > Bạn đã đăng bài thành công ^.^</div>
+          `;
+          btnUploadPost.style.display = "none";
         }
       };
 
@@ -1192,16 +1220,16 @@ view.showComponents = async function(screenName) {
             user,
             photoUrl,
             srcImg,
+            comments,
             like
           } = detail;
           // let userFbdetail = firebase.auth().currentUser;
           // let photoUrl = userFbdetail.photoURL;
 
-          let html = `  <div class="photo-pics">
-          <div class="img-food-detail">
-            <img src="${srcImg}" alt="" />
-          </div>
-          <div> 
+          imgFoodDetail.innerHTML += `<img src="${srcImg}" alt="" />
+          <div style="
+          display: flex;
+          justify-content: space-between;" > 
           <span id="post-like">
 
           <i id="fa-heart" class="fas fa-heart"> ${like}</i>
@@ -1211,42 +1239,8 @@ view.showComponents = async function(screenName) {
             <span><i class="fab fa-facebook-f"></i> </span> Chia sẻ Facebook
           </button>
           </div>
-          <div class="comment-detail"><span>Chưa có bình luận nào</span></div>
-        </div>
-        <div class="food-info">
-          <div class="name-food-detail">${capitalize_Words(name)}</div>
-          <div class="price">
-            Giá tiền: <span>${numberWithCommas(
-              money
-            )}</span> <span style="font-size: 12px;">đ</span>
-          </div>
-          <div class="kind-of-food">Thể loại: <span style="color: #4a90e2;">${type.toUpperCase()}
-          </span></div>
-          <div class="address-food">
-            Địa chỉ:
-            <span style="color: #424242;"
-              >${capitalize_Words(address) + " " + capitalize_Words(city)}</span
-            >
-          </div>
-          <button class="oder-btn">Đặt mua ngay</button>
-          <div class="review-food">
-            <div class="media">
-              <img
-                src="${photoUrl}"
-                class=""
-                alt="..."
-                style="width: 30px;
-              height: 30px;
-              border-radius: 50%;"
-              />
-              <div class="media-body">
-                <h5 class="mt-0">${capitalize_Words(user)}</h5>
-                ${capitalize_Words(review)}
-              </div>
-            </div>
-          </div>
-        </div>`;
-          detailFood.innerHTML += html;
+          `;
+
           let postLike = document.getElementById("post-like");
           let faHeart = document.getElementById("fa-heart");
 
@@ -1293,44 +1287,78 @@ view.showComponents = async function(screenName) {
                 });
               await controller.postDetail(id);
             }
-            // if (
-            //   // model.detail.likeCheck == true &&
-            //   model.userUid.indexOf(firebase.auth().currentUser.uid) == -1
-            // ) {
-            //   await controller.postDetail(id);
-            //   let likeNumber = Number(faHeart.textContent);
-            //   let likeCount = (faHeart.textContent = likeNumber + 1);
-            //   await db
-            //     .collection("post")
-            //     .doc(id)
-            //     .update({
-            //       like: likeCount,
-            //       likeCheck: false,
-            //       userUid: firebase
-            //         .firestore()
-            //         .FieldValue.arrayUnion(firebase.auth().currentUser.uid)
-            //     });
-            //   await controller.postDetail(id);
-            // } else if (
-            //   // model.detail.likeCheck == true &&
-            //   model.userUid.indexOf(firebase.auth().currentUser.uid) != -1
-            // ) {
-            //   await controller.postDetail(id);
-            //   let likeNumber = Number(faHeart.textContent);
-            //   let likeCount = (faHeart.textContent = likeNumber - 1);
-            //   await db
-            //     .collection("post")
-            //     .doc(id)
-            //     .update({
-            //       like: likeCount,
-            //       likeCheck: false,
-            //       userUid: firebase
-            //         .firestore()
-            //         .FieldValue.arrayUnion(firebase.auth().currentUser.uid)
-            //     });
-            //   await controller.postDetail(id);
-            // }
           };
+
+          if (comments) {
+            // for (comment of comments) {
+            //   let html = `<div class="media cmt">
+            //   <img
+            //     src="${comment.userPhoto}"
+            //     class=""
+            //     alt="..."
+            //     style="width: 30px;
+            //     height: 30px;
+            //     border-radius: 50%;"
+            //   />
+            //   <div class="media-body content-comment">
+            //   <h5 class="mt-0">${comment.userName}</h5>
+            //   <p class="">${capitalize_Words(comment.content)}</p>
+            //   </div>
+            // </div>`;
+
+            //   commentDetail.innerHTML += html;
+            // }
+            view.cmt();
+          } else {
+            let html = `<span>Chưa có bình luận nào</span>`;
+
+            commentDetail.innerHTML += html;
+          }
+
+          foodInfo.innerHTML += `<div class="name-food-detail">${capitalize_Words(
+            name
+          )}</div>
+          <div class="price">
+            Giá tiền: <span>${numberWithCommas(
+              money
+            )}</span> <span style="font-size: 12px;">đ</span>
+          </div>
+          <div class="kind-of-food">Thể loại: <span style="color: #4a90e2;">${type.toUpperCase()}
+          </span></div>
+          <div class="address-food">
+            Địa chỉ:
+            <span style="color: #424242;"
+              >${capitalize_Words(address) + " " + capitalize_Words(city)}</span
+            >
+          </div>
+          <button class="oder-btn">Đặt mua ngay</button>
+          <div class="review-food">
+            <div class="media">
+              <img
+                src="${photoUrl}"
+                class=""
+                alt="..."
+                style="width: 30px;
+                height: 30px;
+                border-radius: 50%;"
+              />
+              <div class="media-body">
+                <h5 class="mt-0">${capitalize_Words(user)}</h5>
+                <span>${capitalize_Words(review)}</span>
+              </div>
+            </div>
+          </div>`;
+
+          let htmlUserImg = `
+          <img
+            src="${photoUrl}"
+            class=""
+            alt="..."
+            style="width: 30px;
+            height: 30px;
+            border-radius: 50%;"
+          />`;
+          userImg.innerHTML = htmlUserImg;
         }
       };
 
@@ -1346,6 +1374,34 @@ view.showComponents = async function(screenName) {
         readURL(this);
       });
 
+      formAddComment.onsubmit = formAddCommentSubmit;
+
+      async function formAddCommentSubmit(event) {
+        event.preventDefault();
+        view.disable("submit-btn");
+        let id = model.detail.id;
+        if (model.detail) {
+          let postId = model.detail.id;
+          let user = firebase.auth().currentUser.displayName;
+          let userPhoto = firebase.auth().currentUser.photoURL;
+          let content = formAddComment.elements[0].value;
+
+          if (content) {
+            let comments = {
+              content: content,
+              owner: firebase.auth().currentUser.email,
+              createdAt: new Date().toISOString(),
+              userPhoto: userPhoto,
+              userName: user
+            };
+
+            await controller.addComment(postId, comments);
+            formAddComment.commentContent.value = "";
+            controller.cmt(id);
+            view.enable("submit-btn");
+          }
+        }
+      }
       break;
     }
   }
@@ -1431,7 +1487,7 @@ view.showPost = async function() {
 
     .orderBy("order", "desc")
     .get();
-  console.log(result.docs);
+  // console.log(result.docs);
   let detailByOrderDesc = await transformDocs(result.docs);
   model.post = detailByOrderDesc;
   // console.log(model);
@@ -1527,5 +1583,32 @@ view.showPost = async function() {
   } else {
     let noResult = document.getElementById("no-result");
     noResult.style.display = "none";
+  }
+};
+view.cmt = async function() {
+  let commentDetail = document.getElementById("comment-detail");
+  // console.log(model.detail.comments);
+  // controller.postDetailCmt();
+  // view.showComponents("detail");
+  commentDetail.innerHTML = "";
+  let { comments } = model.detail;
+
+  for (comment of comments) {
+    let html = `<div class="media cmt">
+      <img
+        src="${comment.userPhoto}"
+        class=""
+        alt="..."
+        style="width: 30px;
+        height: 30px;
+        border-radius: 50%;"
+      />
+      <div class="media-body content-comment">
+      <h5 class="mt-0">${comment.userName}</h5>
+      <p class="">${capitalize_Words(comment.content)}</p>
+      </div>
+    </div>`;
+
+    commentDetail.innerHTML += html;
   }
 };
