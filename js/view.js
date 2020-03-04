@@ -463,9 +463,18 @@ view.showComponents = async function(screenName) {
       }
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "none";
+
+          postWrapper.style.display = "flex";
           navLogInBtn.style.display = "none";
           navRegisterBtn.style.display = "none";
         } else {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "block";
+          postWrapper.style.display = "none";
           navLogOutBtn.style.display = "none";
         }
       });
@@ -919,9 +928,18 @@ view.showComponents = async function(screenName) {
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "none";
+
+          postWrapper.style.display = "flex";
           navLogInBtn.style.display = "none";
           navRegisterBtn.style.display = "none";
         } else {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "block";
+          postWrapper.style.display = "none";
           navLogOutBtn.style.display = "none";
         }
       });
@@ -1104,9 +1122,18 @@ view.showComponents = async function(screenName) {
       }
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "none";
+
+          postWrapper.style.display = "flex";
           navLogInBtn.style.display = "none";
           navRegisterBtn.style.display = "none";
         } else {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "block";
+          postWrapper.style.display = "none";
           navLogOutBtn.style.display = "none";
         }
       });
@@ -1615,9 +1642,18 @@ view.showComponents = async function(screenName) {
       });
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "none";
+
+          postWrapper.style.display = "flex";
           navLogInBtn.style.display = "none";
           navRegisterBtn.style.display = "none";
         } else {
+          let postWrapper = document.getElementById("post-wrapper");
+          let noUser = document.getElementById("no-user");
+          noUser.style.display = "block";
+          postWrapper.style.display = "none";
           navLogOutBtn.style.display = "none";
         }
       });
