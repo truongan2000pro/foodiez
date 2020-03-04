@@ -113,7 +113,7 @@ components.nav = `
                 <button class="" id="btn-register-nav">Đăng Ký</button>
               </div>
               <div id="user-detail" class="user-detail-wrapper"> 
-              <img src="./image/dogava.png" class="" alt="..." style="width: 30px;
+              <img id="avatar-nav" src="" class="" alt="..." style="width: 30px;
               height: 30px;
               border-radius: 50%;">
               <span id="user-nav"> </span>
@@ -573,7 +573,15 @@ components.accountInformation = `
           <form id="form-update-profile" class="form-update-profile" action="">
             <h3 class="form-update-header">Chỉnh sửa thông tin cá nhân</h3>
             <div id="input-img" class="input-img">
-              <input type="file" name="img" />
+              <input type="file" style="visibility: hidden; 
+              " name="img" id="ava-input" />
+              <img
+              style="width: 125px;
+              height: 125px;
+              border-radius: 50%;"
+              src=""
+              id="ava-update"
+            />
             </div>
             <div class="name-wrapper">
               <div class="input-wrapper">

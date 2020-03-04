@@ -206,7 +206,8 @@
   height: 100vh;
   display: flex;
   /* justify-content: 100px; */
-  background: url("./image/foodiesfeed.com_messy-pizza-on-a-black-table.jpg") center no-repeat;
+  background: url("./image/foodiesfeed.com_messy-pizza-on-a-black-table.jpg")
+    center no-repeat;
   background-size: cover;
 }
 .register-form {
@@ -250,8 +251,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("./image/burger-and-vegetables-placed-on-brown-wood-surface-1565982.jpg") center
-    no-repeat;
+  background: url("./image/burger-and-vegetables-placed-on-brown-wood-surface-1565982.jpg")
+    center no-repeat;
   background-size: cover;
 }
 
@@ -949,7 +950,7 @@ tr:hover {
   width: 1200px;
   padding-top: 100px;
   margin: auto;
-  margin-bottom: 70px;
+  margin-bottom: calc(100vh - 721px);
 }
 
 .aside-left {
@@ -991,7 +992,7 @@ tr:hover {
   margin-bottom: 10px;
 }
 
-.input-img{
+.input-img {
   margin-bottom: 25px;
 }
 

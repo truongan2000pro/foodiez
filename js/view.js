@@ -3,6 +3,7 @@ const view = {
   city: null,
   id: null
 };
+
 view.showComponents = async function(screenName) {
   view.currentScreen = screenName;
   switch (screenName) {
@@ -433,9 +434,12 @@ view.showComponents = async function(screenName) {
 
       let userDetail = document.getElementById("user-nav");
 
-      firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(async function(user) {
         if (user) {
           let userName = firebase.auth().currentUser.displayName;
+          let ava = document.getElementById("avatar-nav");
+          let src = await firebase.auth().currentUser.photoURL;
+          ava.src = src;
           userDetail.innerText += " " + userName;
           // console.log(userName);
         } else {
@@ -841,8 +845,11 @@ view.showComponents = async function(screenName) {
 
       let userDetail = document.getElementById("user-nav");
 
-      firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(async function(user) {
         if (user) {
+          let ava = document.getElementById("avatar-nav");
+          let src = await firebase.auth().currentUser.photoURL;
+          ava.src = src;
           let userName = firebase.auth().currentUser.displayName;
           userDetail.innerText += " " + userName;
           console.log(userName);
@@ -1071,8 +1078,11 @@ view.showComponents = async function(screenName) {
         view.showComponents("home");
       };
 
-      firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(async function(user) {
         if (user) {
+          let ava = document.getElementById("avatar-nav");
+          let src = await firebase.auth().currentUser.photoURL;
+          ava.src = src;
           let userName = firebase.auth().currentUser.displayName;
           userDetail.innerText += " " + userName;
         } else {
@@ -1400,6 +1410,15 @@ view.showComponents = async function(screenName) {
       app.innerHTML =
         components.nav + components.accountInformation + components.footer;
 
+      let dropdownMenu2 = document.getElementById("dropdownMenu2");
+
+      dropdownMenu2.innerText = capitalize_Words(view.city);
+
+      let home = document.getElementById("logo");
+      home.onclick = function() {
+        view.showComponents("home");
+      };
+
       let userInfo = document.getElementById("user-info");
       let posted = document.getElementById("posted");
       let formUpdateProfile = document.getElementById("form-update-profile");
@@ -1437,15 +1456,21 @@ view.showComponents = async function(screenName) {
       }
       getPostNumber();
 
-      let inputImgHtml = `
-      <img
-        style="width: 125px;
-        height: 125px;
-        border-radius: 50%;"
-        src="${firebase.auth().currentUser.photoURL}"
-      />
-      `;
-      inputImg.innerHTML += inputImgHtml;
+      let avaUpdate = document.getElementById("ava-update");
+      let avaInput = document.getElementById("ava-input");
+      avaUpdate.src = firebase.auth().currentUser.photoURL;
+      avaUpdate.onclick = function() {
+        avaInput.click();
+        // avaInput.onclick = async function() {
+        //   let fileImg = avaInput.files[0];
+        //   let link = await controller.upload(fileImg);
+        //   let user = firebase.auth().currentUser;
+        //   user.updateProfile({
+        //     photoURL: link
+        //   });
+        //   avaUpdate.src = firebase.auth().currentUser.photoURL;
+        // };
+      };
 
       formUpdateProfile.onsubmit = formUpdateProfileOnsubmit;
 
@@ -1453,8 +1478,80 @@ view.showComponents = async function(screenName) {
         e.preventDefault();
         view.disable("update-profile-btn");
         let fileImg = formUpdateProfile.img.files[0];
-        let link = await controller.upload(fileImg);
-        console.log(link);
+        if (fileImg) {
+          let link = await controller.upload(fileImg);
+          let profile = {
+            photoURL: link,
+            firstName: formUpdateProfile.firstName.value,
+            lastName: formUpdateProfile.lastName.value,
+            number: formUpdateProfile.number.value
+          };
+
+          view.validate("first-name-error", [
+            profile.firstName.trim(),
+            "Bạn chưa nhập họ!"
+          ]);
+          view.validate("last-name-error", [
+            profile.lastName.trim(),
+            "Bạn chưa nhập tên!"
+          ]);
+          let validateResult = [
+            view.validate("first-name-error", [
+              profile.firstName.trim(),
+              "Bạn chưa nhập họ!"
+            ]),
+            view.validate("last-name-error", [
+              profile.lastName.trim(),
+              "Bạn chưa nhập tên!"
+            ])
+          ];
+          if (view.allPassed(validateResult)) {
+            let user = await firebase.auth().currentUser;
+            await user.updateProfile({
+              displayName: profile.firstName + " " + profile.lastName,
+              phoneNumber: profile.number,
+              photoURL: profile.photoURL
+            });
+            view.showComponents("home");
+          }
+          view.enable("update-profile-btn");
+        } else {
+          let profile = {
+            // photoURL: link,
+            firstName: formUpdateProfile.firstName.value,
+            lastName: formUpdateProfile.lastName.value,
+            number: formUpdateProfile.number.value
+          };
+
+          view.validate("first-name-error", [
+            profile.firstName.trim(),
+            "Bạn chưa nhập họ!"
+          ]);
+          view.validate("last-name-error", [
+            profile.lastName.trim(),
+            "Bạn chưa nhập tên!"
+          ]);
+          let validateResult = [
+            view.validate("first-name-error", [
+              profile.firstName.trim(),
+              "Bạn chưa nhập họ!"
+            ]),
+            view.validate("last-name-error", [
+              profile.lastName.trim(),
+              "Bạn chưa nhập tên!"
+            ])
+          ];
+          if (view.allPassed(validateResult)) {
+            let user = await firebase.auth().currentUser;
+            await user.updateProfile({
+              displayName: profile.firstName + " " + profile.lastName,
+              phoneNumber: profile.number
+              // photoURL: profile.photoURL
+            });
+            view.showComponents("home");
+          }
+        }
+
         let profile = {
           photoURL: link,
           firstName: formUpdateProfile.firstName.value,
@@ -1470,11 +1567,6 @@ view.showComponents = async function(screenName) {
           profile.lastName.trim(),
           "Bạn chưa nhập tên!"
         ]);
-        view.validate("number-error", [
-          profile.number,
-          "Bạn chưa nhập số điện thoại!"
-        ]);
-
         let validateResult = [
           view.validate("first-name-error", [
             profile.firstName.trim(),
@@ -1483,22 +1575,96 @@ view.showComponents = async function(screenName) {
           view.validate("last-name-error", [
             profile.lastName.trim(),
             "Bạn chưa nhập tên!"
-          ]),
-          view.validate("number-error", [
-            profile.number,
-            "Bạn chưa nhập số điện thoại!"
           ])
         ];
         if (view.allPassed(validateResult)) {
-          let user = firebase.auth().currentUser;
-          user.updateProfile({
+          let user = await firebase.auth().currentUser;
+          await user.updateProfile({
             displayName: profile.firstName + " " + profile.lastName,
             phoneNumber: profile.number,
             photoURL: profile.photoURL
           });
+          view.showComponents("home");
         }
         view.enable("update-profile-btn");
       }
+      let dropdownMenuNav = document.getElementById("dropdown-menu-nav");
+
+      let navLogInBtn = document.getElementById("btn-log-in-nav");
+
+      let navRegisterBtn = document.getElementById("btn-register-nav");
+
+      let navLogOutBtn = document.getElementById("btn-log-out-nav");
+
+      let userDetail = document.getElementById("user-nav");
+
+      let searchBtn = document.getElementById("search-btn");
+
+      firebase.auth().onAuthStateChanged(async function(user) {
+        if (user) {
+          let ava = document.getElementById("avatar-nav");
+          let src = await firebase.auth().currentUser.photoURL;
+          ava.src = src;
+          let userName = firebase.auth().currentUser.displayName;
+          userDetail.innerText += " " + userName;
+          // console.log(userName);
+        } else {
+          let userDetail = document.getElementById("user-detail");
+          userDetail.style.display = "none";
+        }
+      });
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          navLogInBtn.style.display = "none";
+          navRegisterBtn.style.display = "none";
+        } else {
+          navLogOutBtn.style.display = "none";
+        }
+      });
+
+      navLogOutBtn.onclick = function logOutHandler() {
+        firebase.auth().signOut();
+      };
+      navLogInBtn.onclick = function logInLinkHandler() {
+        view.showComponents("logIn");
+      };
+
+      navRegisterBtn.onclick = function registerLinkHandler() {
+        view.showComponents("register");
+      };
+      let searchInput = document.getElementById("search-input");
+
+      searchBtn.onclick = function iconClickHandler() {
+        let nameInput = searchInput.value.trim().toLowerCase();
+
+        controller.postDbGetInDescFood = async function() {
+          let nameInputSplit = nameInput.split(" ");
+
+          let result = await db
+            .collection("post")
+            .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
+            // .where("type", "==", "")
+            // .where("arrName", "array-contains-any", nameInputSplit)
+            .where("name", "==", nameInput)
+            .orderBy("order", "desc")
+            .get();
+
+          let detailByOrderDesc = await transformDocs(result.docs);
+          model.post = detailByOrderDesc;
+
+          // let detail = transformDocs(result.docs);
+          // showPost();};
+        };
+        view.city = dropdownMenu2.innerText;
+
+        if (nameInput == "") {
+          alert("Bạn Chưa Nhập Gì Cả");
+        } else {
+          if (view.currentScreen != "extras") {
+            view.showComponents("extras");
+          }
+        }
+      };
 
       break;
     }
@@ -1712,5 +1878,7 @@ view.cmt = async function() {
 };
 
 function userDetailOnClick() {
+  city = dropdownMenu2.innerText.toLowerCase().trim();
+  view.city = city;
   view.showComponents("accountInformation");
 }
