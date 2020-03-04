@@ -1003,7 +1003,6 @@ view.showComponents = async function(screenName) {
       let userImg = document.getElementById("user-img");
 
       let formAddComment = document.getElementById("form-add-comment");
-      console.log(dropdownMenu2.innerText);
       // dropdownMenu2.innerText = view.city.trim();
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
