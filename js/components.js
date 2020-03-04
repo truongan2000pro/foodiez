@@ -555,3 +555,42 @@ components.mess = `<div class="modal" tabindex="-1" role="dialog">
   </div>
 </div>
 </div>`;
+
+components.accountInformation = `
+<section class="acc-info">
+      <div class="aside-left">
+        <div id="user-info" class="user-info">
+      
+        </div>
+
+        <div id="posted" class="posted">
+          
+        </div>
+      </div>
+
+      <div class="aside-right">
+        <div class="update-profile">
+          <form id="form-update-profile" class="form-update-profile" action="">
+            <h3 class="form-update-header">Chỉnh sửa thông tin cá nhân</h3>
+            <div id="input-img" class="input-img">
+              <input type="file" name="img" />
+            </div>
+            <div class="name-wrapper">
+              <div class="input-wrapper">
+                <input type="text" name="firstName" placeholder="Họ" />
+                <div id="first-name-error" class="message-error"></div>
+              </div>
+              <div class="input-wrapper">
+                <input type="text" name="lastName" placeholder="Tên" />
+                <div id="last-name-error" class="message-error"></div>
+              </div>
+            </div>
+            <div class="input-wrapper">
+              <input type="number" name="number" placeholder="Số điện thoại" />
+              <div id="number-error" class="message-error"></div>
+            </div>
+            <button type="submit" id="update-profile-btn" class="update-profile-btn">Lưu thay đổi</button>
+          </form>
+        </div>
+      </div>
+    </section>`;

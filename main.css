@@ -13,6 +13,11 @@
   margin-top: 8px;
   /* margin-right: 80px; */
 }
+
+.user-detail-wrapper:hover {
+  cursor: pointer;
+}
+
 #user-nav {
   font-weight: 400;
   margin-left: 2px;
@@ -201,8 +206,7 @@
   height: 100vh;
   display: flex;
   /* justify-content: 100px; */
-  background: url("./image/foodiesfeed.com_messy-pizza-on-a-black-table.jpg")
-    center no-repeat;
+  background: url("./image/foodiesfeed.com_messy-pizza-on-a-black-table.jpg") center no-repeat;
   background-size: cover;
 }
 .register-form {
@@ -246,8 +250,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("./image/burger-and-vegetables-placed-on-brown-wood-surface-1565982.jpg")
-    center no-repeat;
+  background: url("./image/burger-and-vegetables-placed-on-brown-wood-surface-1565982.jpg") center
+    no-repeat;
   background-size: cover;
 }
 
@@ -936,4 +940,76 @@ tr:hover {
 .home-heart {
   margin-top: 5px;
   margin-left: 5px;
+}
+
+/* Trang thông tin cá nhân */
+/* Hoàng */
+.acc-info {
+  display: flex;
+  width: 1200px;
+  padding-top: 100px;
+  margin: auto;
+  margin-bottom: 70px;
+}
+
+.aside-left {
+  height: 300px;
+  background: #fff;
+  border-radius: 5px;
+  padding: 25px;
+  width: 500px;
+  margin-right: 50px;
+}
+
+.user-info {
+  display: flex;
+}
+.us {
+  padding-left: 30px;
+}
+.us-date {
+  color: #9b9b9b;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.posted {
+  color: #ed3554;
+}
+
+.posted > * {
+  text-align: center;
+}
+
+.aside-right {
+  background: #fff;
+  border-radius: 5px;
+  padding: 25px;
+  width: 700px;
+}
+.form-update-profile > * {
+  margin-bottom: 10px;
+}
+
+.input-img{
+  margin-bottom: 25px;
+}
+
+.form-update-header {
+  text-align: center;
+  padding: 20px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.update-profile-btn {
+  border-radius: 5px;
+  padding: 0 20px;
+  line-height: 36px;
+  height: 40px;
+  margin-left: 499px;
 }
