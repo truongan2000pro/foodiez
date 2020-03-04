@@ -443,6 +443,9 @@ view.showComponents = async function(screenName) {
           userDetail.style.display = "none";
         }
       });
+
+      userDetail.onclick = userDetailOnClick; // Chuyển sang profile
+
       // let userName = firebase.auth().currentUser.displayName;
       // userDetail.innerText += " " + userName;
       // console.log(userName);
@@ -849,6 +852,8 @@ view.showComponents = async function(screenName) {
         }
       });
 
+      userDetail.onclick = userDetailOnClick; // Chuyển sang profile
+
       for (let i = 0; i < dropdownMenuNav.children.length; i++) {
         dropdownMenuNav.children[i].onclick = async function() {
           dropdownMenu2.innerText = dropdownMenuNav.children[i].textContent;
@@ -1003,7 +1008,6 @@ view.showComponents = async function(screenName) {
       let userImg = document.getElementById("user-img");
 
       let formAddComment = document.getElementById("form-add-comment");
-      // dropdownMenu2.innerText = view.city.trim();
 
       btnCancelUpdatePost.onclick = function cancelUpdateHandler() {
         let postInfo = {
@@ -1076,6 +1080,9 @@ view.showComponents = async function(screenName) {
           userDetail.style.display = "none";
         }
       });
+
+      userDetail.onclick = userDetailOnClick; // Chuyển sang profile
+
       // let userName = firebase.auth().currentUser.displayName;
       // userDetail.innerText += " " + userName;
       // console.log(userName);
@@ -1289,28 +1296,9 @@ view.showComponents = async function(screenName) {
           };
 
           if (comments) {
-            // for (comment of comments) {
-            //   let html = `<div class="media cmt">
-            //   <img
-            //     src="${comment.userPhoto}"
-            //     class=""
-            //     alt="..."
-            //     style="width: 30px;
-            //     height: 30px;
-            //     border-radius: 50%;"
-            //   />
-            //   <div class="media-body content-comment">
-            //   <h5 class="mt-0">${comment.userName}</h5>
-            //   <p class="">${capitalize_Words(comment.content)}</p>
-            //   </div>
-            // </div>`;
-
-            //   commentDetail.innerHTML += html;
-            // }
             view.cmt();
           } else {
             let html = `<span>Chưa có bình luận nào</span>`;
-
             commentDetail.innerHTML += html;
           }
 
@@ -1379,10 +1367,12 @@ view.showComponents = async function(screenName) {
         event.preventDefault();
         view.disable("submit-btn");
         let id = model.detail.id;
-        if (model.detail) {
+        let currentUser = firebase.auth().currentUser;
+
+        if (model.detail && currentUser) {
           let postId = model.detail.id;
-          let user = firebase.auth().currentUser.displayName;
-          let userPhoto = firebase.auth().currentUser.photoURL;
+          let user = currentUser.displayName;
+          let userPhoto = currentUser.photoURL;
           let content = formAddComment.elements[0].value;
 
           if (content) {
@@ -1397,10 +1387,119 @@ view.showComponents = async function(screenName) {
             await controller.addComment(postId, comments);
             formAddComment.commentContent.value = "";
             controller.cmt(id);
-            view.enable("submit-btn");
           }
+        } else {
+          view.showComponents("logIn");
         }
+        view.enable("submit-btn");
       }
+      break;
+    }
+    case "accountInformation": {
+      let app = document.getElementById("app");
+      app.innerHTML =
+        components.nav + components.accountInformation + components.footer;
+
+      let userInfo = document.getElementById("user-info");
+      let posted = document.getElementById("posted");
+      let formUpdateProfile = document.getElementById("form-update-profile");
+      let inputImg = document.getElementById("input-img");
+      let userInfoHtml = `
+          <img
+            style="width: 125px;
+            height: 125px;
+            border-radius: 50%;"
+            src="${firebase.auth().currentUser.photoURL}"
+            alt=""
+          />
+          <div class="us">
+            <h3 class="us-name">${firebase.auth().currentUser.displayName}</h3>
+            <span class="us-date"
+              >Tham gia vào ngày: ${
+                firebase.auth().currentUser.metadata.creationTime
+              }</span>
+          </div>
+          `;
+      userInfo.innerHTML += userInfoHtml;
+
+      async function getPostNumber() {
+        let postedNumber = await firebase
+          .firestore()
+          .collection("post")
+          .where("email", "==", firebase.auth().currentUser.email)
+          .get();
+        let num = postedNumber.docs.length;
+        let postedHtml = `
+          <h2>${num}</h2>
+          <div>Bài đã đăng</div>
+        `;
+        posted.innerHTML += postedHtml;
+      }
+      getPostNumber();
+
+      let inputImgHtml = `
+      <img
+        style="width: 125px;
+        height: 125px;
+        border-radius: 50%;"
+        src="${firebase.auth().currentUser.photoURL}"
+      />
+      `;
+      inputImg.innerHTML += inputImgHtml;
+
+      formUpdateProfile.onsubmit = formUpdateProfileOnsubmit;
+
+      async function formUpdateProfileOnsubmit(e) {
+        e.preventDefault();
+        view.disable("update-profile-btn");
+        let fileImg = formUpdateProfile.img.files[0];
+        let link = await controller.upload(fileImg);
+        console.log(link);
+        let profile = {
+          photoURL: link,
+          firstName: formUpdateProfile.firstName.value,
+          lastName: formUpdateProfile.lastName.value,
+          number: formUpdateProfile.number.value
+        };
+
+        view.validate("first-name-error", [
+          profile.firstName.trim(),
+          "Bạn chưa nhập họ!"
+        ]);
+        view.validate("last-name-error", [
+          profile.lastName.trim(),
+          "Bạn chưa nhập tên!"
+        ]);
+        view.validate("number-error", [
+          profile.number,
+          "Bạn chưa nhập số điện thoại!"
+        ]);
+
+        let validateResult = [
+          view.validate("first-name-error", [
+            profile.firstName.trim(),
+            "Bạn chưa nhập họ!"
+          ]),
+          view.validate("last-name-error", [
+            profile.lastName.trim(),
+            "Bạn chưa nhập tên!"
+          ]),
+          view.validate("number-error", [
+            profile.number,
+            "Bạn chưa nhập số điện thoại!"
+          ])
+        ];
+        if (view.allPassed(validateResult)) {
+          let user = firebase.auth().currentUser;
+          user.updateProfile({
+            displayName: profile.firstName + " " + profile.lastName,
+            phoneNumber: profile.number,
+            photoURL: profile.photoURL
+          });
+        }
+        view.enable("update-profile-btn");
+      }
+
       break;
     }
   }
@@ -1611,3 +1710,7 @@ view.cmt = async function() {
     commentDetail.innerHTML += html;
   }
 };
+
+function userDetailOnClick() {
+  view.showComponents("accountInformation");
+}
