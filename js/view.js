@@ -554,8 +554,8 @@ view.showComponents = async function(screenName) {
             .collection("post")
             .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
             // .where("type", "==", "")
-            // .where("arrName", "array-contains-any", nameInputSplit)
-            .where("name", "==", nameInput)
+            .where("arrName", "array-contains-any", nameInputSplit)
+            // .where("name", "==", nameInput)
             .orderBy("order", "desc")
             .get();
 
@@ -907,8 +907,8 @@ view.showComponents = async function(screenName) {
             .collection("post")
             .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
             // .where("type", "==", "")
-            // .where("arrName", "array-contains-any", nameInputSplit)
-            .where("name", "==", nameInput)
+            .where("arrName", "array-contains-any", nameInputSplit)
+            // .where("name", "==", nameInput)
             .orderBy("order", "desc")
             .get();
 
@@ -1166,8 +1166,8 @@ view.showComponents = async function(screenName) {
             .collection("post")
             .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
             // .where("type", "==", "")
-            // .where("arrName", "array-contains-any", nameInputSplit)
-            .where("name", "==", nameInput)
+            .where("arrName", "array-contains-any", nameInputSplit)
+            // .where("name", "==", nameInput)
             .orderBy("order", "desc")
             .get();
 
@@ -1683,8 +1683,8 @@ view.showComponents = async function(screenName) {
             .collection("post")
             .where("city", "==", dropdownMenu2.innerText.toLowerCase().trim())
             // .where("type", "==", "")
-            // .where("arrName", "array-contains-any", nameInputSplit)
-            .where("name", "==", nameInput)
+            .where("arrName", "array-contains-any", nameInputSplit)
+            // .where("name", "==", nameInput)
             .orderBy("order", "desc")
             .get();
 
