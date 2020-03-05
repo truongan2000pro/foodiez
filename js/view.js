@@ -324,7 +324,8 @@ view.showComponents = async function(screenName) {
           photoUrl: firebase.auth().currentUser.photoURL,
           like: 0,
           likeCheck: false,
-          userUid: []
+          userUid: [],
+          email: firebase.auth().currentUser.email
         };
 
         let validateResult = [
@@ -752,7 +753,8 @@ view.showComponents = async function(screenName) {
           photoUrl: firebase.auth().currentUser.photoURL,
           like: 0,
           likeCheck: false,
-          userUid: []
+          userUid: [],
+          email: firebase.auth().currentUser.email
         };
 
         let validateResult = [
@@ -1203,7 +1205,8 @@ view.showComponents = async function(screenName) {
           inputImg: imgButtonUpdate.value,
           photoUrl: firebase.auth().currentUser.photoURL,
           userUid: [],
-          like: 0
+          like: 0,
+          email: firebase.auth().currentUser.email
         };
 
         let validateResult = [

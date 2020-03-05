@@ -171,7 +171,8 @@ controller.addAndOrderUpdate = async function(postInfo) {
       photoUrl: postInfo.photoUrl,
       like: postInfo.like,
       likeCheck: postInfo.likeCheck,
-      userUid: postInfo.userUid
+      userUid: postInfo.userUid,
+      email: postInfo.email
     })
     .then(async function() {
       await controller
